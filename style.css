@@ -1,0 +1,287 @@
+#selection{
+  margin-top: 60px;
+  display:block;
+}
+
+.btn{
+  cursor: pointer;
+  font-size: 10px;
+  color: white;
+  background: black;
+  padding: 10px 20px;
+  border-radius: 20px;
+  width: 200px;
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.hidden{
+  display: none;
+}
+
+#header{
+  height: 60px;
+  background-color: #514E5A;
+  /* background-color: #EEEEEE; */
+  margin-left: -115px;
+  margin-right: -115px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.header-text{
+  color: white;
+  margin-top: 30px;
+  font-size: 12px;
+}
+
+h6{
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#content{
+  padding-top: 40px;
+}
+
+.textScore{
+  font-size: 14px;
+}
+
+.textCounts{
+  font-size: 14px;
+}
+
+.rect-background{
+  fill: #EEEEEE;
+}
+
+#userScore{
+  /* original orange */
+  fill: #F68D61;
+  /* lavender */
+  /* fill: #a9a7c0; */
+  /* light orange */
+  /* fill: #edbaa7; */
+  /* light green */
+  /* fill: #9dc9a9; */
+  /* light rose */
+  /* fill: #e2d1d5; */
+}
+
+#mlScore{
+  fill: #19ABB5;
+}
+
+.rect-open, .rect-complex{
+  fill: #19ABB5;
+}
+
+.rect-close, .rect-simple{
+  fill: #EEEEEE;
+}
+
+.labels-lines{
+  stroke: #333333;
+  stroke-width: 1px;
+}
+
+.labels-text{
+  text-anchor: middle;
+  font-size: 10px;
+}
+
+#container-session{
+  height: 520px;
+  margin-top: 40px;
+  overflow: scroll;
+}
+
+.session-text{
+  font-size: 10px;
+  /* font-weight: lighter; */
+  margin-bottom: 0.5em;
+}
+
+.client-text{
+  font-weight: normal;
+  color: #999999;
+  margin-left: 20px;
+}
+
+/* CONFIDENCE TEXT HIGHLIGHT */
+
+.highlight-text{
+  color: white;
+  background-color: #19ABB5;
+  font-weight: bolder;
+}
+
+/* MODAL STYLE */
+
+#modal-btn, #modal-content-btn{
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#modal-content-btn{
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+  display: flex;
+}
+
+.modal{
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,.5);
+}
+
+.modal-content{
+  width: 50%;
+  margin: 15% auto;
+  padding: 20px;
+  box-shadow: 0px 5px 15px rgba(0,0,0,.5);
+}
+
+.modal-body{
+  padding: 20px;
+}
+
+/* BUTTONS */
+#btn-reset{
+  cursor: pointer;
+  font-size: 10px;
+  color: white;
+  background: black;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+.accordian{
+  width:100%;
+  height:60px;
+}
+
+/* SLIDER STYLE */
+
+/* style stripped */
+input[type=range] {
+  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  width: 100%; /* Specific width is required for Firefox. */
+  background: transparent; /* Otherwise white in Chrome */
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  cursor: pointer;
+
+  /* Hides the slider so custom styles can be added */
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+/* Handle */
+/* Special styling for WebKit/Blink */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  background: #19ABB5;
+  cursor: pointer;
+  margin-top: 0px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: rgba(0,0,0,.5); /* Add cool effects to your sliders! */
+}
+
+/* All the same stuff for Firefox */
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 1px 1px rgba(0,0,0,.5);
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  background: #19ABB5;
+  cursor: pointer;
+}
+
+/* All the same stuff for IE */
+input[type=range]::-ms-thumb {
+  box-shadow: 0px 1px 1px rgba(0,0,0,.5);
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  background: #19ABB5;
+  cursor: pointer;
+}
+
+/* track */
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: #EEEEEE;
+  border-radius: 5px;
+  /* border: 0.2px solid #010101; */
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #EEEEEE;
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: #EEEEEE;
+  border-radius: 5px;
+  /* border: 0.2px solid #010101; */
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  /* border-width: 16px 0; */
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #19ABB5;
+  /* border: 0.2px solid #010101; */
+  border-radius: 5px;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #19ABB5;
+}
+input[type=range]::-ms-fill-upper {
+  background: #EEEEEE;
+  /* border: 0.2px solid #010101; */
+  border-radius: 5px;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #EEEEEE;
+}
