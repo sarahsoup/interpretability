@@ -15,13 +15,23 @@ function similarSessions(){
   const yOffset = countsTitleTop-similarTitleTop;
   console.log(yOffset);
   d3.select('#title-similar')
-    .style('top',yOffset + 'px'); //does not work
+    .style('padding-top',yOffset + 'px');
 
   const container = d3.select('#content-session')
     .append('div')
     .attr('id','container-similar')
     .attr('width','100%')
-    .attr('height','300px');
+    .attr('height','300px')
+    .style('margin-top','40px')
+    .append('g');
+
+  // container
+  //   .append('image')
+  //   .attr('src','./SVG/caret.svg')
+  //   .attr('x',0)
+  //   .attr('y',0)
+  //   .attr('width',0)
+  //   .attr('height',0);
 
   d3.json('./transcript.json',function(data){
 
@@ -49,6 +59,47 @@ function similarSessions(){
       .attr('id','collapse-2')
       .append('p')
       .html('this is the content!');
+
+    container.append('button')
+      .attr('class','accordian')
+      .attr('id','accordian-3')
+      .attr('data-toggle','collapse')
+      .attr('data-target','#collapse-3')
+      .html('SESSION 5678');
+    container.append('div')
+      .attr('class','collapse')
+      .attr('id','collapse-3')
+      .append('p')
+      .html('this is the content!');
+
+    container.append('button')
+      .attr('class','accordian')
+      .attr('id','accordian-4')
+      .attr('data-toggle','collapse')
+      .attr('data-target','#collapse-4')
+      .html('SESSION 5678');
+    container.append('div')
+      .attr('class','collapse')
+      .attr('id','collapse-4')
+      .append('p')
+      .html('this is the content!');
+
+    container.append('button')
+      .attr('class','accordian')
+      .attr('id','accordian-5')
+      .attr('data-toggle','collapse')
+      .attr('data-target','#collapse-5')
+      .html('SESSION 5678');
+    container.append('div')
+      .attr('class','collapse')
+      .attr('id','collapse-5')
+      .append('p')
+      .html('this is the content!');
+
+    container.selectAll('.collapse')
+      // .style('padding', '20px 20px')
+      .style('font-size', '10px');
+      // .style('border-bottom','1px solid black');
 
   });
 }

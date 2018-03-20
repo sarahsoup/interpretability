@@ -5,9 +5,10 @@
 
 .btn{
   cursor: pointer;
-  font-size: 10px;
-  color: white;
-  background: black;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: white;
+  border: 1px solid black;
   padding: 10px 20px;
   border-radius: 20px;
   width: 200px;
@@ -99,6 +100,11 @@ h6{
   overflow: scroll;
 }
 
+#session-list{
+  list-style: none;
+  /* overflow: scroll; */
+}
+
 .session-text{
   font-size: 10px;
   /* font-weight: lighter; */
@@ -116,12 +122,12 @@ h6{
 .highlight-text{
   color: white;
   background-color: #19ABB5;
-  font-weight: bolder;
+  /* font-weight: bolder; */
 }
 
 /* MODAL STYLE */
 
-#modal-btn, #modal-content-btn{
+#modal-btn, #modal-content-btn, #btn-form{
   cursor: pointer;
   background-color: white;
   border: 1px solid black;
@@ -159,19 +165,35 @@ h6{
 }
 
 /* BUTTONS */
-#btn-reset{
+/* #btn-reset{
   cursor: pointer;
   font-size: 10px;
   color: white;
   background: black;
   padding: 10px 20px;
   border-radius: 20px;
+} */
+
+#container-similar{
+  overflow: scroll;
 }
 
 .accordian{
+  cursor: pointer;
   width:100%;
-  height:60px;
+  height:50px;
+  background-color: white;
+  font-size: 10px;
+  text-align: left;
+  padding-left: 20px;
+  border: none;
+  border-bottom: 1px solid black;
 }
+
+/* .collapse{
+  padding: 20px 20px;
+  font-size: 10px;
+} */
 
 /* SLIDER STYLE */
 
@@ -284,4 +306,10 @@ input[type=range]::-ms-fill-upper {
 }
 input[type=range]:focus::-ms-fill-upper {
   background: #EEEEEE;
+}
+
+input[type=range]::-moz-range-progress {
+  background-color: #19ABB5;
+  height: 10px;
+  border-radius: 5px;
 }

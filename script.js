@@ -20,7 +20,6 @@ const scaleX = d3.scaleLinear().domain([0, 5]).range([0, barW]);
 
 
 d3.selectAll('.btn')
-  .style('color','white')
   .on('click',function(d){
     variation = this.innerHTML;
     d3.select('#selection')
@@ -72,7 +71,7 @@ function createVariation(variation){
     const simpleArr = [];
 
     data.session.talkTurn.forEach(function(d){
-      d.codes[1] = Number(Math.random().toFixed(3));
+      d.codes[1] = (Number(Math.random().toFixed(3))/2) + 0.5;
       if(d.codes[0]=='QUO'){
         openArr.push({
           id: d.id,
@@ -99,18 +98,20 @@ function createVariation(variation){
       }
     });
 
-    openArr.sort(function(a,b){
-      return b.confidence - a.confidence;
-    });
-    closeArr.sort(function(a,b){
-      return a.confidence - b.confidence;
-    });
-    complexArr.sort(function(a,b){
-      return b.confidence - a.confidence;
-    });
-    simpleArr.sort(function(a,b){
-      return a.confidence - b.confidence;
-    });
+if(variation == 'confidence'){
+  openArr.sort(function(a,b){
+    return b.confidence - a.confidence;
+  });
+  closeArr.sort(function(a,b){
+    return a.confidence - b.confidence;
+  });
+  complexArr.sort(function(a,b){
+    return b.confidence - a.confidence;
+  });
+  simpleArr.sort(function(a,b){
+    return a.confidence - b.confidence;
+  });
+};
 
     /* HEADER */
 
@@ -301,6 +302,7 @@ function createVariation(variation){
       .style('font-weight','lighter');
 
     openQT.append('tspan')
+      .attr('id','openQ-perc')
       .text(Math.round(percentOpenQuestions) + '%')
       .style('font-weight','bold');
 
@@ -313,6 +315,7 @@ function createVariation(variation){
       .style('font-weight','lighter');
 
     complexRT.append('tspan')
+      .attr('id','complexQ-perc')
       .text(Math.round(percentComplexReflections) + '%')
       .style('font-weight','bold');
 
@@ -325,7 +328,15 @@ function createVariation(variation){
         complexCount: complexReflections,
         simpleCount: simpleReflections
       };
-      createSliders(sliderObj);
+      const questionsObj = {
+        open: openArr,
+        close: closeArr
+      };
+      const reflectionsObj = {
+        complex: complexArr,
+        simple: simpleArr
+      };
+      createSliders(sliderObj,questionsObj,reflectionsObj);
 
     } else {
 
@@ -342,7 +353,6 @@ function createVariation(variation){
         });
 
       openQG.selectAll('rect-close')
-        //.data(data.session.talkTurn.filter(function(d){ return d.codes[0] == "QUC"; }))
         .data(closeArr)
         .enter()
         .append('rect')
@@ -355,7 +365,6 @@ function createVariation(variation){
 
       i=-1;
       complexRG.selectAll('rect-complex')
-        //.data(data.session.talkTurn.filter(function(d){ return d.codes[0] == "REC"; }))
         .data(complexArr)
         .enter()
         .append('rect')
@@ -367,7 +376,6 @@ function createVariation(variation){
         });
 
       complexRG.selectAll('rect-simple')
-        //.data(data.session.talkTurn.filter(function(d){ return d.codes[0] == "RES"; }))
         .data(simpleArr)
         .enter()
         .append('rect')
@@ -389,257 +397,231 @@ function createVariation(variation){
     let therapist_id;
 
     if(variation == 'confidence'){
+      svgCounts.selectAll('.rect-counts')
+        .style('cursor','pointer')
+        .on('click',function(d){
+          highlight(d);
+        });
+
       openQG.selectAll('.rect-open')
         .style('fill',function(d){
           perc = 0.5+(d.confidence/2);
           return scaleColor(perc).hex()+'';
-        })
-        .on('click',function(d){
-          // turn off class doesn't work
-          d3.selectAll('.rect-open')
-            .classed('highlight-text',false);
-          d3.select('#therapist-' + d.id)
-            .classed('highlight-text',true);
-              let sessionG = document.getElementById('session-group');
-              let targetp = document.getElementById('therapist-' + d.id);
-              //console.log(sessionG.scrollTop);
-              //sessionG.scrollTop = targetp.offsetTop - 100;
-              //console.log(targetp.offsetTop);
-              sessionG.scrollTop = 200;
         });
+
+          // let sessionG = document.getElementById('session-group');
+          // let targetp = document.getElementById('therapist-' + d.id);
+          // console.log(sessionG.scrollTop);
+          // sessionG.scrollTop = targetp.offsetTop - 100;
+          // console.log(targetp.offsetTop);
+          // sessionG.scrollTop = 200;
+
 
       openQG.selectAll('.rect-close')
         .style('fill',function(d){
           perc = 0.5+(d.confidence/2);
           return scaleColor(1-perc).hex()+'';
-        })
-        .on('click',function(d){
-          // d3.selectAll('.rect-counts')
-          //   .classed('highlight-text',false);
-          d3.select('#therapist-' + d.id)
-            .classed('highlight-text',true);
         });
 
       complexRG.selectAll('.rect-complex')
         .style('fill',function(d){
           perc = 0.5+(d.confidence/2);
           return scaleColor(perc).hex()+'';
-        })
-        .on('click',function(d){
-          // d3.selectAll('.rect-counts')
-          //   .classed('highlight-text',false);
-          d3.select('#therapist-' + d.id)
-            .classed('highlight-text',true);
         });
+
       complexRG.selectAll('.rect-simple')
         .style('fill',function(d){
           perc = 0.5+(d.confidence/2);
           return scaleColor(1-perc).hex()+'';
-        })
-        .on('click',function(d){
-          // d3.selectAll('.rect-counts')
-          //   .classed('highlight-text',false);
-          d3.select('#therapist-' + d.id)
-            .classed('highlight-text',true);
         });
+
     };
 
     /************* BAR LABELS *************/
 
-    mlScoreL = mlScoreG.append('g')
-      .attr('class','labels-group');
-
-      mlScoreL.append('line')
-        .attr('class','labels-lines')
-        .attr('x1',scaleX(4))
-        .attr('x2',scaleX(4));
-
-      mlScoreLT1 = mlScoreL.append('text')
-        .attr('class','labels-text')
-        .attr('x',scaleX(4));
-
-      mlScoreLT1.append('tspan')
-        .text('Adv ')
-        .style('font-weight','lighter');
-
-      mlScoreLT1.append('tspan')
-        .text('4.0')
-        .style('font-weight','bold');
-
-      mlScoreL.append('line')
-        .attr('class','labels-lines')
-        .attr('x1',scaleX(3.5))
-        .attr('x2',scaleX(3.5));
-
-      mlScoreLT2 = mlScoreL.append('text')
-        .attr('class','labels-text')
-        .attr('x',scaleX(3.5));
-
-      mlScoreLT2.append('tspan')
-        .text('Basic ')
-        .style('font-weight','lighter');
-
-      mlScoreLT2.append('tspan')
-        .text('3.5')
-        .style('font-weight','bold');
-
-  if(variation == 'confidence'){
-
-    mlScoreL.selectAll('.labels-lines')
-      .attr('y1',barY+barH+confAdj+4)
-      .attr('y2',barY+barH+confAdj+14);
-
-    mlScoreLT1
-      .attr('y',barY+barH+confAdj+28);
-
-    mlScoreLT2
-      .attr('y',barY+barH+confAdj+28);
-
-  } else {
-    mlScoreL.selectAll('.labels-lines')
-      .attr('y1',barY+barH+4)
-      .attr('y2',barY+barH+14);
-
-    mlScoreLT1
-      .attr('y',barY+barH+28);
-
-    mlScoreLT2
-      .attr('y',barY+barH+28);
-  }
-
-    openQL = openQG.append('g')
-      .attr('class','labels-group');
-
-      openQL.append('line')
-        .attr('class','labels-lines')
-        .attr('x1',barW*.7)
-        .attr('x2',barW*.7)
-        .attr('y1',barY+barCountsH+4)
-        .attr('y2',barY+barCountsH+14);
-
-      openQLT1 = openQL.append('text')
-        .attr('class','labels-text')
-        .attr('y',barY+barCountsH+28)
-        .attr('x',barW*.7);
-
-      openQLT1.append('tspan')
-        .text('Adv ')
-        .style('font-weight','lighter');
-
-      openQLT1.append('tspan')
-        .text('70')
-        .style('font-weight','bold');
-
-      openQL.append('line')
-        .attr('class','labels-lines')
-        .attr('x1',barW*.5)
-        .attr('x2',barW*.5)
-        .attr('y1',barY+barCountsH+4)
-        .attr('y2',barY+barCountsH+14);
-
-      openQLT2 = openQL.append('text')
-        .attr('class','labels-text')
-        .attr('y',barY+barCountsH+28)
-        .attr('x',barW*.5);
-
-      openQLT2.append('tspan')
-        .text('Basic ')
-        .style('font-weight','lighter');
-
-      openQLT2.append('tspan')
-        .text('50')
-        .style('font-weight','bold');
-
-    complexRL = complexRG.append('g')
-      .attr('class','labels-group');
-
-      complexRL.append('line')
-        .attr('class','labels-lines')
-        .attr('x1',barW*.7)
-        .attr('x2',barW*.7)
-        .attr('y1',barY+barCountsH+4)
-        .attr('y2',barY+barCountsH+14);
-
-      complexRLT1 = complexRL.append('text')
-        .attr('class','labels-text')
-        .attr('y',barY+barCountsH+28)
-        .attr('x',barW*.7);
-
-      complexRLT1.append('tspan')
-        .text('Adv ')
-        .style('font-weight','lighter');
-
-      complexRLT1.append('tspan')
-        .text('70')
-        .style('font-weight','bold');
-
-      complexRL.append('line')
-        .attr('class','labels-lines')
-        .attr('x1',barW*.5)
-        .attr('x2',barW*.5)
-        .attr('y1',barY+barCountsH+4)
-        .attr('y2',barY+barCountsH+14);
-
-      complexRLT2 = complexRL.append('text')
-        .attr('class','labels-text')
-        .attr('y',barY+barCountsH+28)
-        .attr('x',barW*.5);
-
-      complexRLT2.append('tspan')
-        .text('Basic ')
-        .style('font-weight','lighter');
-
-      complexRLT2.append('tspan')
-        .text('50')
-        .style('font-weight','bold');
+  //   mlScoreL = mlScoreG.append('g')
+  //     .attr('class','labels-group');
+  //
+  //     mlScoreL.append('line')
+  //       .attr('class','labels-lines')
+  //       .attr('x1',scaleX(4))
+  //       .attr('x2',scaleX(4));
+  //
+  //     mlScoreLT1 = mlScoreL.append('text')
+  //       .attr('class','labels-text')
+  //       .attr('x',scaleX(4));
+  //
+  //     mlScoreLT1.append('tspan')
+  //       .text('Adv ')
+  //       .style('font-weight','lighter');
+  //
+  //     mlScoreLT1.append('tspan')
+  //       .text('4.0')
+  //       .style('font-weight','bold');
+  //
+  //     mlScoreL.append('line')
+  //       .attr('class','labels-lines')
+  //       .attr('x1',scaleX(3.5))
+  //       .attr('x2',scaleX(3.5));
+  //
+  //     mlScoreLT2 = mlScoreL.append('text')
+  //       .attr('class','labels-text')
+  //       .attr('x',scaleX(3.5));
+  //
+  //     mlScoreLT2.append('tspan')
+  //       .text('Basic ')
+  //       .style('font-weight','lighter');
+  //
+  //     mlScoreLT2.append('tspan')
+  //       .text('3.5')
+  //       .style('font-weight','bold');
+  //
+  // if(variation == 'confidence'){
+  //
+  //   mlScoreL.selectAll('.labels-lines')
+  //     .attr('y1',barY+barH+confAdj+4)
+  //     .attr('y2',barY+barH+confAdj+14);
+  //
+  //   mlScoreLT1
+  //     .attr('y',barY+barH+confAdj+28);
+  //
+  //   mlScoreLT2
+  //     .attr('y',barY+barH+confAdj+28);
+  //
+  // } else {
+  //   mlScoreL.selectAll('.labels-lines')
+  //     .attr('y1',barY+barH+4)
+  //     .attr('y2',barY+barH+14);
+  //
+  //   mlScoreLT1
+  //     .attr('y',barY+barH+28);
+  //
+  //   mlScoreLT2
+  //     .attr('y',barY+barH+28);
+  // }
+  //
+  //   openQL = openQG.append('g')
+  //     .attr('class','labels-group');
+  //
+  //     openQL.append('line')
+  //       .attr('class','labels-lines')
+  //       .attr('x1',barW*.7)
+  //       .attr('x2',barW*.7)
+  //       .attr('y1',barY+barCountsH+4)
+  //       .attr('y2',barY+barCountsH+14);
+  //
+  //     openQLT1 = openQL.append('text')
+  //       .attr('class','labels-text')
+  //       .attr('y',barY+barCountsH+28)
+  //       .attr('x',barW*.7);
+  //
+  //     openQLT1.append('tspan')
+  //       .text('Adv ')
+  //       .style('font-weight','lighter');
+  //
+  //     openQLT1.append('tspan')
+  //       .text('70')
+  //       .style('font-weight','bold');
+  //
+  //     openQL.append('line')
+  //       .attr('class','labels-lines')
+  //       .attr('x1',barW*.5)
+  //       .attr('x2',barW*.5)
+  //       .attr('y1',barY+barCountsH+4)
+  //       .attr('y2',barY+barCountsH+14);
+  //
+  //     openQLT2 = openQL.append('text')
+  //       .attr('class','labels-text')
+  //       .attr('y',barY+barCountsH+28)
+  //       .attr('x',barW*.5);
+  //
+  //     openQLT2.append('tspan')
+  //       .text('Basic ')
+  //       .style('font-weight','lighter');
+  //
+  //     openQLT2.append('tspan')
+  //       .text('50')
+  //       .style('font-weight','bold');
+  //
+  //   complexRL = complexRG.append('g')
+  //     .attr('class','labels-group');
+  //
+  //     complexRL.append('line')
+  //       .attr('class','labels-lines')
+  //       .attr('x1',barW*.7)
+  //       .attr('x2',barW*.7)
+  //       .attr('y1',barY+barCountsH+4)
+  //       .attr('y2',barY+barCountsH+14);
+  //
+  //     complexRLT1 = complexRL.append('text')
+  //       .attr('class','labels-text')
+  //       .attr('y',barY+barCountsH+28)
+  //       .attr('x',barW*.7);
+  //
+  //     complexRLT1.append('tspan')
+  //       .text('Adv ')
+  //       .style('font-weight','lighter');
+  //
+  //     complexRLT1.append('tspan')
+  //       .text('70')
+  //       .style('font-weight','bold');
+  //
+  //     complexRL.append('line')
+  //       .attr('class','labels-lines')
+  //       .attr('x1',barW*.5)
+  //       .attr('x2',barW*.5)
+  //       .attr('y1',barY+barCountsH+4)
+  //       .attr('y2',barY+barCountsH+14);
+  //
+  //     complexRLT2 = complexRL.append('text')
+  //       .attr('class','labels-text')
+  //       .attr('y',barY+barCountsH+28)
+  //       .attr('x',barW*.5);
+  //
+  //     complexRLT2.append('tspan')
+  //       .text('Basic ')
+  //       .style('font-weight','lighter');
+  //
+  //     complexRLT2.append('tspan')
+  //       .text('50')
+  //       .style('font-weight','bold');
 
     /************** SESSION TRANSCRIPT **************/
-    // const codesSet = new Set();
-    // // const codesMap = new Map();
-    //
-    // let quo = 0;
-    // let quc = 0;
-    // let res = 0;
-    // let rec = 0;
-    // data.session.talkTurn.forEach(function(i){
-    //   codesSet.add(i.codes[0]);
-    //   // console.log(i.codes[0]);
-    //
-    //   if(i.codes[0] == "QUO"){
-    //     quo++;
-    //   }
-    //   if(i.codes[0] == "QUC"){
-    //     quc++;
-    //   }
-    //   if(i.codes[0] == "RES"){
-    //     res++;
-    //   }
-    //   if(i.codes[0] == "REC"){
-    //     rec++;
-    //   }
-    // });
-    //
-    // const codesMap = data.session.talkTurn.map(obj =>{
-    //   let rObj = {};
-    //   rObj[obj.id] = obj.codes[0];
-    //   return rObj;
-    // });
-    //
-    // console.log(codesMap);
-    //
-    // console.log('QUO = ' + quo + ', QEC = ' + quc + ', RES = ' + res + ', REC = ' + rec);
-    // console.log(codesSet);
 
     d3.select('#content-session')
       .append('div')
-      .attr('id','container-session')
-      .append('g')
-      .attr('id','session-group');
+      .attr('id','container-session');
+      // .append('g')
+      // .attr('id','session-group');
 
-    d3.select('#session-group').selectAll('.session-text')
+    // d3.select('#session-group').selectAll('.session-text')
+    //   .data(data.session.talkTurn)
+    //   .enter()
+    //   .append('p')
+    //   .attr('class',function(d){
+    //     if(d.speaker == 'therapist'){
+    //       return 'session-text therapist-text';
+    //     }
+    //     else{
+    //       return 'session-text client-text';
+    //     }
+    //   })
+    //   .attr('id',function(d){
+    //     return d.speaker + '-' + d.id;
+    //   })
+    //   .html(function(d){
+    //     return d.asrText;
+    //   });
+
+    // try list
+    d3.select('#container-session')
+      .append('ol')
+      .attr('id','session-list');
+
+    d3.select('#session-list').selectAll('.session-text')
       .data(data.session.talkTurn)
       .enter()
-      .append('p')
+      .append('li')
       .attr('class',function(d){
         if(d.speaker == 'therapist'){
           return 'session-text therapist-text';
@@ -655,10 +637,15 @@ function createVariation(variation){
         return d.asrText;
       });
 
+    if(variation == 'confidence'){
+      d3.select('#container-session')
+        .style('height','420px');
+    }
+
     if(variation == 'similar sessions'){
       similarSessions();
     }
-
+console.log(data.session.talkTurn);
   });
 
 };
