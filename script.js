@@ -71,7 +71,9 @@ function createVariation(variation){
     const simpleArr = [];
 
     data.session.talkTurn.forEach(function(d){
-      d.codes[1] = (Number(Math.random().toFixed(3))/2) + 0.5;
+      d.codes[1] = (Number(Math.random().toFixed(3))/2) + 0.5; // confidence score
+      d.influence = (Number(Math.random().toFixed(3))*2) - 1; // influence score
+      // console.log(d.influence);
       if(d.codes[0]=='QUO'){
         openArr.push({
           id: d.id,
@@ -143,14 +145,15 @@ if(variation == 'confidence'){
 
     const mlScoreG = svgEmpathy
       .append('g')
-      .attr('class','mlScoreG');
+      .attr('id','mlScoreG');
 
     const userScoreG = svgEmpathy
       .append('g')
-      .attr('class','userScoreG');
+      .attr('id','userScoreG');
 
     const userScoreT = userScoreG.append('text')
       .attr('class','textScore userScore')
+      .attr('id','textScore-user')
       .attr('x','0px');
 
     userScoreT.append('tspan')
@@ -164,6 +167,7 @@ if(variation == 'confidence'){
 
     const mlScoreT = mlScoreG.append('text')
       .attr('class','textScore mlScore')
+      .attr('id','textScore-ml')
       .attr('x','0px');
 
     mlScoreT.append('tspan')
@@ -175,6 +179,14 @@ if(variation == 'confidence'){
       .text(mlScore.toFixed(2))
       .style('font-weight','bold');
 
+    // if(variation == 'narrative description'){
+    //   // addAlgBtn();
+    //   svgEmpathy.append('button')
+    //     .attr('id','modal-btn')
+    //     .html('ABOUT THE ALGORITHM');
+    // }
+
+
     mlScoreG.append('rect')
       .attr('class','rect-background mlScore');
 
@@ -184,10 +196,10 @@ if(variation == 'confidence'){
         .attr('height',200);
 
       d3.select('#userNum')
-        .style('color','#F68D61');
+        .style('color','#F68D61'); //doesn't work
 
       d3.select('#mlNum')
-        .style('color','#19ABB5');
+        .style('color','#19ABB5'); //doesn't work
 
       const gradient = mlScoreG.append('linearGradient')
         .attr('id','gradient');
@@ -397,8 +409,25 @@ if(variation == 'confidence'){
     let therapist_id;
 
     if(variation == 'confidence'){
+      const tooltip = svgCounts.append('div')
+        .attr('class','tooltip')
+        .style('opacity',0);
+
       svgCounts.selectAll('.rect-counts')
         .style('cursor','pointer')
+        .on('mouseover',function(d){
+          rectTop = this.getBoundingClientRect().top;
+          rectCenter = this.getBoundingClientRect().left + (this.getBoundingClientRect().width/2);
+          console.log(rectTop, rectCenter, d.confidence.toFixed(2));
+          tooltip
+            .transition()
+            .style('opacity',1);
+          // ughhh tooltip doesn't show!
+          tooltip
+            .text(d.confidence.toFixed(2))
+            .style('left', rectCenter + 'px')
+            .style('top', (rectTop - 20) + 'px');
+        })
         .on('click',function(d){
           highlight(d);
         });
@@ -408,14 +437,6 @@ if(variation == 'confidence'){
           perc = 0.5+(d.confidence/2);
           return scaleColor(perc).hex()+'';
         });
-
-          // let sessionG = document.getElementById('session-group');
-          // let targetp = document.getElementById('therapist-' + d.id);
-          // console.log(sessionG.scrollTop);
-          // sessionG.scrollTop = targetp.offsetTop - 100;
-          // console.log(targetp.offsetTop);
-          // sessionG.scrollTop = 200;
-
 
       openQG.selectAll('.rect-close')
         .style('fill',function(d){
@@ -588,12 +609,29 @@ if(variation == 'confidence'){
 
     /************** SESSION TRANSCRIPT **************/
 
+    if(variation == 'influential n-grams'){
+      //create legend
+      ngramLegend = d3.select('#content-session')
+        .append('text')
+        .attr('class','ngram-legend')
+        .style('font-size','10px');
+
+      ngramLegend.append('tspan')
+        .text(' most positively influential ')
+        .style('color','white')
+        .style('background-color','#CC6471');
+      ngramLegend.append('tspan')
+        .text(' most negatively influential ')
+        .attr('dx','1em') // this line doesn't do anything
+        .style('color','white')
+        .style('background-color','#19ABB5');
+    }
+
     d3.select('#content-session')
       .append('div')
       .attr('id','container-session');
-      // .append('g')
-      // .attr('id','session-group');
 
+    // p for each talk turn
     // d3.select('#session-group').selectAll('.session-text')
     //   .data(data.session.talkTurn)
     //   .enter()
@@ -613,7 +651,7 @@ if(variation == 'confidence'){
     //     return d.asrText;
     //   });
 
-    // try list
+    // li for each talk turn
     d3.select('#container-session')
       .append('ol')
       .attr('id','session-list');
@@ -637,15 +675,41 @@ if(variation == 'confidence'){
         return d.asrText;
       });
 
+    // text for each talk turn
+    // d3.select('#container-session').selectAll('.session-text')
+    //   .data(data.session.talkTurn)
+    //   .enter()
+    //   .append('p')
+    //   .append('text')
+    //   .attr('class',function(d){
+    //     if(d.speaker == 'therapist'){
+    //       return 'session-text therapist-text';
+    //     }
+    //     else{
+    //       return 'session-text client-text';
+    //     }
+    //   })
+    //   .attr('id',function(d){
+    //     return d.speaker + '-' + d.id;
+    //   })
+    //   .append('tspan')
+    //   .text(function(d){
+    //     return d.asrText;
+    //   });
+
+
+
     if(variation == 'confidence'){
       d3.select('#container-session')
         .style('height','420px');
     }
-
-    if(variation == 'similar sessions'){
+    else if(variation == 'similar sessions'){
       similarSessions();
     }
-console.log(data.session.talkTurn);
+    else if(variation == 'influential n-grams'){
+      influence();
+    }
+
   });
 
 };

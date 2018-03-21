@@ -59,3 +59,19 @@ function createDescription(){
     });
 
 }
+
+// function addAlgBtn(){
+//   console.log('addAlgBtn ran');
+//   d3.select('#textScore-ml')
+//     .style('display','inline-block');
+//
+//   /* MODAL TRIGGER */
+//   d3.select('#mlScoreG')
+//     .append('button')
+//     .attr('id','modal-btn')
+//     .html('ABOUT THE ALGORITHM')
+//     .style('float','left')
+//     .on('click',function(){
+//       modal.style('display','block');
+//     });
+// }
