@@ -142,7 +142,7 @@ function similarSessions(){
       // .attr('src','./3072492.wav')
       // .attr('src','http://www.dropbox.com/home/Psychotherapy%20Transcripts?preview=3072492.wav') //put in html, add s if github pages doesn't work
       // .attr('src','http://www.dropbox.com/s/vnmvl05zqj6ovfx/3072492.wav')
-      .attr('src','http://drive.google.com/open?id=0B7OaBHt0PWMwZjVXVmxiZTJ0VU0')
+      // .attr('src','http://drive.google.com/open?id=0B7OaBHt0PWMwZjVXVmxiZTJ0VU0')
       .attr('type','audio/wav');
 
     d3.select('#session-audio' + div)

@@ -62,15 +62,13 @@ function addNarrativeBtn(){
     .attr('id','modal-icon')
     .attr('class','far fa-question-circle fa-lg');
 
-  console.log(document.getElementById('textScore-ml').getBoundingClientRect().top);
   textPos = document.getElementById('textScore-ml').getBBox();
-  console.log(textPos);
 
   textTop = document.getElementById('textScore-ml').getBoundingClientRect().top;
   textLeft = document.getElementById('textScore-ml').getBoundingClientRect().left;
   textRight = document.getElementById('textScore-ml').getBoundingClientRect().right;
   btnW = document.getElementById('modal-btn').clientWidth;
-  console.log(textLeft,textRight);
+
   d3.select('#modal-btn')
     .style('top',(textTop+10) + 'px')
     .style('left',(textRight-textLeft) + 'px');

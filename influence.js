@@ -7,19 +7,19 @@ function influenceLegend(){
   ngramLegend.append('tspan')
     .text('most ');
   ngramLegend.append('tspan')
-    .text('positively')
+    .text('pro-empathy')
     .style('color','#70B276')
     .style('font-weight','bolder');
     // .style('background-color','#19ABB5');
   ngramLegend.append('tspan')
     .text(' and ');
   ngramLegend.append('tspan')
-    .text('negatively')
+    .text('anti-empathy')
     .style('color','#CC6471')
     .style('font-weight','bolder');
     // .style('background-color','#CC6471');
   ngramLegend.append('tspan')
-    .text(' influential words and phrases');
+    .text(' words and phrases');
 }
 
 
@@ -35,7 +35,7 @@ function influenceFunctionality(mlScore){
   btns.append('button')
     .attr('id','btn-positive')
     .attr('class','btn-influence')
-    .html('ALL POSITIVE')
+    .html('ALL PRO-EMPATHY')
     .on('click',function(){
       influenceChange('positive');
       empathyChange('positive',mlScore);
@@ -44,7 +44,7 @@ function influenceFunctionality(mlScore){
   btns.append('button')
     .attr('id','btn-negative')
     .attr('class','btn-influence')
-    .html('ALL NEGATIVE')
+    .html('ALL ANTI-EMPATHY')
     .on('click',function(){
       influenceChange('negative');
       empathyChange('negative',mlScore);

@@ -35,6 +35,12 @@ d3.select('#welcome').selectAll('.btn')
       .classed('hidden',false);
   });
 
+playSession();
+d3.select('.audio-container')
+  .append('a')
+  .attr('class','btn btn-next')
+  .html('next');
+
 d3.select('#audio').selectAll('.btn')
   .on('click',function(d){
     d3.select('#audio')
@@ -71,12 +77,6 @@ d3.select('#selection').selectAll('.btn')
       .classed('hidden',false);
     createVariation(variation);
   })
-
-playSession();
-d3.select('.audio-container')
-  .append('a')
-  .attr('class','btn')
-  .html('next');
 
   rating = document.getElementById('slider-rating').value;
   d3.select('#rating-val').html(rating);
@@ -208,7 +208,6 @@ if(variation == 'confidence'){
       .text('You rated the session ')
       .style('font-weight','lighter');
 
-    console.log(userScore);
     userScoreT.append('tspan')
       .attr('id','userNum')
       .text(userScore)
@@ -237,7 +236,8 @@ if(variation == 'confidence'){
 
     if(variation == 'narrative description'){
       addNarrativeBtn();
-    } else if(variation == 'confidence'){
+    }
+    if(variation == 'confidence'){
 
       svgEmpathy
         .attr('height',200);

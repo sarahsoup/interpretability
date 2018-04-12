@@ -20,6 +20,22 @@ function makeConfidenceLabels(mlScore,confInt){
   mlScoreG.selectAll('.confidence-label')
     .attr('y',barY+confAdj);
 
+  mlScoreG.append('line')
+    .attr('class','confidence-line')
+    .attr('x1',scaleX(mlScore-confInt)+14)
+    .attr('x2',scaleX(mlScore)-14);
+
+  mlScoreG.append('line')
+    .attr('class','confidence-line')
+    .attr('x1',scaleX(mlScore)+14)
+    .attr('x2',scaleX(mlScore+confInt)-14);
+
+  mlScoreG.selectAll('.confidence-line')
+    .attr('y1',barY+confAdj-3)
+    .attr('y2',barY+confAdj-3)
+    .style('stroke','black')
+    .style('stroke-width','1px');
+
 };
 
 
@@ -28,6 +44,17 @@ function createCountsBars(openPerc,complexPerc){
 
   openQG = d3.select('#openQG');
   complexRG = d3.select('#complexRG');
+
+  const gradientalt = openQG.append('linearGradient')
+    .attr('id','gradient-alt');
+
+  gradientalt.append('stop')
+    .attr('offset','1%')
+    .attr('stop-color','#EEEEEE');
+
+  gradientalt.append('stop')
+    .attr('offset','499%')
+    .attr('stop-color','#19ABB5');
 
   openQG.append('rect')
     .attr('class','rect-background')
@@ -58,7 +85,7 @@ function createCountsBars(openPerc,complexPerc){
       }
     })
     .attr('y',barY+barAdj)
-    .style('fill','url(#gradient)') //issue with gradient
+    .style('fill','url(#gradient-alt)') //issue with gradient
     .style('cursor','pointer')
     .on('click',function(){ highlightAll('open'); });
 
@@ -100,12 +127,6 @@ function createCountsBars(openPerc,complexPerc){
       .attr('class','confidence-label')
       .attr('x',scaleP(openPerc));
 
-    // there is no upper bound, how to make dynamic?
-    // openQG.append('text')
-    //   .text((mlScore+confInt).toFixed(2))
-    //   .attr('class','confidence-label')
-    //   .attr('x',scaleP(mlScore+confInt));
-
     openQG.append('text')
       .text(Math.round(openPerc-confIntCounts))
       .attr('class','confidence-label')
@@ -113,6 +134,22 @@ function createCountsBars(openPerc,complexPerc){
 
     openQG.selectAll('.confidence-label')
       .attr('y',barY+barAdj-10);
+
+    openQG.append('line')
+      .attr('class','confidence-line')
+      .attr('x1',scaleP(openPerc-confIntCounts)+10)
+      .attr('x2',scaleP(openPerc)-12);
+
+    // openQG.append('line')
+    //   .attr('class','confidence-line')
+    //   .attr('x1',scaleP(openPerc)+14)
+    //   .attr('x2',scaleP(openPerc+confIntCounts)-14);
+
+    openQG.selectAll('.confidence-line')
+      .attr('y1',barY+barAdj-13)
+      .attr('y2',barY+barAdj-13)
+      .style('stroke','black')
+      .style('stroke-width','1px');
 
     complexRG.append('text')
       .text(Math.round(complexPerc))
@@ -131,6 +168,22 @@ function createCountsBars(openPerc,complexPerc){
 
     complexRG.selectAll('.confidence-label')
       .attr('y',barY+barAdj-10);
+
+    complexRG.append('line')
+      .attr('class','confidence-line')
+      .attr('x1',scaleP(complexPerc-confIntCounts)+10)
+      .attr('x2',scaleP(complexPerc)-10);
+
+    complexRG.append('line')
+      .attr('class','confidence-line')
+      .attr('x1',scaleP(complexPerc)+10)
+      .attr('x2',scaleP(complexPerc+confIntCounts)-10);
+
+    complexRG.selectAll('.confidence-line')
+      .attr('y1',barY+barAdj-13)
+      .attr('y2',barY+barAdj-13)
+      .style('stroke','black')
+      .style('stroke-width','1px');
 }
 
 function highlight(d){
@@ -157,96 +210,96 @@ function highlightAll(code){
   }
 }
 
-function createCountsLegend(){
-  d3.select('#svg-counts')
-    .attr('height',h+20);
-
-  legendG = d3.select('#svg-counts')
-    .append('g')
-    .attr('transform','translate(0,200)');
-
-  legendG.append('text')
-    .text('Level of Confidence')
-    .style('font-size','14px')
-    .style('font-weight','lighter');
-
-  legendG.append('text')
-    .text('Open Questions and Complex Reflections')
-    .style('font-size','10px')
-    .style('font-weight','lighter')
-    .attr('y',30);
-
-  legendG.append('text')
-    .text('Closed Questions and Simple Reflections')
-    .style('font-size','10px')
-    .style('font-weight','lighter')
-    .attr('y',30)
-    .attr('x',(barW/2)+5);
-
-  legendGradient1 = legendG.append('linearGradient')
-    .attr('id','gradient-legend-1');
-
-  legendGradient1.append('stop')
-    .attr('offset','1%')
-    .attr('stop-color',scaleColor(1).hex()+'');
-
-  legendGradient1.append('stop')
-    .attr('offset','99%')
-    .attr('stop-color',scaleColor(0.5).hex()+'');
-
-  legendG.append('rect')
-    .attr('x',0)
-    .attr('y',40)
-    .attr('height',10)
-    .attr('width',(barW/2)-10)
-    .style('fill','url(#gradient-legend-1)');
-
-  legendGradient2 = legendG.append('linearGradient')
-    .attr('id','gradient-legend-2');
-
-  legendGradient2.append('stop')
-    .attr('offset','1%')
-    .attr('stop-color',scaleColor(0.5).hex()+'');
-
-  legendGradient2.append('stop')
-    .attr('offset','99%')
-    .attr('stop-color',scaleColor(0).hex()+'');
-
-  legendG.append('rect')
-    .attr('x',(barW/2)+5)
-    .attr('y',40)
-    .attr('height',10)
-    .attr('width',(barW/2)-10)
-    .style('fill','url(#gradient-legend-2)');
-
-  legendG.append('text')
-    .text('100%')
-    .style('font-size','10px')
-    .style('font-weight','lighter')
-    .attr('y',64)
-    .attr('x',0);
-
-  legendG.append('text')
-    .text('50%')
-    .style('font-size','10px')
-    .style('font-weight','lighter')
-    .attr('y',64)
-    .attr('x',(barW/2)-10)
-    .style('text-anchor','end');
-
-  legendG.append('text')
-    .text('50%')
-    .style('font-size','10px')
-    .style('font-weight','lighter')
-    .attr('y',64)
-    .attr('x',(barW/2)+5);
-
-  legendG.append('text')
-    .text('100%')
-    .style('font-size','10px')
-    .style('font-weight','lighter')
-    .attr('y',64)
-    .attr('x',barW-5)
-    .style('text-anchor','end');
-
-}
+// function createCountsLegend(){
+//   d3.select('#svg-counts')
+//     .attr('height',h+20);
+//
+//   legendG = d3.select('#svg-counts')
+//     .append('g')
+//     .attr('transform','translate(0,200)');
+//
+//   legendG.append('text')
+//     .text('Level of Confidence')
+//     .style('font-size','14px')
+//     .style('font-weight','lighter');
+//
+//   legendG.append('text')
+//     .text('Open Questions and Complex Reflections')
+//     .style('font-size','10px')
+//     .style('font-weight','lighter')
+//     .attr('y',30);
+//
+//   legendG.append('text')
+//     .text('Closed Questions and Simple Reflections')
+//     .style('font-size','10px')
+//     .style('font-weight','lighter')
+//     .attr('y',30)
+//     .attr('x',(barW/2)+5);
+//
+//   legendGradient1 = legendG.append('linearGradient')
+//     .attr('id','gradient-legend-1');
+//
+//   legendGradient1.append('stop')
+//     .attr('offset','1%')
+//     .attr('stop-color',scaleColor(1).hex()+'');
+//
+//   legendGradient1.append('stop')
+//     .attr('offset','99%')
+//     .attr('stop-color',scaleColor(0.5).hex()+'');
+//
+//   legendG.append('rect')
+//     .attr('x',0)
+//     .attr('y',40)
+//     .attr('height',10)
+//     .attr('width',(barW/2)-10)
+//     .style('fill','url(#gradient-legend-1)');
+//
+//   legendGradient2 = legendG.append('linearGradient')
+//     .attr('id','gradient-legend-2');
+//
+//   legendGradient2.append('stop')
+//     .attr('offset','1%')
+//     .attr('stop-color',scaleColor(0.5).hex()+'');
+//
+//   legendGradient2.append('stop')
+//     .attr('offset','99%')
+//     .attr('stop-color',scaleColor(0).hex()+'');
+//
+//   legendG.append('rect')
+//     .attr('x',(barW/2)+5)
+//     .attr('y',40)
+//     .attr('height',10)
+//     .attr('width',(barW/2)-10)
+//     .style('fill','url(#gradient-legend-2)');
+//
+//   legendG.append('text')
+//     .text('100%')
+//     .style('font-size','10px')
+//     .style('font-weight','lighter')
+//     .attr('y',64)
+//     .attr('x',0);
+//
+//   legendG.append('text')
+//     .text('50%')
+//     .style('font-size','10px')
+//     .style('font-weight','lighter')
+//     .attr('y',64)
+//     .attr('x',(barW/2)-10)
+//     .style('text-anchor','end');
+//
+//   legendG.append('text')
+//     .text('50%')
+//     .style('font-size','10px')
+//     .style('font-weight','lighter')
+//     .attr('y',64)
+//     .attr('x',(barW/2)+5);
+//
+//   legendG.append('text')
+//     .text('100%')
+//     .style('font-size','10px')
+//     .style('font-weight','lighter')
+//     .attr('y',64)
+//     .attr('x',barW-5)
+//     .style('text-anchor','end');
+//
+// }

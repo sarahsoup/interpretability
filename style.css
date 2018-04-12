@@ -32,6 +32,10 @@
   margin-bottom: 20px;
 }
 
+.btn-next{
+  width: 100px;
+}
+
 .hidden{
   display: none;
 }

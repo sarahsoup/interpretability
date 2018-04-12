@@ -38,6 +38,7 @@ function playSession(){
     .attr('id','progress-0')
     .style('display','inline-block')
     .style('margin-left','10px')
+    .style('margin-bottom','8px')
     .style('width','80%')
     .style('height','10px')
     .style('border-radius','5px');
