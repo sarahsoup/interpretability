@@ -1,6 +1,20 @@
-#selection{
+#welcome{
+  display: block;
+}
+
+#welcome, #audio, #rating, #selection{
   margin-top: 60px;
-  display:block;
+}
+
+.container{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#rating-val{
+  text-align: center;
+  font-size: 40px;
+  font-weight: bolder;
 }
 
 .btn{
@@ -24,12 +38,16 @@
 
 #header{
   height: 60px;
-  background-color: #514E5A;
+  /* background-color: #514E5A; */
   /* background-color: #EEEEEE; */
-  margin-left: -115px;
-  margin-right: -115px;
+  /* background-color:  	#696969; */
+  /* margin-left: -115px;
+  margin-right: -115px; */
   padding-left: 100px;
   padding-right: 100px;
+
+  border: none;
+  border-bottom: 2px solid #EEEEEE;
 }
 
 .header-text{
@@ -61,9 +79,10 @@ h6{
 
 #userScore{
   /* original orange */
-  fill: #F68D61;
+  /* fill: #F68D61; */
   /* lavender */
   /* fill: #a9a7c0; */
+  fill: #b29ec3;
   /* light orange */
   /* fill: #edbaa7; */
   /* light green */
@@ -72,7 +91,7 @@ h6{
   /* fill: #e2d1d5; */
 }
 
-#mlScore{
+#mlScore, #scoreChangeNeg{
   fill: #19ABB5;
 }
 
@@ -82,6 +101,11 @@ h6{
 
 .rect-close, .rect-simple{
   fill: #EEEEEE;
+}
+
+.confidence-label{
+  font-size: 10px;
+  text-anchor: middle;
 }
 
 .labels-lines{
@@ -111,14 +135,14 @@ h6{
   padding-left: 20px;
 }
 
-.session-text{
+.session-div{
   font-size: 10px;
   /* font-weight: lighter; */
   margin-bottom: 0.5em;
   line-height: 1.3;
 }
 
-.client-text{
+.client-div{
   font-weight: normal;
   color: #999999;
   margin-left: 20px;
@@ -129,7 +153,7 @@ h6{
 .tooltip {
     position: absolute;
     text-align: center;
-    width: 60px;
+    width: 200px;
     height: 28px;
     padding: 2px;
     font: 12px sans-serif;
@@ -142,22 +166,35 @@ h6{
 /* CONFIDENCE TEXT HIGHLIGHT */
 
 .highlight-text{
-  color: white;
-  background-color: #19ABB5;
+  /* color: white; */
+  /* background-color: #19ABB5; */
+  background-color: #ffff66;
   /* font-weight: bolder; */
 }
 
 /* MODAL STYLE */
 
-#modal-btn, #modal-content-btn, #btn-form{
+#modal-content-btn, #btn-form{
   cursor: pointer;
   background-color: white;
   border: 1px solid black;
   border-radius: 20px;
   padding: 10px 20px;
   margin-bottom: 20px;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: bold;
+}
+
+#modal-btn{
+  position: absolute;
+  margin-left: 20px;
+  margin-top: 6px;
+  margin-bottom: 0px;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  /* padding: 5px 10px;
+  font-size: 8px; */
 }
 
 #modal-content-btn{
@@ -196,11 +233,17 @@ h6{
   border-radius: 20px;
 } */
 
-#container-similar{
-  overflow: scroll;
+/* SIMILAR SESSIONS */
+
+#title-similar{
+  padding-top: 40px;
 }
 
-.accordian{
+#container-similar{
+  overflow: scroll; /* doesn't work */
+}
+
+.accordion{
   cursor: pointer;
   width:100%;
   height:50px;
@@ -212,14 +255,82 @@ h6{
   border-top: 1px solid black;
 }
 
-#accordian-1{
+/* #accordian-1{
   border: none;
+} */
+
+.accordion-last{
+  border-bottom: 1px solid black; /* only when not collapsed */
+}
+
+.icon{
+  margin-right: 10px;
 }
 
 /* .collapse{
   padding: 20px 20px;
   font-size: 10px;
 } */
+
+.audio-controls{
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+
+.btn-play, .btn-pause, .btn-stop{
+  cursor: pointer;
+  /* font-size: 10px; */
+  background-color: white;
+  border: none;
+  /* border: 1px solid black; */
+  /* border-radius: 20px; */
+  /* padding: 5px 10px; */
+  /* margin-right: 5px; */
+}
+
+/* INFLUENTIAL N-GRAMS */
+
+#btn-group{
+  display: block;
+}
+
+#btn-reset, #btn-positive, #btn-negative{
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 10px;
+  /* font-weight: bold; */
+  margin-top: 20px;
+  margin-right: 5px;
+}
+
+#btn-positive{
+  color: #70B276;
+  background-color: white;
+  /* border: 1px solid #19ABB5; */
+  border: 1px solid #70B276;
+}
+
+#btn-negative{
+  color: #CC6471;
+  background-color: white;
+  border: 1px solid #CC6471;
+}
+
+#btn-reset{
+  background-color: white;
+  border: 1px solid black;
+}
+
+/* MANIPULATION */
+.striked-open, .striked-complex{
+  text-decoration: line-through;
+  font-weight: bolder;
+}
+
+.text-change-open, .text-change-complex{
+  margin-left: 5px;
+}
 
 /* SLIDER STYLE */
 

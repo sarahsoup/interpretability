@@ -1,19 +1,5 @@
 function createDescription(){
 
-  /* MODAL TRIGGER */
-  d3.select('.container')
-    .append('button')
-    .attr('id','modal-btn')
-    .html('ABOUT THE ALGORITHM')
-    .on('click',function(){
-      modal.style('display','block');
-    });
-
-  const btnW = document.getElementById('modal-btn').clientWidth;
-
-  d3.select('#modal-btn')
-    .style('margin-left',((barW/2)-(btnW/2)) + 'px');
-
   /* MODAL  */
   const modal = d3.select('.container')
     .append('div')
@@ -60,18 +46,32 @@ function createDescription(){
 
 }
 
-// function addAlgBtn(){
-//   console.log('addAlgBtn ran');
-//   d3.select('#textScore-ml')
-//     .style('display','inline-block');
-//
-//   /* MODAL TRIGGER */
-//   d3.select('#mlScoreG')
-//     .append('button')
-//     .attr('id','modal-btn')
-//     .html('ABOUT THE ALGORITHM')
-//     .style('float','left')
-//     .on('click',function(){
-//       modal.style('display','block');
-//     });
-// }
+function addNarrativeBtn(){
+  /* MODAL TRIGGER */
+  d3.select('#content-empathy')
+    .append('button')
+    .attr('id','modal-btn')
+    // .html('ABOUT')
+    .on('click',function(){
+      d3.select('.modal')
+        .style('display','block');
+    });
+
+  d3.select('#modal-btn')
+    .append('i')
+    .attr('id','modal-icon')
+    .attr('class','far fa-question-circle fa-lg');
+
+  console.log(document.getElementById('textScore-ml').getBoundingClientRect().top);
+  textPos = document.getElementById('textScore-ml').getBBox();
+  console.log(textPos);
+
+  textTop = document.getElementById('textScore-ml').getBoundingClientRect().top;
+  textLeft = document.getElementById('textScore-ml').getBoundingClientRect().left;
+  textRight = document.getElementById('textScore-ml').getBoundingClientRect().right;
+  btnW = document.getElementById('modal-btn').clientWidth;
+  console.log(textLeft,textRight);
+  d3.select('#modal-btn')
+    .style('top',(textTop+10) + 'px')
+    .style('left',(textRight-textLeft) + 'px');
+}

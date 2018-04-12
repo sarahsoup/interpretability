@@ -1,12 +1,14 @@
 const h = 300;
-let userScore = 4;
+let userScore;
 const barW = 500;
 const barH = 50;
 const barCountsH = 20;
 const barY = 20;
 
 const confAdj = 25;
+const barAdj = 10;
 const confInt = 0.4;
+const confIntCounts = 10;
 const scaleColor = chroma.scale(['#EEEEEE','#19ABB5']);
 
 let totalQ = 5;
@@ -15,15 +17,54 @@ let totalR = 6;
 let complexR = 4;
 
 let variation;
+let rating;
 
 const scaleX = d3.scaleLinear().domain([0, 5]).range([0, barW]);
+const scaleP = d3.scaleLinear().domain([0, 100]).range([0, barW]);
+
+const windowW = window.innerWidth;
 
 
-d3.selectAll('.btn')
+d3.select('#welcome').selectAll('.btn')
+  .on('click',function(d){
+    d3.select('#welcome')
+      .style('display','none')
+      .classed('hidden',true);
+    d3.select('#audio')
+      .style('display','block')
+      .classed('hidden',false);
+  });
+
+d3.select('#audio').selectAll('.btn')
+  .on('click',function(d){
+    d3.select('#audio')
+      .style('display','none')
+      .classed('hidden',true);
+    d3.select('#rating')
+      .style('display','block')
+      .classed('hidden',false);
+    d3.select('#slider-rating')
+      .attr('defaultValue',0)
+      .attr('value',0);
+  });
+
+d3.select('#rating').selectAll('.btn')
+  .on('click',function(d){
+    userScore = rating;
+    d3.select('#rating')
+      .style('display','none')
+      .classed('hidden',true);
+    d3.select('#selection')
+      .classed('hidden',false)
+      .style('display','block');
+  });
+
+d3.select('#selection').selectAll('.btn')
   .on('click',function(d){
     variation = this.innerHTML;
     d3.select('#selection')
-      .style('display','none');
+      .style('display','none')
+      .classed('hidden',true);
     d3.select('#header')
       .classed('hidden',false);
     d3.select('#content')
@@ -31,20 +72,27 @@ d3.selectAll('.btn')
     createVariation(variation);
   })
 
+playSession();
+d3.select('.audio-container')
+  .append('a')
+  .attr('class','btn')
+  .html('next');
 
-// let title = document.getElementById('title-empathy').getBoundingClientRect();
-// console.log(title);
+  rating = document.getElementById('slider-rating').value;
+  d3.select('#rating-val').html(rating);
+  d3.select('#slider-rating')
+    .on('input',function(){
+      rating = document.getElementById('slider-rating').value;
+      document.getElementById('rating-val').innerHTML = rating;
+    })
 
-// d3.select('#content-empathy') // issue is title 'extends' the width of container
-//   .append('svg')
-//   .attr('href','./SVG/info.svg')
-//   .attr('class','icon')
-//   .attr('x',title.x + title.width)
-//   .attr('y',title.y + title.height)
-//   .attr('width',10)
-//   .attr('height',10);
 
 function createVariation(variation){
+
+  const headerMargin = windowW - d3.select('#header').node().clientWidth;
+  d3.select('#header')
+    .style('margin-left', '-'+(headerMargin/2)+'px')
+    .style('margin-right', '-'+(headerMargin/2)+'px');
 
   const w = d3.select('#content-empathy').node().clientWidth;
 
@@ -116,7 +164,7 @@ if(variation == 'confidence'){
 };
 
     /* HEADER */
-
+    //
     // const sessionNumber = d3.select('#header-number')
     //   .append('h6')
     //   .attr('class','header-text')
@@ -160,9 +208,11 @@ if(variation == 'confidence'){
       .text('You rated the session ')
       .style('font-weight','lighter');
 
+    console.log(userScore);
     userScoreT.append('tspan')
       .attr('id','userNum')
-      .text(userScore.toFixed(2))
+      .text(userScore)
+      // .text(userScore.toFixed(2))
       .style('font-weight','bold');
 
     const mlScoreT = mlScoreG.append('text')
@@ -179,27 +229,21 @@ if(variation == 'confidence'){
       .text(mlScore.toFixed(2))
       .style('font-weight','bold');
 
-    // if(variation == 'narrative description'){
-    //   // addAlgBtn();
-    //   svgEmpathy.append('button')
-    //     .attr('id','modal-btn')
-    //     .html('ABOUT THE ALGORITHM');
-    // }
-
+    mlScoreT.append('tspan')
+      .attr('id','mlNumChange');
 
     mlScoreG.append('rect')
       .attr('class','rect-background mlScore');
 
-    if(variation == 'confidence'){
+    if(variation == 'narrative description'){
+      addNarrativeBtn();
+    } else if(variation == 'confidence'){
 
       svgEmpathy
         .attr('height',200);
 
-      d3.select('#userNum')
-        .style('color','#F68D61'); //doesn't work
-
       d3.select('#mlNum')
-        .style('color','#19ABB5'); //doesn't work
+        .style('fill','#19ABB5');
 
       const gradient = mlScoreG.append('linearGradient')
         .attr('id','gradient');
@@ -226,7 +270,7 @@ if(variation == 'confidence'){
         .attr('width',scaleX(confInt*2))
         .attr('height',barH)
         .attr('x',scaleX(mlScore-confInt))
-        .attr('y',barY+confAdj+'px')
+        .attr('y',barY+confAdj+barAdj+'px')
         .style('fill','url(#gradient)');
 
       userScoreG.append('rect')
@@ -235,13 +279,16 @@ if(variation == 'confidence'){
         .attr('width',4)
         .attr('height',barH+'px')
         .attr('x',scaleX(userScore)-2)
-        .attr('y',barY+confAdj+'px');
+        .attr('y',barY+confAdj+barAdj+'px')
+        .style('fill','black');
 
       mlScoreT
         .attr('y',confAdj+'px');
 
       svgEmpathy.selectAll('.rect-background')
-        .attr('y',barY+confAdj+'px');
+        .attr('y',barY+confAdj+barAdj+'px');
+
+      makeConfidenceLabels(mlScore,confInt);
 
     } else{
 
@@ -279,6 +326,32 @@ if(variation == 'confidence'){
       .attr('height',barH+'px')
       .attr('x','0px');
 
+    if(variation == 'manipulation' || variation == 'influential n-grams'){
+
+      mlScoreG.append('rect')
+        .attr('class','rect-foreground mlScore mlScoreChange')
+        .attr('id','scoreChangeNeg')
+        .attr('x',0)
+        .attr('width',scaleX(mlScore));
+
+      mlScoreG.append('rect')
+        .attr('class','rect-background mlScore mlScoreChange')
+        .attr('id','scoreChangePos')
+        .attr('x',scaleX(mlScore))
+        .attr('width',scaleX(5-mlScore));
+
+      mlScoreG.selectAll('.mlScoreChange')
+        .attr('height',barH/10)
+        .attr('y',barY+(9*barH/20));
+
+      mlScoreG.append('circle')
+      .attr('id','scoreChange')
+      .attr('cx',scaleX(mlScore))
+      .attr('cy',barY+(barH/2))
+      .attr('r',barH/8)
+      .style('opacity',0);
+    }
+
     /************* BEHAVIOR COUNTS *************/
 
     d3.select('#content-empathy')
@@ -287,21 +360,25 @@ if(variation == 'confidence'){
       .html('BEHAVIOR COUNTS');
 
     const svgCounts = d3.select('#content-empathy')
-      .append('svg');
+      .append('svg')
+      .attr('id','#counts-svg');
 
     svgCounts
       .attr('class','bars-counts')
+      .attr('id','svg-counts')
       .attr('height',h)
       .attr('width',w)
       .attr('transform','translate(0,40)');
 
     const openQG = svgCounts
       .append('g')
-      .attr('class','openQG');
+      .attr('class','openQG')
+      .attr('id','openQG');
 
     const complexRG = svgCounts
       .append('g')
-      .attr('class','complexRG');
+      .attr('class','complexRG')
+      .attr('id','complexRG');
 
     complexRG.attr('transform','translate(0,100)');
 
@@ -310,12 +387,12 @@ if(variation == 'confidence'){
       .attr('x','0px');
 
     openQT.append('tspan')
-      .text('Open Questions ')
+      .text('Questions: ')
       .style('font-weight','lighter');
 
     openQT.append('tspan')
       .attr('id','openQ-perc')
-      .text(Math.round(percentOpenQuestions) + '%')
+      .text(Math.round(percentOpenQuestions) + '% Open')
       .style('font-weight','bold');
 
     const complexRT = complexRG.append('text')
@@ -323,12 +400,12 @@ if(variation == 'confidence'){
       .attr('x','0px');
 
     complexRT.append('tspan')
-      .text('Complex Reflections ')
+      .text('Reflections: ')
       .style('font-weight','lighter');
 
     complexRT.append('tspan')
       .attr('id','complexQ-perc')
-      .text(Math.round(percentComplexReflections) + '%')
+      .text(Math.round(percentComplexReflections) + '% Complex')
       .style('font-weight','bold');
 
     if(variation == 'manipulation'){
@@ -348,7 +425,11 @@ if(variation == 'confidence'){
         complex: complexArr,
         simple: simpleArr
       };
-      createSliders(sliderObj,questionsObj,reflectionsObj);
+      createSliders(sliderObj,questionsObj,reflectionsObj,mlScore);
+
+    } else if(variation == 'confidence') {
+
+      createCountsBars(percentOpenQuestions,percentComplexReflections);
 
     } else {
 
@@ -399,8 +480,8 @@ if(variation == 'confidence'){
         });
 
       svgCounts.selectAll('.rect-counts')
-        .attr('height',barCountsH + 'px')
-        .attr('y',barY+'px')
+        .attr('height',barCountsH)
+        .attr('y',barY)
         .style('stroke-width','2px')
         .style('stroke','white');
     }
@@ -409,52 +490,113 @@ if(variation == 'confidence'){
     let therapist_id;
 
     if(variation == 'confidence'){
-      const tooltip = svgCounts.append('div')
-        .attr('class','tooltip')
-        .style('opacity',0);
 
-      svgCounts.selectAll('.rect-counts')
-        .style('cursor','pointer')
-        .on('mouseover',function(d){
-          rectTop = this.getBoundingClientRect().top;
-          rectCenter = this.getBoundingClientRect().left + (this.getBoundingClientRect().width/2);
-          console.log(rectTop, rectCenter, d.confidence.toFixed(2));
-          tooltip
-            .transition()
-            .style('opacity',1);
-          // ughhh tooltip doesn't show!
-          tooltip
-            .text(d.confidence.toFixed(2))
-            .style('left', rectCenter + 'px')
-            .style('top', (rectTop - 20) + 'px');
-        })
-        .on('click',function(d){
-          highlight(d);
-        });
+      // createCountsLegend();
 
-      openQG.selectAll('.rect-open')
-        .style('fill',function(d){
-          perc = 0.5+(d.confidence/2);
-          return scaleColor(perc).hex()+'';
-        });
+      // const tooltip = d3.select('body').append('div')
+      //   .attr('class','tooltip')
+      //   .attr('id','tooltip-div')
+      //   .style('opacity',0);
+      //
+      // tooltipPos = document.getElementById('tooltip-div').getBoundingClientRect();
+      //
+      // titlePos = document.getElementById('title-counts').getBoundingClientRect();
+      // svgPos = document.getElementById('svg-counts').getBBox();
+      // titleOffset = document.getElementById('title-counts').offsetTop;
+      //
+      // highlighter = svgCounts.append('rect')
+      //   .attr('id','highlighter');
+      //
+      // svgCounts.selectAll('.rect-counts')
+      //   .style('cursor','pointer')
+      //   .on('mouseover',function(d){
+      //     rect = this;
+      //     magnify = 6;
+      //     // rectPos = this.getBBox();
+      //     rectPos = this.getBoundingClientRect();
+      //
+      //     if(d3.select(rect).classed('rect-open')){
+      //       type = 'open';
+      //     }else if(d3.select(rect).classed('rect-close')){
+      //       type = 'close';
+      //     }
+      //     else if(d3.select(rect).classed('rect-complex')){
+      //       type = 'complex';
+      //     }else if(d3.select(rect).classed('rect-simple')){
+      //       type = 'simple';
+      //     }
+      //
+      //     // d3.select(this)
+      //     //   .transition()
+      //     //   .style('stroke','black');
+      //
+      //     // highlighter
+      //     //   .transition()
+      //     //   .attr('x',function(){
+      //     //     return d3.select(rect).attr('x')-2;
+      //     //   })
+      //     //   .attr('y',function(){
+      //     //     return d3.select(rect).attr('y')-2;
+      //     //   })
+      //     //   .attr('width',function(){
+      //     //     return d3.select(rect).attr('width');
+      //     //   })
+      //     //   .attr('height',function(){
+      //     //     return d3.select(rect).attr('height');
+      //     //   });
+      //       // .style('opacity',0)
+      //       // .transition()
+      //       // .style('opacity',1)
+      //       // .style('stroke-width','2px')
+      //       // .style('stroke','black');
+      //
+      //     tooltip
+      //       .transition()
+      //       .style('opacity',1);
+      //     tooltip
+      //       .text(type + ': ' + Math.round(d.confidence*100)+'% confidence')
+      //       // .style("left", (d3.event.pageX) + "px")
+      //       // .style("top", (d3.event.pageY) + "px");
+      //       .style('left', rectPos.x + (rectPos.width/2) - (tooltipPos.width/2) + 'px')
+      //       .style('top', rectPos.y - tooltipPos.height - 4 + 'px')
+      //   })
+      //   .on('mouseout',function(d){
+      //
+      //     d3.select(this)
+      //       .transition()
+      //       .style('stroke','white');
+      //
+      //     tooltip
+      //       .transition()
+      //       .style('opacity',0);
+      //   })
+      //   .on('click',function(d){
+      //     highlight(d);
+      //   });
 
-      openQG.selectAll('.rect-close')
-        .style('fill',function(d){
-          perc = 0.5+(d.confidence/2);
-          return scaleColor(1-perc).hex()+'';
-        });
-
-      complexRG.selectAll('.rect-complex')
-        .style('fill',function(d){
-          perc = 0.5+(d.confidence/2);
-          return scaleColor(perc).hex()+'';
-        });
-
-      complexRG.selectAll('.rect-simple')
-        .style('fill',function(d){
-          perc = 0.5+(d.confidence/2);
-          return scaleColor(1-perc).hex()+'';
-        });
+      // openQG.selectAll('.rect-open')
+      //   .style('fill',function(d){
+      //     perc = 0.5+(d.confidence/2);
+      //     return scaleColor(perc).hex()+'';
+      //   });
+      //
+      // openQG.selectAll('.rect-close')
+      //   .style('fill',function(d){
+      //     perc = 0.5+(d.confidence/2);
+      //     return scaleColor(1-perc).hex()+'';
+      //   });
+      //
+      // complexRG.selectAll('.rect-complex')
+      //   .style('fill',function(d){
+      //     perc = 0.5+(d.confidence/2);
+      //     return scaleColor(perc).hex()+'';
+      //   });
+      //
+      // complexRG.selectAll('.rect-simple')
+      //   .style('fill',function(d){
+      //     perc = 0.5+(d.confidence/2);
+      //     return scaleColor(1-perc).hex()+'';
+      //   });
 
     };
 
@@ -610,21 +752,8 @@ if(variation == 'confidence'){
     /************** SESSION TRANSCRIPT **************/
 
     if(variation == 'influential n-grams'){
-      //create legend
-      ngramLegend = d3.select('#content-session')
-        .append('text')
-        .attr('class','ngram-legend')
-        .style('font-size','10px');
-
-      ngramLegend.append('tspan')
-        .text(' most positively influential ')
-        .style('color','white')
-        .style('background-color','#CC6471');
-      ngramLegend.append('tspan')
-        .text(' most negatively influential ')
-        .attr('dx','1em') // this line doesn't do anything
-        .style('color','white')
-        .style('background-color','#19ABB5');
+      influenceLegend();
+      influenceFunctionality(mlScore);
     }
 
     d3.select('#content-session')
@@ -652,35 +781,14 @@ if(variation == 'confidence'){
     //   });
 
     // li for each talk turn
-    d3.select('#container-session')
-      .append('ol')
-      .attr('id','session-list');
-
-    d3.select('#session-list').selectAll('.session-text')
-      .data(data.session.talkTurn)
-      .enter()
-      .append('li')
-      .attr('class',function(d){
-        if(d.speaker == 'therapist'){
-          return 'session-text therapist-text';
-        }
-        else{
-          return 'session-text client-text';
-        }
-      })
-      .attr('id',function(d){
-        return d.speaker + '-' + d.id;
-      })
-      .html(function(d){
-        return d.asrText;
-      });
-
-    // text for each talk turn
-    // d3.select('#container-session').selectAll('.session-text')
+    // d3.select('#container-session')
+    //   .append('ol')
+    //   .attr('id','session-list');
+    //
+    // d3.select('#session-list').selectAll('.session-text')
     //   .data(data.session.talkTurn)
     //   .enter()
-    //   .append('p')
-    //   .append('text')
+    //   .append('li')
     //   .attr('class',function(d){
     //     if(d.speaker == 'therapist'){
     //       return 'session-text therapist-text';
@@ -692,22 +800,63 @@ if(variation == 'confidence'){
     //   .attr('id',function(d){
     //     return d.speaker + '-' + d.id;
     //   })
-    //   .append('tspan')
-    //   .text(function(d){
+    //   .html(function(d){
     //     return d.asrText;
     //   });
+
+    // text for each talk turn
+    d3.select('#container-session').selectAll('.session-text')
+      .data(data.session.talkTurn)
+      .enter()
+      .append('div')
+      .attr('class',function(d){
+        if(d.speaker == 'therapist'){
+          return 'session-div therapist-div';
+        }
+        else{
+          return 'session-div client-div';
+        }
+      })
+      .append('text')
+      .attr('class',function(d){
+        if(d.speaker == 'therapist' && d.codes[0]=='QUO'){
+          return 'session-text therapist-text openQ-text';
+        }
+        else if(d.speaker == 'therapist' && d.codes[0]=='REC'){
+          return 'session-text therapist-text complexR-text';
+        }
+        else if(d.speaker == 'therapist'){
+          return 'session-text therapist-text';
+        }
+        else{
+          return 'session-text client-text';
+        }
+      })
+      .attr('id',function(d){
+        return d.speaker + '-' + d.id;
+      })
+      .append('tspan')
+      .attr('id',function(d){
+        return d.speaker + '-original-' + d.id;
+      })
+      .text(function(d){
+        return d.asrText;
+      });
 
 
 
     if(variation == 'confidence'){
-      d3.select('#container-session')
-        .style('height','420px');
+      // d3.select('#container-session')
+      //   .style('height','420px');
     }
     else if(variation == 'similar sessions'){
       similarSessions();
     }
     else if(variation == 'influential n-grams'){
       influence();
+
+      // d3.select('#container-session')
+      //   .style('margin-top','20px');
     }
 
   });

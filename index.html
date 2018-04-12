@@ -5,12 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+  <!-- W3 for Progress Bar -->
+  <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
   <!-- CSS -->
   <link href="./style.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
-  <div class="row" id="selection">
+  <div class="row" id="welcome">
+    <div class="col-lg-12 welcome-container">
+      <h6>Welcome!</h6>
+      <p>This is where we tell you about the study.</p>
+      <a class="btn">next</a>
+    </div>
+  </div>
+  <div class="row hidden" id="audio">
+    <div class="col-lg-12 audio-container">
+      <p>This is where you listen to the session.</p>
+      <audio id="session-audio0">
+        <source src="http://drive.google.com/open?id=0B7OaBHt0PWMwZjVXVmxiZTJ0VU0" type="audio/wav">
+      </audio>
+    </div>
+  </div>
+  <div class="row hidden" id="rating">
+    <div class="col-lg-12 rating-container">
+      <p>This is where you rate the session.</p>
+      <p id="rating-val">0</p><br>
+      <form>
+        <input class="slider" id="slider-rating" type="range" min=0 max=5 step=.1>
+      </form>
+      <a class="btn">next</a>
+    </div>
+
+  </div>
+  <div class="row hidden" id="selection">
     <a class="btn">narrative description</a>
     <a class="btn">confidence</a>
     <a class="btn">manipulation</a>
@@ -46,6 +76,7 @@
 <script src="./manipulation.js"></script>
 <script src="./similarsessions.js"></script>
 <script src="./influence.js"></script>
+<script src="./playsession.js"></script>
 <script src="./script.js"></script>
 
 </body>
