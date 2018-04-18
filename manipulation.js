@@ -275,7 +275,7 @@ function createSliders(data,questions,reflections,mlScore){
           .transition()
           .style('opacity',0);
         d3.select('#mlNum')
-          .text(diffNow.toFixed(2));
+          .text(scoreNow.toFixed(2));
         d3.select('#mlNumChange')
           .text(null);
       }
@@ -393,7 +393,7 @@ function createSliders(data,questions,reflections,mlScore){
           .transition()
           .style('opacity',0);
         d3.select('#mlNum')
-          .text(diffNow.toFixed(2));
+          .text(scoreNow.toFixed(2));
         d3.select('#mlNumChange')
           .text(null);
       }
