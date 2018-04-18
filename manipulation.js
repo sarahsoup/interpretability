@@ -1,5 +1,10 @@
 function createSliders(data,questions,reflections,mlScore){
-  const positionOffset = h-barCountsH-barY;
+  const positionOffset = h-10-barY;
+  let scoreNow = mlScore;
+  let diffNow = 0;
+  let diffQ = 0;
+  let diffR = 0;
+  let diff = 0.2;
   const column = d3.select('#content-empathy');
   const form = column.append('form').attr('id','form');
 
@@ -30,10 +35,12 @@ function createSliders(data,questions,reflections,mlScore){
     .attr('class','slider')
     .attr('id','slider-open')
     .attr('type','range')
-    .style('height',barH + 'px')
+    .style('height','10px')
     .style('width',barW + 'px')
     .style('position','relative')
-    .style('top','-' + positionOffset + 'px')
+    .style('top','-250px')
+    .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + data.openPerc + '%, #EEEEEE ' + data.openPerc + '%, #EEEEEE)')
+    .style('border-radius','10px')
     .attr('min','0')
     .attr('max','100')
     .attr('step',100/(data.openCount+data.closedCount))
@@ -64,10 +71,12 @@ function createSliders(data,questions,reflections,mlScore){
     .attr('class','slider')
     .attr('id','slider-complex')
     .attr('type','range')
-    .style('height',barH + 'px')
+    .style('height','10px')
     .style('width',barW + 'px')
     .style('position','relative')
-    .style('top','-' + (positionOffset-100+56) + 'px')
+    .style('top','-174px')
+    .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + data.complexPerc + '%, #EEEEEE ' + data.complexPerc + '%, #EEEEEE)')
+    .style('border-radius','10px')
     .attr('min','0')
     .attr('max','100')
     .attr('step',100/(data.complexCount+data.simpleCount))
@@ -103,9 +112,15 @@ function createSliders(data,questions,reflections,mlScore){
     .attr('id','btn-form')
     .html('RESET')
     .style('position','relative')
-    .style('top','-170px')
+    .style('top','-140px')
     .on('click',function(){
       document.getElementById('form').reset();
+      d3.select('#slider-open')
+        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + data.openPerc + '%, #EEEEEE ' + data.openPerc + '%, #EEEEEE)');
+      d3.select('#slider-complex')
+        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + data.complexPerc + '%, #EEEEEE ' + data.complexPerc + '%, #EEEEEE)');
+      valQprev = document.getElementById('slider-open').value;
+      valRprev = document.getElementById('slider-complex').value;
       d3.select('#openQ-perc')
         .text(Math.round(data.openPerc) + '%');
       d3.select('#complexQ-perc')
@@ -121,6 +136,8 @@ function createSliders(data,questions,reflections,mlScore){
 
       scoreNow = mlScore;
       diffNow = 0;
+      diffQ = 0;
+      diffR = 0;
 
       d3.select('#mlScore')
         .transition()
@@ -142,9 +159,6 @@ function createSliders(data,questions,reflections,mlScore){
   d3.select('#btn-form')
     .style('left',(barW/2)-(btnWidth/2) + 'px');
 
-  scoreNow = mlScore;
-  diffNow = 0;
-  diff = 0.2;
   valQprev = document.getElementById('slider-open').value;
   valRprev = document.getElementById('slider-complex').value;
 
@@ -152,32 +166,20 @@ function createSliders(data,questions,reflections,mlScore){
     .on('input',function(e){
 
       let valQcurr = document.getElementById('slider-open').value;
+      d3.select('#slider-open')
+        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + valQcurr + '%, #EEEEEE ' + valQcurr + '%, #EEEEEE)');
       d3.select('#openQ-perc')
         .text(Math.round(valQcurr) + '%');
 
       if(Math.round(valQcurr) < Math.round(data.openPerc)){
 
         if(Math.round(valQcurr) < Math.round(valQprev)){
-          scoreNow = scoreNow - diff;
-          diffNow = diffNow - diff;
+          diffQ = diffQ - diff;
         }else{
-          scoreNow = scoreNow + diff;
-          diffNow = diffNow + diff;
+          diffQ = diffQ + diff;
         }
-
-        d3.select('#mlScore')
-          .transition()
-          .attr('width',scaleX(scoreNow));
-        d3.select('#scoreChange')
-          .style('fill','#19ABB5')
-          .transition()
-          .style('opacity',1);
-        d3.select('#mlNum')
-          .text(scoreNow.toFixed(2));
-        d3.select('#mlNumChange')
-          .text(' (down ' + Math.abs(diffNow.toFixed(2)) + ')')
-          .style('fill','#CC6471')
-          .style('font-weight','bolder');
+        scoreNow = mlScore + diffQ + diffR;
+        diffNow = diffQ + diffR;
 
         questions.open.forEach(function(d){
           d3.select('#therapist-original-' + d.id)
@@ -204,26 +206,12 @@ function createSliders(data,questions,reflections,mlScore){
       else if(Math.round(valQcurr) > Math.round(data.openPerc)){
 
         if(Math.round(valQcurr) > Math.round(valQprev)){
-          scoreNow = scoreNow + diff;
-          diffNow = diffNow + diff;
+          diffQ = diffQ + diff;
         }else{
-          scoreNow = scoreNow - diff;
-          diffNow = diffNow - diff;
+          diffQ = diffQ - diff;
         }
-
-        d3.select('#mlScore')
-          .transition()
-          .attr('width',scaleX(scoreNow));
-        d3.select('#scoreChange')
-          .style('fill','#EEEEEE')
-          .transition()
-          .style('opacity',1);
-        d3.select('#mlNum')
-          .text(scoreNow.toFixed(2));
-        d3.select('#mlNumChange')
-          .text(' (up ' + Math.abs(diffNow.toFixed(2)) + ')')
-          .style('fill','#19ABB5')
-          .style('font-weight','bolder');
+        scoreNow = mlScore + diffQ + diffR;
+        diffNow = diffQ + diffR;
 
         questions.close.forEach(function(d){
           d3.select('#therapist-original-' + d.id)
@@ -252,44 +240,15 @@ function createSliders(data,questions,reflections,mlScore){
         d3.selectAll('.text-change-open')
           .remove();
 
-        scoreNow = mlScore;
-        diffNow = 0;
-
-        d3.select('#mlScore')
-          .transition()
-          .attr('width',scaleX(mlScore));
-        d3.select('#scoreChange')
-          .transition()
-          .style('opacity',0);
-        d3.select('#mlNum')
-          .text(mlScore.toFixed(2));
-        d3.select('#mlNumChange')
-          .text(null);
+        diffQ = 0;
+        scoreNow = mlScore + diffQ + diffR;
+        diffNow = diffQ + diffR;
       }
 
-      valQprev = document.getElementById('slider-open').value;
-
-    });
-
-  d3.select('#slider-complex')
-    .on('input',function(e){
-      let valRcurr = document.getElementById('slider-complex').value;
-      d3.select('#complexQ-perc')
-        .text(Math.round(valRcurr) + '%');
-
-      if(Math.round(valRcurr) < Math.round(data.complexPerc)){
-
-        if(Math.round(valRcurr) < Math.round(valRprev)){
-          scoreNow = scoreNow - diff;
-          diffNow = diffNow - diff;
-        }else{
-          scoreNow = scoreNow + diff;
-          diffNow = diffNow + diff;
-        }
-
-        d3.select('#mlScore')
-          .transition()
-          .attr('width',scaleX(scoreNow));
+      d3.select('#mlScore')
+        .transition()
+        .attr('width',scaleX(scoreNow));
+      if(diffNow < 0){
         d3.select('#scoreChange')
           .style('fill','#19ABB5')
           .transition()
@@ -300,6 +259,47 @@ function createSliders(data,questions,reflections,mlScore){
           .text(' (down ' + Math.abs(diffNow.toFixed(2)) + ')')
           .style('fill','#CC6471')
           .style('font-weight','bolder');
+      }else if(diffNow > 0){
+        d3.select('#scoreChange')
+          .style('fill','#EEEEEE')
+          .transition()
+          .style('opacity',1);
+        d3.select('#mlNum')
+          .text(scoreNow.toFixed(2));
+        d3.select('#mlNumChange')
+          .text(' (up ' + Math.abs(diffNow.toFixed(2)) + ')')
+          .style('fill','#19ABB5')
+          .style('font-weight','bolder');
+      }else{
+        d3.select('#scoreChange')
+          .transition()
+          .style('opacity',0);
+        d3.select('#mlNum')
+          .text(diffNow.toFixed(2));
+        d3.select('#mlNumChange')
+          .text(null);
+      }
+      valQprev = document.getElementById('slider-open').value;
+
+    });
+
+  d3.select('#slider-complex')
+    .on('input',function(e){
+      let valRcurr = document.getElementById('slider-complex').value;
+      d3.select('#slider-complex')
+        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + valRcurr + '%, #EEEEEE ' + valRcurr + '%, #EEEEEE)');
+      d3.select('#complexQ-perc')
+        .text(Math.round(valRcurr) + '%');
+
+      if(Math.round(valRcurr) < Math.round(data.complexPerc)){
+
+        if(Math.round(valRcurr) < Math.round(valRprev)){
+          diffR = diffR - diff;
+        }else{
+          diffR = diffR + diff;
+        }
+        scoreNow = mlScore + diffQ + diffR;
+        diffNow = diffQ + diffR;
 
         reflections.complex.forEach(function(d){
           d3.select('#therapist-original-' + d.id)
@@ -325,26 +325,12 @@ function createSliders(data,questions,reflections,mlScore){
       else if(Math.round(valRcurr) > Math.round(data.complexPerc)){
 
         if(Math.round(valRcurr) > Math.round(valRprev)){
-          scoreNow = scoreNow + diff;
-          diffNow = diffNow + diff;
+          diffR = diffR + diff;
         }else{
-          scoreNow = scoreNow - diff;
-          diffNow = diffNow - diff;
+          diffR = diffR - diff;
         }
-
-        d3.select('#mlScore')
-          .transition()
-          .attr('width',scaleX(scoreNow));
-        d3.select('#scoreChange')
-          .style('fill','#EEEEEE')
-          .transition()
-          .style('opacity',1);
-        d3.select('#mlNum')
-          .text(scoreNow.toFixed(2));
-        d3.select('#mlNumChange')
-          .text(' (up ' + Math.abs(diffNow.toFixed(2)) + ')')
-          .style('fill','#19ABB5')
-          .style('font-weight','bolder');
+        scoreNow = mlScore + diffQ + diffR;
+        diffNow = diffQ + diffR;
 
         reflections.simple.forEach(function(d){
           d3.select('#therapist-original-' + d.id)
@@ -373,21 +359,44 @@ function createSliders(data,questions,reflections,mlScore){
         d3.selectAll('.text-change-complex')
           .remove();
 
-        scoreNow = mlScore;
-        diffNow = 0;
-
-        d3.select('#mlScore')
+        diffR = 0;
+        scoreNow = mlScore + diffQ + diffR;
+        diffNow = diffQ + diffR;
+      }
+      d3.select('#mlScore')
+        .transition()
+        .attr('width',scaleX(scoreNow));
+      if(diffNow < 0){
+        d3.select('#scoreChange')
+          .style('fill','#19ABB5')
           .transition()
-          .attr('width',scaleX(mlScore));
+          .style('opacity',1);
+        d3.select('#mlNum')
+          .text(scoreNow.toFixed(2));
+        d3.select('#mlNumChange')
+          .text(' (down ' + Math.abs(diffNow.toFixed(2)) + ')')
+          .style('fill','#CC6471')
+          .style('font-weight','bolder');
+      }else if(diffNow > 0){
+        d3.select('#scoreChange')
+          .style('fill','#EEEEEE')
+          .transition()
+          .style('opacity',1);
+        d3.select('#mlNum')
+          .text(scoreNow.toFixed(2));
+        d3.select('#mlNumChange')
+          .text(' (up ' + Math.abs(diffNow.toFixed(2)) + ')')
+          .style('fill','#19ABB5')
+          .style('font-weight','bolder');
+      }else{
         d3.select('#scoreChange')
           .transition()
           .style('opacity',0);
         d3.select('#mlNum')
-          .text(mlScore.toFixed(2));
+          .text(diffNow.toFixed(2));
         d3.select('#mlNumChange')
           .text(null);
       }
-
       valRprev = document.getElementById('slider-complex').value;
 
     });

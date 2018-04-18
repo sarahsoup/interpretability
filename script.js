@@ -81,9 +81,13 @@ d3.select('#selection').selectAll('.btn')
   rating = document.getElementById('slider-rating').value;
   d3.select('#rating-val').html(rating);
   d3.select('#slider-rating')
+    .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + ((rating/5)*100) + '%, #EEEEEE ' + ((rating/5)*100) + '%, #EEEEEE)')
+    .style('border-radius','10px')
     .on('input',function(){
       rating = document.getElementById('slider-rating').value;
       document.getElementById('rating-val').innerHTML = rating;
+      d3.select('#slider-rating')
+        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + ((rating/5)*100) + '%, #EEEEEE ' + ((rating/5)*100) + '%, #EEEEEE)');
     })
 
 
@@ -188,8 +192,8 @@ if(variation == 'confidence'){
     svgEmpathy
       .attr('class','bars-empathy')
       .attr('id','svg-empathy')
-      .attr('width',w)
-      .attr('transform','translate(0,40)');
+      .attr('width',w);
+      // .attr('transform','translate(0,40)');
 
     const mlScoreG = svgEmpathy
       .append('g')
@@ -295,8 +299,11 @@ if(variation == 'confidence'){
       svgEmpathy
         .attr('height',h);
 
+      userScoreG
+        .attr('transform','translate(0,40)'); //was 0
+
       mlScoreG
-        .attr('transform','translate(0,120)');
+        .attr('transform','translate(0,160)'); //was 140
 
       userScoreG.append('rect')
         .attr('class','rect-background userScore');
@@ -367,8 +374,8 @@ if(variation == 'confidence'){
       .attr('class','bars-counts')
       .attr('id','svg-counts')
       .attr('height',h)
-      .attr('width',w)
-      .attr('transform','translate(0,40)');
+      .attr('width',w);
+      // .attr('transform','translate(0,40)');
 
     const openQG = svgCounts
       .append('g')
@@ -380,7 +387,8 @@ if(variation == 'confidence'){
       .attr('class','complexRG')
       .attr('id','complexRG');
 
-    complexRG.attr('transform','translate(0,100)');
+    openQG.attr('transform','translate(0,40)');
+    complexRG.attr('transform','translate(0,140)');
 
     const openQT = openQG.append('text')
       .attr('class','textCounts openQ')

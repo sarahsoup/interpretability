@@ -51,7 +51,6 @@ function addNarrativeBtn(){
   d3.select('#content-empathy')
     .append('button')
     .attr('id','modal-btn')
-    // .html('ABOUT')
     .on('click',function(){
       d3.select('.modal')
         .style('display','block');
@@ -63,13 +62,12 @@ function addNarrativeBtn(){
     .attr('class','far fa-question-circle fa-lg');
 
   textPos = document.getElementById('textScore-ml').getBBox();
-
   textTop = document.getElementById('textScore-ml').getBoundingClientRect().top;
   textLeft = document.getElementById('textScore-ml').getBoundingClientRect().left;
   textRight = document.getElementById('textScore-ml').getBoundingClientRect().right;
   btnW = document.getElementById('modal-btn').clientWidth;
 
   d3.select('#modal-btn')
-    .style('top',(textTop+10) + 'px')
+    .style('top',(textTop+48) + 'px')
     .style('left',(textRight-textLeft) + 'px');
 }
