@@ -1,25 +1,27 @@
 function influenceLegend(){
-  ngramLegend = d3.select('#content-session')
-    .append('text')
+  d3.select('#content-session')
+    .append('p')
     .attr('class','ngram-legend')
-    .style('font-size','10px');
+    .style('font-size','10px')
+    .html('The most influential words and phrases to the empathy score are emphasized below. ' +
+    'Some are <span class="pos">pro-empathy</span> and some are <span class="neg">anti-empathy</span>. Click the buttons to see how changing the ' +
+    'most influential words and phrases to all positive or negative change the empathy score.')
 
-  ngramLegend.append('tspan')
-    .text('most ');
-  ngramLegend.append('tspan')
-    .text('pro-empathy')
+  d3.selectAll('.pos')
     .style('color','#70B276')
     .style('font-weight','bolder');
-    // .style('background-color','#19ABB5');
-  ngramLegend.append('tspan')
-    .text(' and ');
-  ngramLegend.append('tspan')
-    .text('anti-empathy')
+  d3.selectAll('.neg')
     .style('color','#CC6471')
     .style('font-weight','bolder');
-    // .style('background-color','#CC6471');
-  ngramLegend.append('tspan')
-    .text(' words and phrases');
+
+  posdiv = d3.select('#content-session')
+    .append('div')
+    .attr('class','col-sm-6');
+
+  negdiv = d3.select('#content-session')
+    .append('div')
+    .attr('class','col-sm-6');
+
 }
 
 

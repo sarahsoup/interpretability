@@ -1,5 +1,9 @@
 function playSession(){
   d3.select('#session-audio0')
+    .append('source')
+    .attr('src',sessionAudio);
+
+  d3.select('#session-audio0')
     .on('timeupdate',function(){
       updateProgressBar(0);
     });
@@ -78,10 +82,13 @@ function stopPlayer(div){
   audioPlayer.currentTime = 0;
 
   btn = document.getElementById('btn-play-' + div);
+  icon = d3.select('#icon-play-' + div);
   btn.title = 'play';
   btn.className = 'btn-play';
+  icon.classed('fa-play-circle',true);
+  icon.classed('fa-pause-circle',false);
 
-  progressBar = document.getElementById('progress-bar' + div);
+  progressBar = document.getElementById('progress-bar-' + div);
   progressBar.value = 0;
 }
 
@@ -93,4 +100,7 @@ function updateProgressBar(div){
   totalW = parseInt(progress.style('width'),10);
   progressW = (totalW * (percentage/100)).toFixed(2);
   progressBar.style('width',progressW + 'px');
+  if(listenMaxDur < audioPlayer.currentTime){
+    listenMaxDur = audioPlayer.currentTime;
+  }
 }

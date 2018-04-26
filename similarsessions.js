@@ -1,26 +1,22 @@
 function similarSessions(){
-  d3.select('#container-session')
-    .style('height','268px'); //svg-empathy (300) height minus difference in top-pos (32)
+  // d3.select('#container-session')
+  //   .style('height','268px'); //svg-empathy (300) height minus difference in top-pos (32)
 
-  d3.select('#content-session')
+  d3.select('#content-empathy')
     .append('h6')
     .attr('id','title-similar')
     .html('SIMILAR SESSIONS');
 
-  const countsTitle = document.getElementById('title-counts');
-  const countsTitleTop = countsTitle.getBoundingClientRect().top;
-  const similarTitle = document.getElementById('title-similar');
-  const similarTitleTop = similarTitle.getBoundingClientRect().top;
-  // console.log(countsTitleTop, similarTitleTop);
-  const yOffset = countsTitleTop-similarTitleTop;
-  // console.log(yOffset);
-  // d3.select('#title-similar')
-  //   .style('padding-top',yOffset + 'px');
+  d3.select('#content-empathy')
+    .append('p')
+    .attr('id','desc-similar')
+    .style('width',barW+'px')
+    .html('These are sessions that had similar empathy scores. Click a session to listen to a portion of it.')
 
-  const container = d3.select('#content-session')
+  const container = d3.select('#content-empathy')
     .append('div')
     .attr('id','container-similar')
-    .attr('width','100%')
+    .attr('width',barW)
     // .attr('height','300px')
     .attr('height','100px') // doesn't change anything
     .style('margin-top','40px')
@@ -139,6 +135,7 @@ function similarSessions(){
       .append('audio')
       .attr('id','session-audio' + div)
       .append('source')
+      // .attr('src',sessionAudio)
       // .attr('src','./3072492.wav')
       // .attr('src','http://www.dropbox.com/home/Psychotherapy%20Transcripts?preview=3072492.wav') //put in html, add s if github pages doesn't work
       // .attr('src','http://www.dropbox.com/s/vnmvl05zqj6ovfx/3072492.wav')

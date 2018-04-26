@@ -35,7 +35,7 @@ function createDescription(){
   //   });
 
   body.append('p')
-    .html('This is text about the algorithm');
+    .html(aboutAlg);
 
   body.append('button')
     .attr('id','modal-content-btn')
@@ -46,28 +46,28 @@ function createDescription(){
 
 }
 
-function addNarrativeBtn(){
-  /* MODAL TRIGGER */
-  d3.select('#content-empathy')
-    .append('button')
-    .attr('id','modal-btn')
-    .on('click',function(){
-      d3.select('.modal')
-        .style('display','block');
-    });
-
-  d3.select('#modal-btn')
-    .append('i')
-    .attr('id','modal-icon')
-    .attr('class','far fa-question-circle fa-lg');
-
-  textPos = document.getElementById('textScore-ml').getBBox();
-  textTop = document.getElementById('textScore-ml').getBoundingClientRect().top;
-  textLeft = document.getElementById('textScore-ml').getBoundingClientRect().left;
-  textRight = document.getElementById('textScore-ml').getBoundingClientRect().right;
-  btnW = document.getElementById('modal-btn').clientWidth;
-
-  d3.select('#modal-btn')
-    .style('top',(textTop+48) + 'px')
-    .style('left',(textRight-textLeft) + 'px');
-}
+// function addNarrativeBtn(){
+//   /* MODAL TRIGGER */
+//   d3.select('#content-empathy')
+//     .append('button')
+//     .attr('id','modal-btn')
+//     .on('click',function(){
+//       d3.select('.modal')
+//         .style('display','block');
+//     });
+//
+//   d3.select('#modal-btn')
+//     .append('i')
+//     .attr('id','modal-icon')
+//     .attr('class','far fa-question-circle fa-lg');
+//
+//   textPos = document.getElementById('textScore-ml').getBBox();
+//   textTop = document.getElementById('textScore-ml').getBoundingClientRect().top;
+//   textLeft = document.getElementById('textScore-ml').getBoundingClientRect().left;
+//   textRight = document.getElementById('textScore-ml').getBoundingClientRect().right;
+//   btnW = document.getElementById('modal-btn').clientWidth;
+//
+//   d3.select('#modal-btn')
+//     .style('top',(textTop+48) + 'px')
+//     .style('left',(textRight-textLeft) + 'px');
+// }

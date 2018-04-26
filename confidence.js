@@ -40,151 +40,151 @@ function makeConfidenceLabels(mlScore,confInt){
 
 
 
-function createCountsBars(openPerc,complexPerc){
-
-  openQG = d3.select('#openQG');
-  complexRG = d3.select('#complexRG');
-
-  const gradientalt = openQG.append('linearGradient')
-    .attr('id','gradient-alt');
-
-  gradientalt.append('stop')
-    .attr('offset','1%')
-    .attr('stop-color','#EEEEEE');
-
-  gradientalt.append('stop')
-    .attr('offset','499%')
-    .attr('stop-color','#19ABB5');
-
-  openQG.append('rect')
-    .attr('class','rect-background')
-    .attr('x',0)
-    .attr('y',barY+barAdj)
-    .attr('width',barW)
-    .attr('height',barCountsH);
-
-  openQG.append('rect')
-    .attr('class','rect-gradient')
-    .attr('width',function(){
-      if(100 >= (openPerc+confIntCounts)){
-        return scaleP(confIntCounts*2);
-      }else if(0 > (openPerc-confIntCounts)){
-        diff = (openPerc-confIntCounts);
-        return scaleP((confIntCounts*2)+diff);
-      }else{
-        diff = (openPerc+confIntCounts) - 100;
-        return scaleP((confIntCounts*2)-diff);
-      }
-    })
-    .attr('height',barCountsH)
-    .attr('x',function(){
-      if(0 > (openPerc-confIntCounts)){
-        return 0;
-      }else{
-        return scaleP(openPerc-confIntCounts);
-      }
-    })
-    .attr('y',barY+barAdj)
-    .style('fill','url(#gradient-alt)') //issue with gradient
-    .style('cursor','pointer')
-    .on('click',function(){ highlightAll('open'); });
-
-  complexRG.append('rect')
-    .attr('class','rect-background')
-    .attr('x',0)
-    .attr('y',barY+barAdj)
-    .attr('width',barW)
-    .attr('height',barCountsH);
-
-  complexRG.append('rect')
-    .attr('class','rect-gradient')
-    .attr('width',function(){
-      if(100 >= (complexPerc+confIntCounts)){
-        return scaleP(confIntCounts*2);
-      }else if(0 > (complexPerc-confIntCounts)){
-        diff = (complexPerc-confIntCounts);
-        return scaleP((confIntCounts*2)+diff);
-      }else{
-        diff = (complexPerc+confIntCounts) - 100;
-        return scaleP((confIntCounts*2)-diff);
-      }
-    })
-    .attr('height',barCountsH)
-    .attr('x',function(){
-      if(0 > (complexPerc-confIntCounts)){
-        return 0;
-      }else{
-        return scaleP(complexPerc-confIntCounts);
-      }
-    })
-    .attr('y',barY+barAdj)
-    .style('fill','url(#gradient)')
-    .style('cursor','pointer')
-    .on('click',function(){ highlightAll('complex'); });
-
-    openQG.append('text')
-      .text(Math.round(openPerc))
-      .attr('class','confidence-label')
-      .attr('x',scaleP(openPerc));
-
-    openQG.append('text')
-      .text(Math.round(openPerc-confIntCounts))
-      .attr('class','confidence-label')
-      .attr('x',scaleP(openPerc-confIntCounts));
-
-    openQG.selectAll('.confidence-label')
-      .attr('y',barY+barAdj-10);
-
-    openQG.append('line')
-      .attr('class','confidence-line')
-      .attr('x1',scaleP(openPerc-confIntCounts)+10)
-      .attr('x2',scaleP(openPerc)-12);
-
-    // openQG.append('line')
-    //   .attr('class','confidence-line')
-    //   .attr('x1',scaleP(openPerc)+14)
-    //   .attr('x2',scaleP(openPerc+confIntCounts)-14);
-
-    openQG.selectAll('.confidence-line')
-      .attr('y1',barY+barAdj-13)
-      .attr('y2',barY+barAdj-13)
-      .style('stroke','black')
-      .style('stroke-width','1px');
-
-    complexRG.append('text')
-      .text(Math.round(complexPerc))
-      .attr('class','confidence-label')
-      .attr('x',scaleP(complexPerc));
-
-    complexRG.append('text')
-      .text(Math.round(complexPerc+confIntCounts))
-      .attr('class','confidence-label')
-      .attr('x',scaleP(complexPerc+confIntCounts));
-
-    complexRG.append('text')
-      .text(Math.round(complexPerc-confIntCounts))
-      .attr('class','confidence-label')
-      .attr('x',scaleP(complexPerc-confIntCounts));
-
-    complexRG.selectAll('.confidence-label')
-      .attr('y',barY+barAdj-10);
-
-    complexRG.append('line')
-      .attr('class','confidence-line')
-      .attr('x1',scaleP(complexPerc-confIntCounts)+10)
-      .attr('x2',scaleP(complexPerc)-10);
-
-    complexRG.append('line')
-      .attr('class','confidence-line')
-      .attr('x1',scaleP(complexPerc)+10)
-      .attr('x2',scaleP(complexPerc+confIntCounts)-10);
-
-    complexRG.selectAll('.confidence-line')
-      .attr('y1',barY+barAdj-13)
-      .attr('y2',barY+barAdj-13)
-      .style('stroke','black')
-      .style('stroke-width','1px');
-}
+// function createCountsBars(openPerc,complexPerc){
+//
+//   openQG = d3.select('#openQG');
+//   complexRG = d3.select('#complexRG');
+//
+//   const gradientalt = openQG.append('linearGradient')
+//     .attr('id','gradient-alt');
+//
+//   gradientalt.append('stop')
+//     .attr('offset','1%')
+//     .attr('stop-color','#EEEEEE');
+//
+//   gradientalt.append('stop')
+//     .attr('offset','499%')
+//     .attr('stop-color','#19ABB5');
+//
+//   openQG.append('rect')
+//     .attr('class','rect-background')
+//     .attr('x',0)
+//     .attr('y',barY+barAdj)
+//     .attr('width',barW)
+//     .attr('height',barCountsH);
+//
+//   openQG.append('rect')
+//     .attr('class','rect-gradient')
+//     .attr('width',function(){
+//       if(100 >= (openPerc+confIntCounts)){
+//         return scaleP(confIntCounts*2);
+//       }else if(0 > (openPerc-confIntCounts)){
+//         diff = (openPerc-confIntCounts);
+//         return scaleP((confIntCounts*2)+diff);
+//       }else{
+//         diff = (openPerc+confIntCounts) - 100;
+//         return scaleP((confIntCounts*2)-diff);
+//       }
+//     })
+//     .attr('height',barCountsH)
+//     .attr('x',function(){
+//       if(0 > (openPerc-confIntCounts)){
+//         return 0;
+//       }else{
+//         return scaleP(openPerc-confIntCounts);
+//       }
+//     })
+//     .attr('y',barY+barAdj)
+//     .style('fill','url(#gradient-alt)') //issue with gradient
+//     .style('cursor','pointer')
+//     .on('click',function(){ highlightAll('open'); });
+//
+//   complexRG.append('rect')
+//     .attr('class','rect-background')
+//     .attr('x',0)
+//     .attr('y',barY+barAdj)
+//     .attr('width',barW)
+//     .attr('height',barCountsH);
+//
+//   complexRG.append('rect')
+//     .attr('class','rect-gradient')
+//     .attr('width',function(){
+//       if(100 >= (complexPerc+confIntCounts)){
+//         return scaleP(confIntCounts*2);
+//       }else if(0 > (complexPerc-confIntCounts)){
+//         diff = (complexPerc-confIntCounts);
+//         return scaleP((confIntCounts*2)+diff);
+//       }else{
+//         diff = (complexPerc+confIntCounts) - 100;
+//         return scaleP((confIntCounts*2)-diff);
+//       }
+//     })
+//     .attr('height',barCountsH)
+//     .attr('x',function(){
+//       if(0 > (complexPerc-confIntCounts)){
+//         return 0;
+//       }else{
+//         return scaleP(complexPerc-confIntCounts);
+//       }
+//     })
+//     .attr('y',barY+barAdj)
+//     .style('fill','url(#gradient)')
+//     .style('cursor','pointer')
+//     .on('click',function(){ highlightAll('complex'); });
+//
+//     openQG.append('text')
+//       .text(Math.round(openPerc))
+//       .attr('class','confidence-label')
+//       .attr('x',scaleP(openPerc));
+//
+//     openQG.append('text')
+//       .text(Math.round(openPerc-confIntCounts))
+//       .attr('class','confidence-label')
+//       .attr('x',scaleP(openPerc-confIntCounts));
+//
+//     openQG.selectAll('.confidence-label')
+//       .attr('y',barY+barAdj-10);
+//
+//     openQG.append('line')
+//       .attr('class','confidence-line')
+//       .attr('x1',scaleP(openPerc-confIntCounts)+10)
+//       .attr('x2',scaleP(openPerc)-12);
+//
+//     // openQG.append('line')
+//     //   .attr('class','confidence-line')
+//     //   .attr('x1',scaleP(openPerc)+14)
+//     //   .attr('x2',scaleP(openPerc+confIntCounts)-14);
+//
+//     openQG.selectAll('.confidence-line')
+//       .attr('y1',barY+barAdj-13)
+//       .attr('y2',barY+barAdj-13)
+//       .style('stroke','black')
+//       .style('stroke-width','1px');
+//
+//     complexRG.append('text')
+//       .text(Math.round(complexPerc))
+//       .attr('class','confidence-label')
+//       .attr('x',scaleP(complexPerc));
+//
+//     complexRG.append('text')
+//       .text(Math.round(complexPerc+confIntCounts))
+//       .attr('class','confidence-label')
+//       .attr('x',scaleP(complexPerc+confIntCounts));
+//
+//     complexRG.append('text')
+//       .text(Math.round(complexPerc-confIntCounts))
+//       .attr('class','confidence-label')
+//       .attr('x',scaleP(complexPerc-confIntCounts));
+//
+//     complexRG.selectAll('.confidence-label')
+//       .attr('y',barY+barAdj-10);
+//
+//     complexRG.append('line')
+//       .attr('class','confidence-line')
+//       .attr('x1',scaleP(complexPerc-confIntCounts)+10)
+//       .attr('x2',scaleP(complexPerc)-10);
+//
+//     complexRG.append('line')
+//       .attr('class','confidence-line')
+//       .attr('x1',scaleP(complexPerc)+10)
+//       .attr('x2',scaleP(complexPerc+confIntCounts)-10);
+//
+//     complexRG.selectAll('.confidence-line')
+//       .attr('y1',barY+barAdj-13)
+//       .attr('y2',barY+barAdj-13)
+//       .style('stroke','black')
+//       .style('stroke-width','1px');
+// }
 
 function highlight(d){
   d3.selectAll('.highlight-text')

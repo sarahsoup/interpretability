@@ -1,4 +1,7 @@
 function createSliders(data,questions,reflections,mlScore){
+  console.log(questions);
+  console.log(reflections);
+
   const positionOffset = h-10-barY;
   let scoreNow = mlScore;
   let diffNow = 0;
@@ -46,6 +49,11 @@ function createSliders(data,questions,reflections,mlScore){
     .attr('step',100/(data.openCount+data.closedCount))
     .attr('value',data.openPerc);
 
+  d3.select('#openQG')
+    .append('rect')
+    .attr('class','tick-counts')
+    .attr('x',(barW*(1-.96)/2));
+
   i = 0;
   d3.select('#openQG').selectAll('tick-open')
     .data(questions.open)
@@ -81,6 +89,11 @@ function createSliders(data,questions,reflections,mlScore){
     .attr('max','100')
     .attr('step',100/(data.complexCount+data.simpleCount))
     .attr('value',data.complexPerc);
+
+  d3.select('#complexRG')
+    .append('rect')
+    .attr('class','tick-counts')
+    .attr('x',(barW*(1-.96)/2));
 
   i = 0;
   d3.select('#complexRG').selectAll('tick-complex')
@@ -122,9 +135,9 @@ function createSliders(data,questions,reflections,mlScore){
       valQprev = document.getElementById('slider-open').value;
       valRprev = document.getElementById('slider-complex').value;
       d3.select('#openQ-perc')
-        .text(Math.round(data.openPerc) + '%');
+        .text(Math.round(data.openPerc) + '% Open');
       d3.select('#complexQ-perc')
-        .text(Math.round(data.complexPerc) + '%');
+        .text(Math.round(data.complexPerc) + '% Complex');
       d3.selectAll('.striked-open')
         .classed('striked-open',false);
       d3.selectAll('.striked-complex')
@@ -169,7 +182,7 @@ function createSliders(data,questions,reflections,mlScore){
       d3.select('#slider-open')
         .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + valQcurr + '%, #EEEEEE ' + valQcurr + '%, #EEEEEE)');
       d3.select('#openQ-perc')
-        .text(Math.round(valQcurr) + '%');
+        .text(Math.round(valQcurr) + '% Open');
 
       if(Math.round(valQcurr) < Math.round(data.openPerc)){
 
@@ -289,7 +302,7 @@ function createSliders(data,questions,reflections,mlScore){
       d3.select('#slider-complex')
         .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + valRcurr + '%, #EEEEEE ' + valRcurr + '%, #EEEEEE)');
       d3.select('#complexQ-perc')
-        .text(Math.round(valRcurr) + '%');
+        .text(Math.round(valRcurr) + '% Complex');
 
       if(Math.round(valRcurr) < Math.round(data.complexPerc)){
 

@@ -10,20 +10,36 @@ const barAdj = 10;
 const confInt = 0.4;
 const confIntCounts = 10;
 const scaleColor = chroma.scale(['#EEEEEE','#19ABB5']);
+const sessionTest = './transcript.json';
+const sessionGood = './good_wav.json';
+const sessionBad = './bad_wav.json';
+const session = sessionGood;
+let sessionAudio, sessionType;
+if(session == sessionGood){
+  sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_goodtherapy.wav';
+  sessionType = 'good';
+}else if(session == sessionBad){
+  sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_badtherapy.wav';
+  sessionType = 'bad';
+}
 
-let totalQ = 5;
-let openQ = 3;
-let totalR = 6;
-let complexR = 4;
+// let totalQ = 5;
+// let openQ = 3;
+// let totalR = 6;
+// let complexR = 4;
 
+let listenMaxDur = 0;
+let outputDurSec = 0;
 let variation;
 let rating;
+let dataObj = {};
 
 const scaleX = d3.scaleLinear().domain([0, 5]).range([0, barW]);
 const scaleP = d3.scaleLinear().domain([0, 100]).range([0, barW]);
 
 const windowW = window.innerWidth;
 
+const aboutAlg = 'This is text about the algorithm';
 
 d3.select('#welcome').selectAll('.btn')
   .on('click',function(d){
@@ -43,6 +59,7 @@ d3.select('.audio-container')
 
 d3.select('#audio').selectAll('.btn')
   .on('click',function(d){
+    stopPlayer(0);
     d3.select('#audio')
       .style('display','none')
       .classed('hidden',true);
@@ -75,6 +92,8 @@ d3.select('#selection').selectAll('.btn')
       .classed('hidden',false);
     d3.select('#content')
       .classed('hidden',false);
+    d3.select('#next')
+      .classed('hidden',false);
     createVariation(variation);
   })
 
@@ -92,6 +111,9 @@ d3.select('#selection').selectAll('.btn')
 
 
 function createVariation(variation){
+  const durSecInterval = setInterval(function(){
+    outputDurSec++;
+  },1000);
 
   const headerMargin = windowW - d3.select('#header').node().clientWidth;
   d3.select('#header')
@@ -104,7 +126,7 @@ function createVariation(variation){
     createDescription();
   }
 
-  d3.json('./transcript.json',function(data){
+  d3.json(session,function(data){
 
     const mlScore = data.scores.globals.empathy;
 
@@ -168,21 +190,12 @@ if(variation == 'confidence'){
 };
 
     /* HEADER */
-    //
-    // const sessionNumber = d3.select('#header-number')
-    //   .append('h6')
-    //   .attr('class','header-text')
-    //   .html(data.sessionNumber);
-    //
-    // const sessionTherapist = d3.select('#header-therapist')
-    //   .append('h6')
-    //   .attr('class','header-text')
-    //   .html('Therapist: ' + data.therapist);
-    //
-    // const sessionClient = d3.select('#header-client')
-    //   .append('h6')
-    //   .attr('class','header-text')
-    //   .html('Client: ' + data.client.clientID);
+
+    const sessionNumber = d3.select('#header-title')
+      .append('h6')
+      .attr('class','header-text')
+      .html('HUMAN INTERPRETABILITY STUDY');
+
 
     /************* EMPATHY BARS *************/
 
@@ -192,16 +205,18 @@ if(variation == 'confidence'){
     svgEmpathy
       .attr('class','bars-empathy')
       .attr('id','svg-empathy')
-      .attr('width',w);
-      // .attr('transform','translate(0,40)');
+      .attr('width',w)
+      .attr('height',h);
 
     const mlScoreG = svgEmpathy
       .append('g')
-      .attr('id','mlScoreG');
+      .attr('id','mlScoreG')
+      .attr('transform','translate(0,160)');
 
     const userScoreG = svgEmpathy
       .append('g')
-      .attr('id','userScoreG');
+      .attr('id','userScoreG')
+      .attr('transform','translate(0,40)');
 
     const userScoreT = userScoreG.append('text')
       .attr('class','textScore userScore')
@@ -215,8 +230,10 @@ if(variation == 'confidence'){
     userScoreT.append('tspan')
       .attr('id','userNum')
       .text(userScore)
-      // .text(userScore.toFixed(2))
       .style('font-weight','bold');
+
+    userScoreG.append('rect')
+      .attr('class','rect-background userScore');
 
     const mlScoreT = mlScoreG.append('text')
       .attr('class','textScore mlScore')
@@ -238,13 +255,7 @@ if(variation == 'confidence'){
     mlScoreG.append('rect')
       .attr('class','rect-background mlScore');
 
-    if(variation == 'narrative description'){
-      addNarrativeBtn();
-    }
     if(variation == 'confidence'){
-
-      svgEmpathy
-        .attr('height',200);
 
       d3.select('#mlNum')
         .style('fill','#19ABB5');
@@ -283,30 +294,21 @@ if(variation == 'confidence'){
         .attr('width',4)
         .attr('height',barH+'px')
         .attr('x',scaleX(userScore)-2)
-        .attr('y',barY+confAdj+barAdj+'px')
+        .attr('y',barY+barAdj+'px')
         .style('fill','black');
 
       mlScoreT
         .attr('y',confAdj+'px');
 
-      svgEmpathy.selectAll('.rect-background')
+      userScoreG.selectAll('.rect-background')
+        .attr('y',barY+barAdj+'px');
+
+      mlScoreG.selectAll('.rect-background')
         .attr('y',barY+confAdj+barAdj+'px');
 
       makeConfidenceLabels(mlScore,confInt);
 
     } else{
-
-      svgEmpathy
-        .attr('height',h);
-
-      userScoreG
-        .attr('transform','translate(0,40)'); //was 0
-
-      mlScoreG
-        .attr('transform','translate(0,160)'); //was 140
-
-      userScoreG.append('rect')
-        .attr('class','rect-background userScore');
 
       userScoreG.append('rect')
         .attr('class','rect-foreground userScore')
@@ -361,62 +363,70 @@ if(variation == 'confidence'){
 
     /************* BEHAVIOR COUNTS *************/
 
-    d3.select('#content-empathy')
-      .append('h6')
-      .attr('id','title-counts')
-      .html('BEHAVIOR COUNTS');
-
-    const svgCounts = d3.select('#content-empathy')
-      .append('svg')
-      .attr('id','#counts-svg');
-
-    svgCounts
-      .attr('class','bars-counts')
-      .attr('id','svg-counts')
-      .attr('height',h)
-      .attr('width',w);
-      // .attr('transform','translate(0,40)');
-
-    const openQG = svgCounts
-      .append('g')
-      .attr('class','openQG')
-      .attr('id','openQG');
-
-    const complexRG = svgCounts
-      .append('g')
-      .attr('class','complexRG')
-      .attr('id','complexRG');
-
-    openQG.attr('transform','translate(0,40)');
-    complexRG.attr('transform','translate(0,140)');
-
-    const openQT = openQG.append('text')
-      .attr('class','textCounts openQ')
-      .attr('x','0px');
-
-    openQT.append('tspan')
-      .text('Questions: ')
-      .style('font-weight','lighter');
-
-    openQT.append('tspan')
-      .attr('id','openQ-perc')
-      .text(Math.round(percentOpenQuestions) + '% Open')
-      .style('font-weight','bold');
-
-    const complexRT = complexRG.append('text')
-      .attr('class','textCounts complexR')
-      .attr('x','0px');
-
-    complexRT.append('tspan')
-      .text('Reflections: ')
-      .style('font-weight','lighter');
-
-    complexRT.append('tspan')
-      .attr('id','complexQ-perc')
-      .text(Math.round(percentComplexReflections) + '% Complex')
-      .style('font-weight','bold');
-
     if(variation == 'manipulation'){
+
+      d3.select('#content-empathy')
+        .append('h6')
+        .attr('id','title-counts')
+        .html('BEHAVIOR COUNTS');
+
+      d3.select('#content-empathy')
+        .append('p')
+        .attr('id','desc-counts')
+        .style('width',barW+'px')
+        .html('Here are some measures correlated with empathy. '+
+        'Drag the sliders to see how the empathy score and session transcript change when these measures change.')
+
+      const svgCounts = d3.select('#content-empathy')
+        .append('svg')
+        .attr('id','#counts-svg');
+
+      svgCounts
+        .attr('class','bars-counts')
+        .attr('id','svg-counts')
+        .attr('height',h)
+        .attr('width',w);
+        // .attr('transform','translate(0,40)');
+
+      const openQG = svgCounts
+        .append('g')
+        .attr('class','openQG')
+        .attr('id','openQG');
+
+      const complexRG = svgCounts
+        .append('g')
+        .attr('class','complexRG')
+        .attr('id','complexRG');
+
+      openQG.attr('transform','translate(0,40)');
+      complexRG.attr('transform','translate(0,140)');
+
+      const openQT = openQG.append('text')
+        .attr('class','textCounts openQ')
+        .attr('x','0px');
+
+      openQT.append('tspan')
+        .text('Questions: ')
+        .style('font-weight','lighter');
+
+      openQT.append('tspan')
+        .attr('id','openQ-perc')
+        .text(Math.round(percentOpenQuestions) + '% Open')
+        .style('font-weight','bold');
+
+      const complexRT = complexRG.append('text')
+        .attr('class','textCounts complexR')
+        .attr('x','0px');
+
+      complexRT.append('tspan')
+        .text('Reflections: ')
+        .style('font-weight','lighter');
+
+      complexRT.append('tspan')
+        .attr('id','complexQ-perc')
+        .text(Math.round(percentComplexReflections) + '% Complex')
+        .style('font-weight','bold');
+
       const sliderObj = {
         openPerc: percentOpenQuestions,
         openCount: openQuestions,
@@ -435,177 +445,80 @@ if(variation == 'confidence'){
       };
       createSliders(sliderObj,questionsObj,reflectionsObj,mlScore);
 
-    } else if(variation == 'confidence') {
-
-      createCountsBars(percentOpenQuestions,percentComplexReflections);
-
-    } else {
-
-      let i=-1;
-      openQG.selectAll('rect-open')
-        .data(openArr)
-        .enter()
-        .append('rect')
-        .attr('class','rect-counts rect-open')
-        .attr('width',barW/(openQuestions+closedQuestions))
-        .attr('x',function(){
-          i++;
-          return i*(barW/(openQuestions+closedQuestions));
-        });
-
-      openQG.selectAll('rect-close')
-        .data(closeArr)
-        .enter()
-        .append('rect')
-        .attr('class','rect-counts rect-close')
-        .attr('width',barW/(openQuestions+closedQuestions))
-        .attr('x',function(){
-          i++;
-          return i*(barW/(openQuestions+closedQuestions));
-        });
-
-      i=-1;
-      complexRG.selectAll('rect-complex')
-        .data(complexArr)
-        .enter()
-        .append('rect')
-        .attr('class','rect-counts rect-complex')
-        .attr('width',barW/(complexReflections+simpleReflections))
-        .attr('x',function(){
-          i++;
-          return i*(barW/(complexReflections+simpleReflections));
-        });
-
-      complexRG.selectAll('rect-simple')
-        .data(simpleArr)
-        .enter()
-        .append('rect')
-        .attr('class','rect-counts rect-simple')
-        .attr('width',barW/(complexReflections+simpleReflections))
-        .attr('x',function(){
-          i++;
-          return i*(barW/(complexReflections+simpleReflections));
-        });
-
-      svgCounts.selectAll('.rect-counts')
-        .attr('height',barCountsH)
-        .attr('y',barY)
-        .style('stroke-width','2px')
-        .style('stroke','white');
     }
+    // else if(variation == 'confidence') {
+    //
+    //   // createCountsBars(percentOpenQuestions,percentComplexReflections);
+    //
+    // } else {
+    //
+    //   let i=-1;
+    //   openQG.selectAll('rect-open')
+    //     .data(openArr)
+    //     .enter()
+    //     .append('rect')
+    //     .attr('class','rect-counts rect-open')
+    //     .attr('width',barW/(openQuestions+closedQuestions))
+    //     .attr('x',function(){
+    //       i++;
+    //       return i*(barW/(openQuestions+closedQuestions));
+    //     });
+    //
+    //   openQG.selectAll('rect-close')
+    //     .data(closeArr)
+    //     .enter()
+    //     .append('rect')
+    //     .attr('class','rect-counts rect-close')
+    //     .attr('width',barW/(openQuestions+closedQuestions))
+    //     .attr('x',function(){
+    //       i++;
+    //       return i*(barW/(openQuestions+closedQuestions));
+    //     });
+    //
+    //   i=-1;
+    //   complexRG.selectAll('rect-complex')
+    //     .data(complexArr)
+    //     .enter()
+    //     .append('rect')
+    //     .attr('class','rect-counts rect-complex')
+    //     .attr('width',barW/(complexReflections+simpleReflections))
+    //     .attr('x',function(){
+    //       i++;
+    //       return i*(barW/(complexReflections+simpleReflections));
+    //     });
+    //
+    //   complexRG.selectAll('rect-simple')
+    //     .data(simpleArr)
+    //     .enter()
+    //     .append('rect')
+    //     .attr('class','rect-counts rect-simple')
+    //     .attr('width',barW/(complexReflections+simpleReflections))
+    //     .attr('x',function(){
+    //       i++;
+    //       return i*(barW/(complexReflections+simpleReflections));
+    //     });
+    //
+    //   svgCounts.selectAll('.rect-counts')
+    //     .attr('height',barCountsH)
+    //     .attr('y',barY)
+    //     .style('stroke-width','2px')
+    //     .style('stroke','white');
+    // }
 
     let perc;
     let therapist_id;
 
-    if(variation == 'confidence'){
+    if(variation == 'confidence' || variation == 'narrative description'){
+      d3.select('#content-empathy')
+        .append('h6')
+        .attr('id','title-aboutAlg')
+        .html('ABOUT THE ALGORITHM');
 
-      // createCountsLegend();
-
-      // const tooltip = d3.select('body').append('div')
-      //   .attr('class','tooltip')
-      //   .attr('id','tooltip-div')
-      //   .style('opacity',0);
-      //
-      // tooltipPos = document.getElementById('tooltip-div').getBoundingClientRect();
-      //
-      // titlePos = document.getElementById('title-counts').getBoundingClientRect();
-      // svgPos = document.getElementById('svg-counts').getBBox();
-      // titleOffset = document.getElementById('title-counts').offsetTop;
-      //
-      // highlighter = svgCounts.append('rect')
-      //   .attr('id','highlighter');
-      //
-      // svgCounts.selectAll('.rect-counts')
-      //   .style('cursor','pointer')
-      //   .on('mouseover',function(d){
-      //     rect = this;
-      //     magnify = 6;
-      //     // rectPos = this.getBBox();
-      //     rectPos = this.getBoundingClientRect();
-      //
-      //     if(d3.select(rect).classed('rect-open')){
-      //       type = 'open';
-      //     }else if(d3.select(rect).classed('rect-close')){
-      //       type = 'close';
-      //     }
-      //     else if(d3.select(rect).classed('rect-complex')){
-      //       type = 'complex';
-      //     }else if(d3.select(rect).classed('rect-simple')){
-      //       type = 'simple';
-      //     }
-      //
-      //     // d3.select(this)
-      //     //   .transition()
-      //     //   .style('stroke','black');
-      //
-      //     // highlighter
-      //     //   .transition()
-      //     //   .attr('x',function(){
-      //     //     return d3.select(rect).attr('x')-2;
-      //     //   })
-      //     //   .attr('y',function(){
-      //     //     return d3.select(rect).attr('y')-2;
-      //     //   })
-      //     //   .attr('width',function(){
-      //     //     return d3.select(rect).attr('width');
-      //     //   })
-      //     //   .attr('height',function(){
-      //     //     return d3.select(rect).attr('height');
-      //     //   });
-      //       // .style('opacity',0)
-      //       // .transition()
-      //       // .style('opacity',1)
-      //       // .style('stroke-width','2px')
-      //       // .style('stroke','black');
-      //
-      //     tooltip
-      //       .transition()
-      //       .style('opacity',1);
-      //     tooltip
-      //       .text(type + ': ' + Math.round(d.confidence*100)+'% confidence')
-      //       // .style("left", (d3.event.pageX) + "px")
-      //       // .style("top", (d3.event.pageY) + "px");
-      //       .style('left', rectPos.x + (rectPos.width/2) - (tooltipPos.width/2) + 'px')
-      //       .style('top', rectPos.y - tooltipPos.height - 4 + 'px')
-      //   })
-      //   .on('mouseout',function(d){
-      //
-      //     d3.select(this)
-      //       .transition()
-      //       .style('stroke','white');
-      //
-      //     tooltip
-      //       .transition()
-      //       .style('opacity',0);
-      //   })
-      //   .on('click',function(d){
-      //     highlight(d);
-      //   });
-
-      // openQG.selectAll('.rect-open')
-      //   .style('fill',function(d){
-      //     perc = 0.5+(d.confidence/2);
-      //     return scaleColor(perc).hex()+'';
-      //   });
-      //
-      // openQG.selectAll('.rect-close')
-      //   .style('fill',function(d){
-      //     perc = 0.5+(d.confidence/2);
-      //     return scaleColor(1-perc).hex()+'';
-      //   });
-      //
-      // complexRG.selectAll('.rect-complex')
-      //   .style('fill',function(d){
-      //     perc = 0.5+(d.confidence/2);
-      //     return scaleColor(perc).hex()+'';
-      //   });
-      //
-      // complexRG.selectAll('.rect-simple')
-      //   .style('fill',function(d){
-      //     perc = 0.5+(d.confidence/2);
-      //     return scaleColor(1-perc).hex()+'';
-      //   });
-
+      d3.select('#content-empathy')
+        .append('p')
+        .attr('id','desc-aboutAlg')
+        .style('width',barW+'px')
+        .html(aboutAlg);
     };
 
     /************* BAR LABELS *************/
@@ -853,20 +766,30 @@ if(variation == 'confidence'){
 
 
 
-    if(variation == 'confidence'){
-      // d3.select('#container-session')
-      //   .style('height','420px');
-    }
-    else if(variation == 'similar sessions'){
+    if(variation == 'similar sessions'){
       similarSessions();
     }
     else if(variation == 'influential n-grams'){
       influence();
-
-      // d3.select('#container-session')
-      //   .style('margin-top','20px');
+    }else if(variation == 'manipulation'){
+      d3.select('#btn-to-survey')
+        .style('position','relative')
+        .style('top','-160px');
     }
 
   });
+
+  dataObj.user = 'placeholder';
+  dataObj.rating = rating;
+  dataObj.session = sessionType;
+  dataObj.listenTime = +listenMaxDur.toFixed(0);
+  dataObj.variation = variation;
+
+  d3.select('#btn-to-survey')
+    .on('click',function(){
+      dataObj.outputTime = outputDurSec;
+      clearInterval(durSecInterval);
+      console.log(dataObj);
+    })
 
 };
