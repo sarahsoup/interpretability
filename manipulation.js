@@ -33,6 +33,10 @@ function createSliders(data,questions,reflections,mlScore){
     d.step = Math.round(step * i);
     i++;
   });
+  // console.log('open+close = '+ (data.openCount+data.closedCount));
+  // console.log('step = ' + (100/(data.openCount+data.closedCount)).toFixed(1));
+  // console.log('complex+simple = '+ (data.complexCount+data.simpleCount));
+  // console.log('step = ' + 100/(data.complexCount+data.simpleCount));
 
   form.append('input')
     .attr('class','slider')
@@ -45,9 +49,9 @@ function createSliders(data,questions,reflections,mlScore){
     .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + data.openPerc + '%, #EEEEEE ' + data.openPerc + '%, #EEEEEE)')
     .style('border-radius','10px')
     .attr('min','0')
-    .attr('max','100')
-    .attr('step',100/(data.openCount+data.closedCount))
-    .attr('value',data.openPerc);
+    .attr('max',(data.openCount+data.closedCount))
+    .attr('step',1)
+    .attr('value',data.openCount);
 
   d3.select('#openQG')
     .append('rect')
@@ -86,9 +90,9 @@ function createSliders(data,questions,reflections,mlScore){
     .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + data.complexPerc + '%, #EEEEEE ' + data.complexPerc + '%, #EEEEEE)')
     .style('border-radius','10px')
     .attr('min','0')
-    .attr('max','100')
-    .attr('step',100/(data.complexCount+data.simpleCount))
-    .attr('value',data.complexPerc);
+    .attr('max',(data.complexCount+data.simpleCount))
+    .attr('step',1)
+    .attr('value',data.complexCount);
 
   d3.select('#complexRG')
     .append('rect')
@@ -180,11 +184,11 @@ function createSliders(data,questions,reflections,mlScore){
 
       let valQcurr = document.getElementById('slider-open').value;
       d3.select('#slider-open')
-        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + valQcurr + '%, #EEEEEE ' + valQcurr + '%, #EEEEEE)');
+        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + (valQcurr/(data.openCount+data.closedCount)) + '%, #EEEEEE ' + (valQcurr/(data.openCount+data.closedCount)) + '%, #EEEEEE)');
       d3.select('#openQ-perc')
-        .text(Math.round(valQcurr) + '% Open');
+        .text(Math.round((valQcurr/(data.openCount+data.closedCount))*100) + '% Open');
 
-      if(Math.round(valQcurr) < Math.round(data.openPerc)){
+      if(Math.round(valQcurr) < Math.round(data.openCount)){
 
         if(Math.round(valQcurr) < Math.round(valQprev)){
           diffQ = diffQ - diff;
@@ -216,7 +220,7 @@ function createSliders(data,questions,reflections,mlScore){
 
         });
       }
-      else if(Math.round(valQcurr) > Math.round(data.openPerc)){
+      else if(Math.round(valQcurr) > Math.round(data.openCount)){
 
         if(Math.round(valQcurr) > Math.round(valQprev)){
           diffQ = diffQ + diff;
@@ -300,11 +304,11 @@ function createSliders(data,questions,reflections,mlScore){
     .on('input',function(e){
       let valRcurr = document.getElementById('slider-complex').value;
       d3.select('#slider-complex')
-        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + valRcurr + '%, #EEEEEE ' + valRcurr + '%, #EEEEEE)');
+        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + (valRcurr/(data.complexCount+data.simpleCount)) + '%, #EEEEEE ' + (valRcurr/(data.complexCount+data.simpleCount)) + '%, #EEEEEE)');
       d3.select('#complexQ-perc')
-        .text(Math.round(valRcurr) + '% Complex');
+        .text(Math.round((valRcurr/(data.complexCount+data.simpleCount))*100) + '% Complex');
 
-      if(Math.round(valRcurr) < Math.round(data.complexPerc)){
+      if(Math.round(valRcurr) < Math.round(data.complexCount)){
 
         if(Math.round(valRcurr) < Math.round(valRprev)){
           diffR = diffR - diff;
@@ -335,7 +339,7 @@ function createSliders(data,questions,reflections,mlScore){
             });
         });
       }
-      else if(Math.round(valRcurr) > Math.round(data.complexPerc)){
+      else if(Math.round(valRcurr) > Math.round(data.complexCount)){
 
         if(Math.round(valRcurr) > Math.round(valRprev)){
           diffR = diffR + diff;
