@@ -13,24 +13,28 @@ function createSliders(data,questions,reflections,mlScore){
 
   // associate range steps with session text
   let i = 1;
-  let step = 100/(data.openCount+data.closedCount);
+  // let step = 100/(data.openCount+data.closedCount);
   questions.open.forEach(function(d){
-    d.step = Math.round(step * i);
+    d.step = i;
+    // d.step = Math.round(step * i);
     i++;
   });
   questions.close.forEach(function(d){
-    d.step = Math.round(step * i);
+    d.step = i;
+    // d.step = Math.round(step * i);
     i++;
   });
 
   i = 1;
-  step = 100/(data.complexCount+data.simpleCount)
+  // step = 100/(data.complexCount+data.simpleCount)
   reflections.complex.forEach(function(d){
-    d.step = Math.round(step * i);
+    d.step = i;
+    // d.step = Math.round(step * i);
     i++;
   });
   reflections.simple.forEach(function(d){
-    d.step = Math.round(step * i);
+    d.step = i;
+    // d.step = Math.round(step * i);
     i++;
   });
   // console.log('open+close = '+ (data.openCount+data.closedCount));
@@ -184,7 +188,7 @@ function createSliders(data,questions,reflections,mlScore){
 
       let valQcurr = document.getElementById('slider-open').value;
       d3.select('#slider-open')
-        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + (valQcurr/(data.openCount+data.closedCount)) + '%, #EEEEEE ' + (valQcurr/(data.openCount+data.closedCount)) + '%, #EEEEEE)');
+        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + (valQcurr/(data.openCount+data.closedCount)*100) + '%, #EEEEEE ' + (valQcurr/(data.openCount+data.closedCount)*100) + '%, #EEEEEE)');
       d3.select('#openQ-perc')
         .text(Math.round((valQcurr/(data.openCount+data.closedCount))*100) + '% Open');
 
@@ -304,7 +308,7 @@ function createSliders(data,questions,reflections,mlScore){
     .on('input',function(e){
       let valRcurr = document.getElementById('slider-complex').value;
       d3.select('#slider-complex')
-        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + (valRcurr/(data.complexCount+data.simpleCount)) + '%, #EEEEEE ' + (valRcurr/(data.complexCount+data.simpleCount)) + '%, #EEEEEE)');
+        .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + (valRcurr/(data.complexCount+data.simpleCount)*100) + '%, #EEEEEE ' + (valRcurr/(data.complexCount+data.simpleCount)*100) + '%, #EEEEEE)');
       d3.select('#complexQ-perc')
         .text(Math.round((valRcurr/(data.complexCount+data.simpleCount))*100) + '% Complex');
 

@@ -13,7 +13,7 @@ const scaleColor = chroma.scale(['#EEEEEE','#19ABB5']);
 const sessionTest = './transcript.json';
 const sessionGood = './good_wav.json';
 const sessionBad = './bad_wav.json';
-const session = sessionGood;
+const session = sessionBad;
 let sessionAudio, sessionType;
 if(session == sessionGood){
   sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_goodtherapy.wav';
@@ -23,10 +23,16 @@ if(session == sessionGood){
   sessionType = 'bad';
 }
 
-// let totalQ = 5;
-// let openQ = 3;
-// let totalR = 6;
-// let complexR = 4;
+//variation randomization
+const variationArr = [
+  {variation: 'narrative description'},
+  {variation: 'confidence'},
+  {variation: 'manipulation'},
+  {variation: 'similar sessions'},
+  {variation: 'influential n-grams'}
+];
+const randomIndex = Math.floor(Math.random() * 5);
+const variationTest = variationArr[randomIndex].variation; //will ultimately be variable to define variation
 
 let listenMaxDur = 0;
 let outputDurSec = 0;
@@ -100,6 +106,7 @@ d3.select('#selection').selectAll('.btn')
   rating = document.getElementById('slider-rating').value;
   d3.select('#rating-val').html(rating);
   d3.select('#slider-rating')
+    .style('height','10px')
     .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + ((rating/5)*100) + '%, #EEEEEE ' + ((rating/5)*100) + '%, #EEEEEE)')
     .style('border-radius','10px')
     .on('input',function(){
@@ -361,7 +368,7 @@ if(variation == 'confidence'){
       .style('opacity',0);
     }
 
-    /************* BEHAVIOR COUNTS *************/
+    /************* LOWER LEFT CONTENT *************/
 
     if(variation == 'manipulation'){
 
@@ -374,6 +381,8 @@ if(variation == 'confidence'){
         .append('p')
         .attr('id','desc-counts')
         .style('width',barW+'px')
+        .style('margin-top','20px')
+        .style('font-size','12px')
         .html('Here are some measures correlated with empathy. '+
         'Drag the sliders to see how the empathy score and session transcript change when these measures change.')
 
@@ -386,7 +395,6 @@ if(variation == 'confidence'){
         .attr('id','svg-counts')
         .attr('height',h)
         .attr('width',w);
-        // .attr('transform','translate(0,40)');
 
       const openQG = svgCounts
         .append('g')
@@ -445,70 +453,7 @@ if(variation == 'confidence'){
       };
       createSliders(sliderObj,questionsObj,reflectionsObj,mlScore);
 
-    }
-    // else if(variation == 'confidence') {
-    //
-    //   // createCountsBars(percentOpenQuestions,percentComplexReflections);
-    //
-    // } else {
-    //
-    //   let i=-1;
-    //   openQG.selectAll('rect-open')
-    //     .data(openArr)
-    //     .enter()
-    //     .append('rect')
-    //     .attr('class','rect-counts rect-open')
-    //     .attr('width',barW/(openQuestions+closedQuestions))
-    //     .attr('x',function(){
-    //       i++;
-    //       return i*(barW/(openQuestions+closedQuestions));
-    //     });
-    //
-    //   openQG.selectAll('rect-close')
-    //     .data(closeArr)
-    //     .enter()
-    //     .append('rect')
-    //     .attr('class','rect-counts rect-close')
-    //     .attr('width',barW/(openQuestions+closedQuestions))
-    //     .attr('x',function(){
-    //       i++;
-    //       return i*(barW/(openQuestions+closedQuestions));
-    //     });
-    //
-    //   i=-1;
-    //   complexRG.selectAll('rect-complex')
-    //     .data(complexArr)
-    //     .enter()
-    //     .append('rect')
-    //     .attr('class','rect-counts rect-complex')
-    //     .attr('width',barW/(complexReflections+simpleReflections))
-    //     .attr('x',function(){
-    //       i++;
-    //       return i*(barW/(complexReflections+simpleReflections));
-    //     });
-    //
-    //   complexRG.selectAll('rect-simple')
-    //     .data(simpleArr)
-    //     .enter()
-    //     .append('rect')
-    //     .attr('class','rect-counts rect-simple')
-    //     .attr('width',barW/(complexReflections+simpleReflections))
-    //     .attr('x',function(){
-    //       i++;
-    //       return i*(barW/(complexReflections+simpleReflections));
-    //     });
-    //
-    //   svgCounts.selectAll('.rect-counts')
-    //     .attr('height',barCountsH)
-    //     .attr('y',barY)
-    //     .style('stroke-width','2px')
-    //     .style('stroke','white');
-    // }
-
-    let perc;
-    let therapist_id;
-
-    if(variation == 'confidence' || variation == 'narrative description'){
+    }else if(variation == 'confidence' || variation == 'narrative description'){
       d3.select('#content-empathy')
         .append('h6')
         .attr('id','title-aboutAlg')
@@ -519,211 +464,19 @@ if(variation == 'confidence'){
         .attr('id','desc-aboutAlg')
         .style('width',barW+'px')
         .html(aboutAlg);
-    };
-
-    /************* BAR LABELS *************/
-
-  //   mlScoreL = mlScoreG.append('g')
-  //     .attr('class','labels-group');
-  //
-  //     mlScoreL.append('line')
-  //       .attr('class','labels-lines')
-  //       .attr('x1',scaleX(4))
-  //       .attr('x2',scaleX(4));
-  //
-  //     mlScoreLT1 = mlScoreL.append('text')
-  //       .attr('class','labels-text')
-  //       .attr('x',scaleX(4));
-  //
-  //     mlScoreLT1.append('tspan')
-  //       .text('Adv ')
-  //       .style('font-weight','lighter');
-  //
-  //     mlScoreLT1.append('tspan')
-  //       .text('4.0')
-  //       .style('font-weight','bold');
-  //
-  //     mlScoreL.append('line')
-  //       .attr('class','labels-lines')
-  //       .attr('x1',scaleX(3.5))
-  //       .attr('x2',scaleX(3.5));
-  //
-  //     mlScoreLT2 = mlScoreL.append('text')
-  //       .attr('class','labels-text')
-  //       .attr('x',scaleX(3.5));
-  //
-  //     mlScoreLT2.append('tspan')
-  //       .text('Basic ')
-  //       .style('font-weight','lighter');
-  //
-  //     mlScoreLT2.append('tspan')
-  //       .text('3.5')
-  //       .style('font-weight','bold');
-  //
-  // if(variation == 'confidence'){
-  //
-  //   mlScoreL.selectAll('.labels-lines')
-  //     .attr('y1',barY+barH+confAdj+4)
-  //     .attr('y2',barY+barH+confAdj+14);
-  //
-  //   mlScoreLT1
-  //     .attr('y',barY+barH+confAdj+28);
-  //
-  //   mlScoreLT2
-  //     .attr('y',barY+barH+confAdj+28);
-  //
-  // } else {
-  //   mlScoreL.selectAll('.labels-lines')
-  //     .attr('y1',barY+barH+4)
-  //     .attr('y2',barY+barH+14);
-  //
-  //   mlScoreLT1
-  //     .attr('y',barY+barH+28);
-  //
-  //   mlScoreLT2
-  //     .attr('y',barY+barH+28);
-  // }
-  //
-  //   openQL = openQG.append('g')
-  //     .attr('class','labels-group');
-  //
-  //     openQL.append('line')
-  //       .attr('class','labels-lines')
-  //       .attr('x1',barW*.7)
-  //       .attr('x2',barW*.7)
-  //       .attr('y1',barY+barCountsH+4)
-  //       .attr('y2',barY+barCountsH+14);
-  //
-  //     openQLT1 = openQL.append('text')
-  //       .attr('class','labels-text')
-  //       .attr('y',barY+barCountsH+28)
-  //       .attr('x',barW*.7);
-  //
-  //     openQLT1.append('tspan')
-  //       .text('Adv ')
-  //       .style('font-weight','lighter');
-  //
-  //     openQLT1.append('tspan')
-  //       .text('70')
-  //       .style('font-weight','bold');
-  //
-  //     openQL.append('line')
-  //       .attr('class','labels-lines')
-  //       .attr('x1',barW*.5)
-  //       .attr('x2',barW*.5)
-  //       .attr('y1',barY+barCountsH+4)
-  //       .attr('y2',barY+barCountsH+14);
-  //
-  //     openQLT2 = openQL.append('text')
-  //       .attr('class','labels-text')
-  //       .attr('y',barY+barCountsH+28)
-  //       .attr('x',barW*.5);
-  //
-  //     openQLT2.append('tspan')
-  //       .text('Basic ')
-  //       .style('font-weight','lighter');
-  //
-  //     openQLT2.append('tspan')
-  //       .text('50')
-  //       .style('font-weight','bold');
-  //
-  //   complexRL = complexRG.append('g')
-  //     .attr('class','labels-group');
-  //
-  //     complexRL.append('line')
-  //       .attr('class','labels-lines')
-  //       .attr('x1',barW*.7)
-  //       .attr('x2',barW*.7)
-  //       .attr('y1',barY+barCountsH+4)
-  //       .attr('y2',barY+barCountsH+14);
-  //
-  //     complexRLT1 = complexRL.append('text')
-  //       .attr('class','labels-text')
-  //       .attr('y',barY+barCountsH+28)
-  //       .attr('x',barW*.7);
-  //
-  //     complexRLT1.append('tspan')
-  //       .text('Adv ')
-  //       .style('font-weight','lighter');
-  //
-  //     complexRLT1.append('tspan')
-  //       .text('70')
-  //       .style('font-weight','bold');
-  //
-  //     complexRL.append('line')
-  //       .attr('class','labels-lines')
-  //       .attr('x1',barW*.5)
-  //       .attr('x2',barW*.5)
-  //       .attr('y1',barY+barCountsH+4)
-  //       .attr('y2',barY+barCountsH+14);
-  //
-  //     complexRLT2 = complexRL.append('text')
-  //       .attr('class','labels-text')
-  //       .attr('y',barY+barCountsH+28)
-  //       .attr('x',barW*.5);
-  //
-  //     complexRLT2.append('tspan')
-  //       .text('Basic ')
-  //       .style('font-weight','lighter');
-  //
-  //     complexRLT2.append('tspan')
-  //       .text('50')
-  //       .style('font-weight','bold');
+    }else if(variation == 'influential n-grams'){
+      influenceLegend(data.session.talkTurn);
+    }
 
     /************** SESSION TRANSCRIPT **************/
 
     if(variation == 'influential n-grams'){
-      influenceLegend();
       influenceFunctionality(mlScore);
     }
 
     d3.select('#content-session')
       .append('div')
       .attr('id','container-session');
-
-    // p for each talk turn
-    // d3.select('#session-group').selectAll('.session-text')
-    //   .data(data.session.talkTurn)
-    //   .enter()
-    //   .append('p')
-    //   .attr('class',function(d){
-    //     if(d.speaker == 'therapist'){
-    //       return 'session-text therapist-text';
-    //     }
-    //     else{
-    //       return 'session-text client-text';
-    //     }
-    //   })
-    //   .attr('id',function(d){
-    //     return d.speaker + '-' + d.id;
-    //   })
-    //   .html(function(d){
-    //     return d.asrText;
-    //   });
-
-    // li for each talk turn
-    // d3.select('#container-session')
-    //   .append('ol')
-    //   .attr('id','session-list');
-    //
-    // d3.select('#session-list').selectAll('.session-text')
-    //   .data(data.session.talkTurn)
-    //   .enter()
-    //   .append('li')
-    //   .attr('class',function(d){
-    //     if(d.speaker == 'therapist'){
-    //       return 'session-text therapist-text';
-    //     }
-    //     else{
-    //       return 'session-text client-text';
-    //     }
-    //   })
-    //   .attr('id',function(d){
-    //     return d.speaker + '-' + d.id;
-    //   })
-    //   .html(function(d){
-    //     return d.asrText;
-    //   });
 
     // text for each talk turn
     d3.select('#container-session').selectAll('.session-text')
@@ -757,6 +510,9 @@ if(variation == 'confidence'){
         return d.speaker + '-' + d.id;
       })
       .append('tspan')
+      .attr('class',function(d){
+        return d.speaker + '-original';
+      })
       .attr('id',function(d){
         return d.speaker + '-original-' + d.id;
       })
