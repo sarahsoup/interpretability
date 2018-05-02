@@ -13,7 +13,27 @@ const scaleColor = chroma.scale(['#EEEEEE','#19ABB5']);
 const sessionTest = './transcript.json';
 const sessionGood = './good_wav.json';
 const sessionBad = './bad_wav.json';
-const session = sessionBad;
+
+let listenMaxDur = 0;
+let outputDurSec = 0;
+let session;
+let variation;
+let rating;
+let dataObj = {};
+
+const scaleX = d3.scaleLinear().domain([0, 5]).range([0, barW]);
+const scaleP = d3.scaleLinear().domain([0, 100]).range([0, barW]);
+
+const windowW = window.innerWidth;
+
+//session randomization
+const sessionArr = [
+  {session: './good_wav.json'},
+  {session: './bad_wav.json'},
+];
+const randomSessIndex = Math.floor(Math.random() * 2);
+session = sessionArr[randomSessIndex].session;
+// session = sessionBad;
 let sessionAudio, sessionType;
 if(session == sessionGood){
   sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_goodtherapy.wav';
@@ -31,19 +51,8 @@ const variationArr = [
   {variation: 'similar sessions'},
   {variation: 'influential n-grams'}
 ];
-const randomIndex = Math.floor(Math.random() * 5);
-const variationTest = variationArr[randomIndex].variation; //will ultimately be variable to define variation
-
-let listenMaxDur = 0;
-let outputDurSec = 0;
-let variation;
-let rating;
-let dataObj = {};
-
-const scaleX = d3.scaleLinear().domain([0, 5]).range([0, barW]);
-const scaleP = d3.scaleLinear().domain([0, 100]).range([0, barW]);
-
-const windowW = window.innerWidth;
+const randomVarIndex = Math.floor(Math.random() * 5);
+variation = variationArr[randomVarIndex].variation;
 
 const aboutAlg = 'This is text about the algorithm';
 
@@ -83,9 +92,18 @@ d3.select('#rating').selectAll('.btn')
     d3.select('#rating')
       .style('display','none')
       .classed('hidden',true);
-    d3.select('#selection')
-      .classed('hidden',false)
-      .style('display','block');
+
+    //only when variation selection screen turned off
+    // d3.select('#selection')
+    //   .classed('hidden',false)
+    //   .style('display','block');
+    d3.select('#header')
+      .classed('hidden',false);
+    d3.select('#content')
+      .classed('hidden',false);
+    d3.select('#next')
+      .classed('hidden',false);
+    createVariation(variation);
   });
 
 d3.select('#selection').selectAll('.btn')
@@ -463,6 +481,7 @@ if(variation == 'confidence'){
         .append('p')
         .attr('id','desc-aboutAlg')
         .style('width',barW+'px')
+        .style('margin-top','40px')
         .html(aboutAlg);
     }else if(variation == 'influential n-grams'){
       influenceLegend(data.session.talkTurn);
@@ -526,8 +545,12 @@ if(variation == 'confidence'){
       similarSessions();
     }
     else if(variation == 'influential n-grams'){
+      d3.select('#container-session')
+        .style('margin-top','30px');
       influence();
     }else if(variation == 'manipulation'){
+      d3.select('#container-session')
+        .style('height','540px');
       d3.select('#btn-to-survey')
         .style('position','relative')
         .style('top','-160px');

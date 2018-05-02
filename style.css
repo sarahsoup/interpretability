@@ -367,6 +367,7 @@ li {
 .striked-open, .striked-complex{
   text-decoration: line-through;
   font-weight: bolder;
+  color: #CC6471;
 }
 
 .text-change-open, .text-change-complex{

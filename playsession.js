@@ -34,8 +34,17 @@ function playSession(){
     });
   d3.select('#btn-stop-0')
     .append('i')
+    .attr('id','icon-stop-circle-0')
+    .attr('class','far fa-circle fa-2x');
+    // .attr('class','far fa-stop-circle fa-2x');
+  d3.select('#btn-stop-0')
+    .append('i')
     .attr('id','icon-stop-0')
-    .attr('class','far fa-stop-circle fa-2x');
+    .attr('class','fas fa-fast-backward fa-sm')
+    .style('position','relative')
+    .style('right','23px')
+    .style('bottom','6px');
+
   progressDiv = d3.select('#audio-controls-0')
     .append('div')
     .attr('class','progress')

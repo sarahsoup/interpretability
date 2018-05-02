@@ -15,10 +15,9 @@ function influenceLegend(talkTurn){
     .attr('class','ngram-legend')
     .style('font-size','12px')
     .style('width',barW+'px')
-    .style('margin-top','20px')
+    .style('margin-top','30px')
     .html('The most influential words and phrases to the empathy score are listed below and emphasized in the session transcript. ' +
-    'Some are <span class="pos">pro-empathy</span> and some are <span class="neg">anti-empathy</span>. Click the buttons to see how changing the ' +
-    'most influential words and phrases to all positive or negative change the empathy score.')
+    'Some are <span class="pos">pro-empathy</span> and some are <span class="neg">anti-empathy</span>.')
 
   // d3.selectAll('.pos')
   //   .style('color','#70B276')
@@ -63,6 +62,17 @@ function influenceLegend(talkTurn){
 
 
 function influenceFunctionality(mlScore){
+
+  d3.select('#content-session')
+    .append('p')
+    .attr('class','ngram-legend')
+    .style('font-size','12px')
+    .style('width',barW+'px')
+    .style('margin-top','30px')
+    .style('margin-bottom','10px')
+    .html('Click the buttons below to see how changing the ' +
+    'most influential words and phrases to all positive or negative affect the empathy score.');
+
   btns = d3.select('#content-session')
     .append('g')
     .attr('id','btn-group');
