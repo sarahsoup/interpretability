@@ -10,9 +10,9 @@ const barAdj = 10;
 const confInt = 0.4;
 const confIntCounts = 10;
 const scaleColor = chroma.scale(['#EEEEEE','#19ABB5']);
-const sessionTest = './transcript.json';
-const sessionGood = './good_wav.json';
-const sessionBad = './bad_wav.json';
+const sessionTest = './output/transcript.json';
+const sessionGood = './output/good_wav.json';
+const sessionBad = './output/bad_wav.json';
 
 let listenMaxDur = 0;
 let outputDurSec = 0;
@@ -33,7 +33,7 @@ const sessionArr = [
 ];
 const randomSessIndex = Math.floor(Math.random() * 2);
 session = sessionArr[randomSessIndex].session;
-// session = sessionBad;
+// session = sessionGood; //manually set session
 let sessionAudio, sessionType;
 if(session == sessionGood){
   sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_goodtherapy.wav';
@@ -53,6 +53,7 @@ const variationArr = [
 ];
 const randomVarIndex = Math.floor(Math.random() * 5);
 variation = variationArr[randomVarIndex].variation;
+// variation = 'similar sessions'; //manually set variation
 
 const aboutAlg = 'This is text about the algorithm';
 

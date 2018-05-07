@@ -1,3 +1,12 @@
+const similarSessionGood1 = './audio/tascam_20150427_ad_ts_bj_gt_clip.wav';
+const empathyGood1 = '5';
+const similarSessionGood2 = './audio/tascam_20150430_ad_bp_ha_gt_clip.wav';
+const empathyGood2 = '5';
+const similarSessionBad1 = './audio/tascam_20150430_bp_ad_ha_bt_clip.wav';
+const empathyBad1 = '2';
+const similarSessionBad2 = './audio/tascam_20150504_bp_ts_al_bt_clip.wav';
+const empathyBad2 = '3';
+
 function similarSessions(){
   // d3.select('#container-session')
   //   .style('height','268px'); //svg-empathy (300) height minus difference in top-pos (32)
@@ -40,7 +49,13 @@ function similarSessions(){
       .attr('class','icon fas fa-chevron-down fa-2x');
     accordionButton1
       .append('text')
-      .text('EMPATHY SCORE ' + data.scores.globals.empathy.toFixed(2));
+      .text(function(){
+        if(session == sessionGood){
+          return 'EMPATHY SCORE ' + empathyGood1;
+        }else if(session == sessionBad){
+          return 'EMPATHY SCORE ' + empathyBad1;
+        }
+      });
     container.append('div')
       .attr('class','collapse')
       .attr('id','collapse-1');
@@ -62,32 +77,38 @@ function similarSessions(){
       .attr('class','icon fas fa-chevron-down fa-2x');
     accordionButton2
       .append('text')
-      .text('EMPATHY SCORE ' + data.scores.globals.empathy.toFixed(2));
+      .text(function(){
+        if(session == sessionGood){
+          return 'EMPATHY SCORE ' + empathyGood2;
+        }else if(session == sessionBad){
+          return 'EMPATHY SCORE ' + empathyBad2;
+        }
+      });
     container.append('div')
       .attr('class','collapse')
       .attr('id','collapse-2');
     playAudio('2');
 
-    accordionButton3 = container.append('button')
-      .attr('class','accordion')
-      .attr('id','accordion-3')
-      .attr('data-toggle','collapse')
-      .attr('data-target','#collapse-3')
-      .on('click',function(){
-        flipIcon('3');
-      });
-    accordionButton3
-      .append('i')
-      .attr('class','icon')
-      .attr('id','icon-3')
-      .attr('class','icon fas fa-chevron-down fa-2x');
-    accordionButton3
-      .append('text')
-      .text('EMPATHY SCORE ' + data.scores.globals.empathy.toFixed(2));
-    container.append('div')
-      .attr('class','collapse')
-      .attr('id','collapse-3');
-    playAudio('3');
+    // accordionButton3 = container.append('button')
+    //   .attr('class','accordion')
+    //   .attr('id','accordion-3')
+    //   .attr('data-toggle','collapse')
+    //   .attr('data-target','#collapse-3')
+    //   .on('click',function(){
+    //     flipIcon('3');
+    //   });
+    // accordionButton3
+    //   .append('i')
+    //   .attr('class','icon')
+    //   .attr('id','icon-3')
+    //   .attr('class','icon fas fa-chevron-down fa-2x');
+    // accordionButton3
+    //   .append('text')
+    //   .text('EMPATHY SCORE ' + data.scores.globals.empathy.toFixed(2));
+    // container.append('div')
+    //   .attr('class','collapse')
+    //   .attr('id','collapse-3');
+    // playAudio('3');
 
     // container.selectAll('.collapse')
     //   // .style('padding', '20px 20px')
@@ -135,11 +156,21 @@ function similarSessions(){
       .append('audio')
       .attr('id','session-audio' + div)
       .append('source')
-      // .attr('src',sessionAudio)
-      // .attr('src','./3072492.wav')
-      // .attr('src','http://www.dropbox.com/home/Psychotherapy%20Transcripts?preview=3072492.wav') //put in html, add s if github pages doesn't work
-      // .attr('src','http://www.dropbox.com/s/vnmvl05zqj6ovfx/3072492.wav')
-      // .attr('src','http://drive.google.com/open?id=0B7OaBHt0PWMwZjVXVmxiZTJ0VU0')
+      .attr('src',function(){
+        if(session == sessionGood){
+          if(div == '1'){
+            return similarSessionGood1;
+          }else if(div == '2'){
+            return similarSessionGood2;
+          }
+        }else if(session == sessionBad){
+          if(div == '1'){
+            return similarSessionBad1;
+          }else if(div == '2'){
+            return similarSessionBad2;
+          }
+        }
+      })
       .attr('type','audio/wav');
 
     d3.select('#session-audio' + div)
@@ -193,47 +224,47 @@ function similarSessions(){
       .style('border-radius','5px');
   }
 
-  // function togglePlayPause(div) {
-  //   let audioPlayer = document.getElementById('session-audio' + div);
-  //   let btn = document.getElementById('btn-play-' + div);
-  //   icon = d3.select('#icon-play-' + div);
-  //    if (audioPlayer.paused || audioPlayer.ended) {
-  //       btn.title = 'pause';
-  //       btn.className = 'btn-pause';
-  //       icon.classed('fa-play-circle',false);
-  //       icon.classed('fa-pause-circle',true);
-  //       audioPlayer.play();
-  //    }
-  //    else {
-  //       btn.title = 'play';
-  //       btn.className = 'btn-play';
-  //       icon.classed('fa-play-circle',true);
-  //       icon.classed('fa-pause-circle',false);
-  //       audioPlayer.pause();
-  //    }
-  // }
-  //
-  // function stopPlayer(div){
-  //   audioPlayer = document.getElementById('session-audio' + div);
-  //   audioPlayer.pause();
-  //   audioPlayer.currentTime = 0;
-  //
-  //   btn = document.getElementById('btn-play-' + div);
-  //   btn.title = 'play';
-  //   btn.className = 'btn-play';
-  //
-  //   progressBar = document.getElementById('progress-bar' + div);
-  //   progressBar.value = 0;
-  // }
-  //
-  // function updateProgressBar(div){
-  //   audioPlayer = document.getElementById('session-audio' + div);
-  //   progress = d3.select('#progress-' + div);
-  //   progressBar = d3.select('#progress-bar-' + div);
-  //   percentage = (100 / audioPlayer.duration) * audioPlayer.currentTime;
-  //   totalW = parseInt(progress.style('width'),10);
-  //   progressW = (totalW * (percentage/100)).toFixed(2);
-  //   progressBar.style('width',progressW + 'px');
-  // }
+  function togglePlayPause(div) {
+    let audioPlayer = document.getElementById('session-audio' + div);
+    let btn = document.getElementById('btn-play-' + div);
+    icon = d3.select('#icon-play-' + div);
+     if (audioPlayer.paused || audioPlayer.ended) {
+        btn.title = 'pause';
+        btn.className = 'btn-pause';
+        icon.classed('fa-play-circle',false);
+        icon.classed('fa-pause-circle',true);
+        audioPlayer.play();
+     }
+     else {
+        btn.title = 'play';
+        btn.className = 'btn-play';
+        icon.classed('fa-play-circle',true);
+        icon.classed('fa-pause-circle',false);
+        audioPlayer.pause();
+     }
+  }
+
+  function stopPlayer(div){
+    audioPlayer = document.getElementById('session-audio' + div);
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+
+    btn = document.getElementById('btn-play-' + div);
+    btn.title = 'play';
+    btn.className = 'btn-play';
+
+    progressBar = document.getElementById('progress-bar-' + div);
+    progressBar.value = 0;
+  }
+
+  function updateProgressBar(div){
+    audioPlayer = document.getElementById('session-audio' + div);
+    progress = d3.select('#progress-' + div);
+    progressBar = d3.select('#progress-bar-' + div);
+    percentage = (100 / audioPlayer.duration) * audioPlayer.currentTime;
+    totalW = parseInt(progress.style('width'),10);
+    progressW = (totalW * (percentage/100)).toFixed(2);
+    progressBar.style('width',progressW + 'px');
+  }
 
 }
