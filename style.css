@@ -11,6 +11,10 @@
   padding-right: 0px;
 }
 
+#progress-0{
+  width: 80%;
+}
+
 #rating-val{
   text-align: center;
   font-size: 40px;

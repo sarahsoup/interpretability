@@ -28,18 +28,20 @@ const windowW = window.innerWidth;
 
 //session randomization
 const sessionArr = [
-  {session: './good_wav.json'},
-  {session: './bad_wav.json'},
+  {session: './output/good_wav.json'},
+  {session: './output/bad_wav.json'},
 ];
 const randomSessIndex = Math.floor(Math.random() * 2);
 session = sessionArr[randomSessIndex].session;
 // session = sessionGood; //manually set session
 let sessionAudio, sessionType;
 if(session == sessionGood){
-  sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_goodtherapy.wav';
+  // sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_goodtherapy.wav'; // full audio
+  sessionAudio = './audio/hi_goodtherapy_clip.wav';
   sessionType = 'good';
 }else if(session == sessionBad){
-  sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_badtherapy.wav';
+  // sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_badtherapy.wav'; // full audio
+  sessionAudio = './audio/hi_badtherapy_clip.wav';
   sessionType = 'bad';
 }
 

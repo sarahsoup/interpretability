@@ -31,8 +31,6 @@ function similarSessions(){
     .style('margin-top','40px')
     .append('g');
 
-  d3.json('./transcript.json',function(data){
-
     /* create accordian */
     accordionButton1 = container.append('button')
       .attr('class','accordion')
@@ -40,7 +38,7 @@ function similarSessions(){
       .attr('data-toggle','collapse')
       .attr('data-target','#collapse-1')
       .on('click',function(){
-        flipIcon('1');
+        similarFlipIcon('1');
       });
     accordionButton1
       .append('i')
@@ -60,7 +58,7 @@ function similarSessions(){
       .attr('class','collapse')
       .attr('id','collapse-1');
       // .classed('accordion-first', true)
-    playAudio('1');
+    similarPlayAudio('1');
 
     accordionButton2 = container.append('button')
       .attr('class','accordion')
@@ -68,7 +66,7 @@ function similarSessions(){
       .attr('data-toggle','collapse')
       .attr('data-target','#collapse-2')
       .on('click',function(){
-        flipIcon('2');
+        similarFlipIcon('2');
       });
     accordionButton2
       .append('i')
@@ -87,60 +85,9 @@ function similarSessions(){
     container.append('div')
       .attr('class','collapse')
       .attr('id','collapse-2');
-    playAudio('2');
+    similarPlayAudio('2');
 
-    // accordionButton3 = container.append('button')
-    //   .attr('class','accordion')
-    //   .attr('id','accordion-3')
-    //   .attr('data-toggle','collapse')
-    //   .attr('data-target','#collapse-3')
-    //   .on('click',function(){
-    //     flipIcon('3');
-    //   });
-    // accordionButton3
-    //   .append('i')
-    //   .attr('class','icon')
-    //   .attr('id','icon-3')
-    //   .attr('class','icon fas fa-chevron-down fa-2x');
-    // accordionButton3
-    //   .append('text')
-    //   .text('EMPATHY SCORE ' + data.scores.globals.empathy.toFixed(2));
-    // container.append('div')
-    //   .attr('class','collapse')
-    //   .attr('id','collapse-3');
-    // playAudio('3');
-
-    // container.selectAll('.collapse')
-    //   // .style('padding', '20px 20px')
-    //   .style('font-size', '10px');
-    //   // .style('border-bottom','1px solid black');
-
-    // function createSession(){
-    //
-    //   container.select('#session-list-1').selectAll('.session-text')
-    //     .data(data.session.talkTurn)
-    //     .enter()
-    //     .append('li')
-    //     .attr('class',function(d){
-    //       if(d.speaker == 'therapist'){
-    //         return 'session-text therapist-text';
-    //       }
-    //       else{
-    //         return 'session-text client-text';
-    //       }
-    //     })
-    //     .attr('id',function(d){
-    //       return d.speaker + '-' + d.id;
-    //     })
-    //     .html(function(d){
-    //       return d.asrText;
-    //     });
-    //
-    // }
-
-  });
-
-  function flipIcon(num){
+  function similarFlipIcon(num){
     icon = d3.select('#icon-'+num);
     if(icon.classed('fa-chevron-down')){
       icon.classed('fa-chevron-down',false);
@@ -151,7 +98,7 @@ function similarSessions(){
     }
   };
 
-  function playAudio(div){
+  function similarPlayAudio(div){
     d3.select('#collapse-' + div)
       .append('audio')
       .attr('id','session-audio' + div)
@@ -175,7 +122,7 @@ function similarSessions(){
 
     d3.select('#session-audio' + div)
       .on('timeupdate',function(){
-        updateProgressBar(div);
+        similarUpdateProgressBar(div);
       });
 
     d3.select('#collapse-' + div)
@@ -187,7 +134,7 @@ function similarSessions(){
       .attr('class','btn-play')
       .attr('title','play')
       .on('click',function(d){
-        togglePlayPause(div);
+        similarTogglePlayPause(div);
       });
     d3.select('#btn-play-' + div)
       .append('i')
@@ -199,7 +146,7 @@ function similarSessions(){
       .attr('class','btn-stop')
       .attr('title','stop')
       .on('click',function(d){
-        stopPlayer(div);
+        similarStopPlayer(div);
       });
     d3.select('#btn-stop-' + div)
       .append('i')
@@ -224,7 +171,7 @@ function similarSessions(){
       .style('border-radius','5px');
   }
 
-  function togglePlayPause(div) {
+  function similarTogglePlayPause(div) {
     let audioPlayer = document.getElementById('session-audio' + div);
     let btn = document.getElementById('btn-play-' + div);
     icon = d3.select('#icon-play-' + div);
@@ -244,7 +191,7 @@ function similarSessions(){
      }
   }
 
-  function stopPlayer(div){
+  function similarStopPlayer(div){
     audioPlayer = document.getElementById('session-audio' + div);
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
@@ -257,13 +204,13 @@ function similarSessions(){
     progressBar.value = 0;
   }
 
-  function updateProgressBar(div){
+  function similarUpdateProgressBar(div){
     audioPlayer = document.getElementById('session-audio' + div);
     progress = d3.select('#progress-' + div);
     progressBar = d3.select('#progress-bar-' + div);
-    percentage = (100 / audioPlayer.duration) * audioPlayer.currentTime;
+    percentage = (audioPlayer.currentTime / audioPlayer.duration);
     totalW = parseInt(progress.style('width'),10);
-    progressW = (totalW * (percentage/100)).toFixed(2);
+    progressW = (totalW * percentage).toFixed(2);
     progressBar.style('width',progressW + 'px');
   }
 

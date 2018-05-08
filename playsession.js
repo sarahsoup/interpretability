@@ -52,7 +52,7 @@ function playSession(){
     .style('display','inline-block')
     .style('margin-left','10px')
     .style('margin-bottom','8px')
-    .style('width','80%')
+    // .style('width','80%')
     .style('height','10px')
     .style('border-radius','5px');
   progressDiv
@@ -105,9 +105,9 @@ function updateProgressBar(div){
   audioPlayer = document.getElementById('session-audio' + div);
   progress = d3.select('#progress-' + div);
   progressBar = d3.select('#progress-bar-' + div);
-  percentage = (100 / audioPlayer.duration) * audioPlayer.currentTime;
-  totalW = parseInt(progress.style('width'),10);
-  progressW = (totalW * (percentage/100)).toFixed(2);
+  percentage = (audioPlayer.currentTime / audioPlayer.duration);
+  totalW = parseInt(d3.select('#progress-0').style('width'),10);
+  progressW = (totalW * percentage).toFixed(2);
   progressBar.style('width',progressW + 'px');
   if(listenMaxDur < audioPlayer.currentTime){
     listenMaxDur = audioPlayer.currentTime;
