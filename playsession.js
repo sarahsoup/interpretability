@@ -23,7 +23,8 @@ function playSession(){
   d3.select('#btn-play-0')
     .append('i')
     .attr('id','icon-play-0')
-    .attr('class','far fa-play-circle fa-2x');
+    .attr('class','fas fa-play fa-lg');
+    // .attr('class','far fa-play-circle fa-2x');
   d3.select('#audio-controls-0')
     .append('button')
     .attr('id','btn-stop-0')
@@ -32,18 +33,19 @@ function playSession(){
     .on('click',function(d){
       stopPlayer(0);
     });
-  d3.select('#btn-stop-0')
-    .append('i')
-    .attr('id','icon-stop-circle-0')
-    .attr('class','far fa-circle fa-2x');
+  // d3.select('#btn-stop-0')
+  //   .append('i')
+  //   .attr('id','icon-stop-circle-0')
+  //   .attr('class','far fa-circle fa-2x');
     // .attr('class','far fa-stop-circle fa-2x');
   d3.select('#btn-stop-0')
     .append('i')
     .attr('id','icon-stop-0')
-    .attr('class','fas fa-fast-backward fa-sm')
-    .style('position','relative')
-    .style('right','23px')
-    .style('bottom','6px');
+    .attr('class','fas fa-fast-backward fa-lg');
+    // .attr('class','fas fa-fast-backward fa-sm')
+    // .style('position','relative')
+    // .style('right','23px')
+    // .style('bottom','6px');
 
   progressDiv = d3.select('#audio-controls-0')
     .append('div')
@@ -51,8 +53,6 @@ function playSession(){
     .attr('id','progress-0')
     .style('display','inline-block')
     .style('margin-left','10px')
-    .style('margin-bottom','8px')
-    // .style('width','80%')
     .style('height','10px')
     .style('border-radius','5px');
   progressDiv
@@ -72,15 +72,15 @@ function togglePlayPause(div) {
    if (audioPlayer.paused || audioPlayer.ended) {
       btn.title = 'pause';
       btn.className = 'btn-pause';
-      icon.classed('fa-play-circle',false);
-      icon.classed('fa-pause-circle',true);
+      icon.classed('fa-play'/*-circle'*/,false);
+      icon.classed('fa-pause'/*-circle'*/,true);
       audioPlayer.play();
    }
    else {
       btn.title = 'play';
       btn.className = 'btn-play';
-      icon.classed('fa-play-circle',true);
-      icon.classed('fa-pause-circle',false);
+      icon.classed('fa-play'/*-circle'*/,true);
+      icon.classed('fa-pause'/*-circle'*/,false);
       audioPlayer.pause();
    }
 }
@@ -94,8 +94,8 @@ function stopPlayer(div){
   icon = d3.select('#icon-play-' + div);
   btn.title = 'play';
   btn.className = 'btn-play';
-  icon.classed('fa-play-circle',true);
-  icon.classed('fa-pause-circle',false);
+  icon.classed('fa-play'/*-circle'*/,true);
+  icon.classed('fa-pause'/*-circle'*/,false);
 
   progressBar = document.getElementById('progress-bar-' + div);
   progressBar.value = 0;

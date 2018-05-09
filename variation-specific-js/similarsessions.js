@@ -1,3 +1,4 @@
+// similar session audio from brian, empathy scores pulled from associated google doc
 const similarSessionGood1 = './audio/tascam_20150427_ad_ts_bj_gt_clip.wav';
 const empathyGood1 = '5';
 const similarSessionGood2 = './audio/tascam_20150430_ad_bp_ha_gt_clip.wav';
@@ -7,9 +8,11 @@ const empathyBad1 = '2';
 const similarSessionBad2 = './audio/tascam_20150504_bp_ts_al_bt_clip.wav';
 const empathyBad2 = '3';
 
+// for calculating max listening time for each audio file
+let audioMax1 = 0;
+let audioMax2 = 0;
+
 function similarSessions(){
-  // d3.select('#container-session')
-  //   .style('height','268px'); //svg-empathy (300) height minus difference in top-pos (32)
 
   d3.select('#content-empathy')
     .append('h6')
@@ -26,9 +29,7 @@ function similarSessions(){
     .append('div')
     .attr('id','container-similar')
     .attr('width',barW)
-    // .attr('height','300px')
-    .attr('height','100px') // doesn't change anything
-    .style('margin-top','40px')
+    .style('margin-top','30px')
     .append('g');
 
     /* create accordian */
@@ -44,20 +45,31 @@ function similarSessions(){
       .append('i')
       .attr('class','icon')
       .attr('id','icon-1')
-      .attr('class','icon fas fa-chevron-down fa-2x');
+      .attr('class','icon fas fa-chevron-down fa-lg');
     accordionButton1
       .append('text')
+      .attr('id','text-1')
+      .style('font-size','12px')
+      .style('padding-left','10px');
+
+    d3.select('#text-1')
+      .append('tspan')
+      .text('Session 1 Empathy Score: ');
+    d3.select('#text-1')
+      .append('tspan')
       .text(function(){
         if(session == sessionGood){
-          return 'EMPATHY SCORE ' + empathyGood1;
+          return empathyGood1;
         }else if(session == sessionBad){
-          return 'EMPATHY SCORE ' + empathyBad1;
+          return empathyBad1;
         }
-      });
+      })
+      .style('font-weight','bold');
+
     container.append('div')
       .attr('class','collapse')
       .attr('id','collapse-1');
-      // .classed('accordion-first', true)
+
     similarPlayAudio('1');
 
     accordionButton2 = container.append('button')
@@ -72,16 +84,26 @@ function similarSessions(){
       .append('i')
       .attr('class','icon')
       .attr('id','icon-2')
-      .attr('class','icon fas fa-chevron-down fa-2x');
+      .attr('class','icon fas fa-chevron-down fa-lg');
     accordionButton2
       .append('text')
-      .text(function(){
-        if(session == sessionGood){
-          return 'EMPATHY SCORE ' + empathyGood2;
-        }else if(session == sessionBad){
-          return 'EMPATHY SCORE ' + empathyBad2;
-        }
-      });
+      .attr('id','text-2')
+      .style('font-size','12px')
+      .style('padding-left','10px');
+
+      d3.select('#text-2')
+        .append('tspan')
+        .text('Session 2 Empathy Score: ');
+      d3.select('#text-2')
+        .append('tspan')
+        .text(function(){
+          if(session == sessionGood){
+            return empathyGood2;
+          }else if(session == sessionBad){
+            return empathyBad2;
+          }
+        })
+        .style('font-weight','bold');
     container.append('div')
       .attr('class','collapse')
       .attr('id','collapse-2');
@@ -139,7 +161,7 @@ function similarSessions(){
     d3.select('#btn-play-' + div)
       .append('i')
       .attr('id','icon-play-' + div)
-      .attr('class','far fa-play-circle fa-lg');
+      .attr('class','fas fa-play fa-sm');
     d3.select('#audio-controls-' + div)
       .append('button')
       .attr('id','btn-stop-' + div)
@@ -151,7 +173,7 @@ function similarSessions(){
     d3.select('#btn-stop-' + div)
       .append('i')
       .attr('id','icon-stop-' + div)
-      .attr('class','far fa-stop-circle fa-lg');
+      .attr('class','fas fa-fast-backward fa-sm');
     progressDiv = d3.select('#audio-controls-' + div)
       .append('div')
       .attr('class','progress')
@@ -178,15 +200,15 @@ function similarSessions(){
      if (audioPlayer.paused || audioPlayer.ended) {
         btn.title = 'pause';
         btn.className = 'btn-pause';
-        icon.classed('fa-play-circle',false);
-        icon.classed('fa-pause-circle',true);
+        icon.classed('fa-play',false);
+        icon.classed('fa-pause',true);
         audioPlayer.play();
      }
      else {
         btn.title = 'play';
         btn.className = 'btn-play';
-        icon.classed('fa-play-circle',true);
-        icon.classed('fa-pause-circle',false);
+        icon.classed('fa-play',true);
+        icon.classed('fa-pause',false);
         audioPlayer.pause();
      }
   }
@@ -197,8 +219,11 @@ function similarSessions(){
     audioPlayer.currentTime = 0;
 
     btn = document.getElementById('btn-play-' + div);
+    icon = d3.select('#icon-play-' + div);
     btn.title = 'play';
     btn.className = 'btn-play';
+    icon.classed('fa-play',true);
+    icon.classed('fa-pause',false);
 
     progressBar = document.getElementById('progress-bar-' + div);
     progressBar.value = 0;
@@ -212,6 +237,16 @@ function similarSessions(){
     totalW = parseInt(progress.style('width'),10);
     progressW = (totalW * percentage).toFixed(2);
     progressBar.style('width',progressW + 'px');
+    if(div == '1'){
+      if(audioMax1 < audioPlayer.currentTime){
+        audioMax1 = audioPlayer.currentTime;
+      }
+    }else if(div == '2'){
+      if(audioMax2 < audioPlayer.currentTime){
+        audioMax2 = audioPlayer.currentTime;
+      }
+    }
+    interaction = +(audioMax1 + audioMax2).toFixed(0);
   }
 
 }

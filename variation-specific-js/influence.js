@@ -4,6 +4,8 @@ const ngramNegSet = new Set();
 const scoreDiff = 1; //manually selected empathy change
 let lastBtnClicked = 'none';
 
+// influenceChange() changes text in session transcript - to be overwritten
+
 function influenceLegend(talkTurn){
   d3.select('#content-empathy')
     .append('h6')
@@ -18,13 +20,6 @@ function influenceLegend(talkTurn){
     .style('margin-top','30px')
     .html('The most influential words and phrases to the empathy score are listed below and emphasized in the session transcript. ' +
     'Some are <span class="pos">pro-empathy</span> and some are <span class="neg">anti-empathy</span>.')
-
-  // d3.selectAll('.pos')
-  //   .style('color','#70B276')
-  //   .style('font-weight','bolder');
-  // d3.selectAll('.neg')
-  //   .style('color','#CC6471')
-  //   .style('font-weight','bolder');
 
   row = d3.select('#content-empathy')
     .append('div')
@@ -60,7 +55,6 @@ function influenceLegend(talkTurn){
     .html(item);
 }
 
-
 function influenceFunctionality(mlScore){
 
   d3.select('#content-session')
@@ -86,6 +80,7 @@ function influenceFunctionality(mlScore){
     .attr('class','btn-influence')
     .html('ALL PRO-EMPATHY')
     .on('click',function(){
+      interaction++;
       influenceChange('positive');
       empathyChange('positive',mlScore);
       lastBtnClicked = 'positive';
@@ -96,6 +91,7 @@ function influenceFunctionality(mlScore){
     .attr('class','btn-influence')
     .html('ALL ANTI-EMPATHY')
     .on('click',function(){
+      interaction++;
       influenceChange('negative');
       empathyChange('negative',mlScore);
       lastBtnClicked = 'negative';
@@ -105,13 +101,13 @@ function influenceFunctionality(mlScore){
     .attr('id','btn-reset')
     .html('RESET')
     .on('click',function(){
+      interaction++;
       influence();
       empathyChange('reset',mlScore);
       lastBtnClicked = 'reset';
     });
 
 }
-
 
 function influence(){
 
@@ -166,9 +162,7 @@ function influenceChange(direction){
         .attr('class','text-change-pos')
         .attr('id',function(d){ return 'therapist-change-' + d.id; })
         .classed('striked-neg',false)
-        .text(function(d){
-          return /*d.asrText;*/ '(changed to pro-empathy word/phrase)';
-        });
+        .text('(changed to pro-empathy word/phrase)');
     }
   }else if(direction == 'negative'){
     d3.select('#btn-negative')
@@ -190,18 +184,9 @@ function influenceChange(direction){
         .attr('class','text-change-neg')
         .attr('id',function(d){ return 'therapist-change-' + d.id; })
         .classed('striked-pos',false)
-        .text(function(d){
-          return /*d.asrText;*/ '(changed to anti-empathy word/phrase)';
-        });
+        .text('(changed to anti-empathy word/phrase)');
     }
   }
-
-  // d3.selectAll('.therapist-text')
-  //   .filter(function(d){ return (d.influence < -influenceThreshold || d.influence > influenceThreshold) })
-  //   .style('color',function(){
-  //     if(direction == 'positive'){ return '#70B276'; }
-  //     else if(direction == 'negative'){ return '#CC6471'; }
-  //   });
 }
 
 function empathyChange(direction,mlScore){

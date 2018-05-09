@@ -1,3 +1,15 @@
+
+/* scroll bar always visible (applies to both session div and whole page) */
+/* does not work for firefox */
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+}
+
 #welcome{
   display: block;
 }
@@ -19,6 +31,13 @@
   text-align: center;
   font-size: 40px;
   font-weight: bolder;
+}
+
+#number-rating{
+  font-size: 40px;
+  font-weight: bolder;
+  width: 100px;
+  height: 75px;
 }
 
 .btn{
@@ -50,11 +69,6 @@
 
 #header{
   height: 60px;
-  /* background-color: #514E5A; */
-  /* background-color: #EEEEEE; */
-  /* background-color:  	#696969; */
-  /* margin-left: -115px;
-  margin-right: -115px; */
   padding-left: 40px;
   padding-right: 100px;
   padding-top: 20px;
@@ -90,17 +104,7 @@ h6{
 }
 
 #userScore{
-  /* original orange */
-  /* fill: #F68D61; */
-  /* lavender */
-  /* fill: #a9a7c0; */
   fill: #b29ec3;
-  /* light orange */
-  /* fill: #edbaa7; */
-  /* light green */
-  /* fill: #9dc9a9; */
-  /* light rose */
-  /* fill: #e2d1d5; */
 }
 
 #mlScore, #scoreChangeNeg{
@@ -133,13 +137,13 @@ h6{
 #container-session{
   height: 520px;
   margin-top: 40px;
+  overflow: -moz-scrollbars-vertical;
   overflow: scroll;
 }
 
 #session-list, #session-list-1{
   list-style: none;
   padding-left: 0px;
-  /* overflow: scroll; */
 }
 
 #session-list-1{
@@ -149,7 +153,6 @@ h6{
 
 .session-div{
   font-size: 10px;
-  /* font-weight: lighter; */
   margin-bottom: 0.5em;
   line-height: 1.3;
 }
@@ -158,30 +161,6 @@ h6{
   font-weight: normal;
   color: #999999;
   margin-left: 20px;
-}
-
-/* TOOLTIP */
-
-/* .tooltip {
-    position: absolute;
-    text-align: center;
-    width: 200px;
-    height: 28px;
-    padding: 2px;
-    font: 12px sans-serif;
-    background: white;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
-} */
-
-/* CONFIDENCE TEXT HIGHLIGHT */
-
-.highlight-text{
-  /* color: white; */
-  /* background-color: #19ABB5; */
-  background-color: #ffff66;
-  /* font-weight: bolder; */
 }
 
 /* MODAL STYLE */
@@ -205,8 +184,6 @@ h6{
   cursor: pointer;
   background-color: white;
   border: none;
-  /* padding: 5px 10px;
-  font-size: 8px; */
 }
 
 #modal-content-btn{
@@ -235,35 +212,22 @@ h6{
   padding: 20px;
 }
 
-/* BUTTONS */
-/* #btn-reset{
-  cursor: pointer;
-  font-size: 10px;
-  color: white;
-  background: black;
-  padding: 10px 20px;
-  border-radius: 20px;
-} */
+/* VARIATION DESCRIPTIONS */
 
-/* MANIPULATION */
+#desc-aboutAlg{
+  font-size: 12px;
+  margin-top: 30px
+}
 
-#desc-counts, #desc-similar, #desc-aboutAlg{
-  font-size: 10px;
+#desc-counts, #desc-similar{
+  font-size: 12px;
+  margin-top: 20px;
 }
 
 /* SIMILAR SESSIONS */
 
-#title-similar{
-  /* padding-top: 40px; */
-}
-
-#container-similar{
-  overflow: scroll; /* doesn't work */
-}
-
 .accordion{
   cursor: pointer;
-  /* width:100%; */
   width: 500px;
   height: 50px;
   background-color: white;
@@ -274,37 +238,20 @@ h6{
   border-top: 1px solid black;
 }
 
-/* #accordian-1{
-  border: none;
-} */
-
-.accordion-last{
-  border-bottom: 1px solid black; /* only when not collapsed */
-}
-
 .icon{
   margin-right: 10px;
 }
 
-/* .collapse{
-  padding: 20px 20px;
-  font-size: 10px;
-} */
-
 .audio-controls{
   padding-left: 20px;
   padding-bottom: 20px;
+  padding-top: 5px;
 }
 
 .btn-play, .btn-pause, .btn-stop{
   cursor: pointer;
-  /* font-size: 10px; */
-  background-color: white;
   border: none;
-  /* border: 1px solid black; */
-  /* border-radius: 20px; */
-  /* padding: 5px 10px; */
-  /* margin-right: 5px; */
+  background: white;
 }
 
 /* INFLUENTIAL N-GRAMS */
@@ -318,7 +265,6 @@ h6{
   border-radius: 20px;
   padding: 5px 15px;
   font-size: 10px;
-  /* font-weight: bold; */
   margin-top: 20px;
   margin-right: 5px;
 }
@@ -376,6 +322,16 @@ li {
 
 .text-change-open, .text-change-complex{
   margin-left: 5px;
+}
+
+#manipulation-tracking{
+  position: absolute;
+  width: 20px;
+  right: 0px;
+}
+
+.rect-change{
+  fill: #CC6471;
 }
 
 /* SLIDER STYLE */
@@ -447,14 +403,8 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 10px;
   cursor: pointer;
-  /* background: #EEEEEE; */
-  /* background: linear-gradient(to right, #19ABB5, #19ABB5 49%, #EEEEEE 51%, #EEEEEE); */
   border-radius: 5px;
 }
-
-/* input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #EEEEEE;
-} */
 
 input[type=range]::-moz-range-track {
   width: 100%;
@@ -462,7 +412,6 @@ input[type=range]::-moz-range-track {
   cursor: pointer;
   background: #EEEEEE;
   border-radius: 5px;
-  /* border: 0.2px solid #010101; */
 }
 
 input[type=range]::-ms-track {
@@ -477,16 +426,6 @@ input[type=range]::-ms-fill-lower {
   background: #19ABB5;
   border-radius: 5px;
 }
-/* input[type=range]:focus::-ms-fill-lower {
-  background: #19ABB5;
-} */
-/* input[type=range]::-ms-fill-upper {
-  background: #EEEEEE;
-  border-radius: 5px;
-}
-input[type=range]:focus::-ms-fill-upper {
-  background: #EEEEEE;
-} */
 
 input[type=range]::-moz-range-progress {
   background-color: #19ABB5;

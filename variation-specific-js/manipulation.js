@@ -1,12 +1,164 @@
-function createSliders(data,questions,reflections,mlScore){
+function createSliders(data,questions,reflections,mlScore,w){
 
+  const column = d3.select('#content-empathy');
+  let i;
+
+  // create initial text and svg content
+  column.append('h6')
+    .attr('id','title-counts')
+    .html('BEHAVIOR COUNTS');
+
+  column.append('p')
+    .attr('id','desc-counts')
+    .style('width',barW+'px')
+    .html('Here are some measures correlated with empathy. '+
+    'Drag the sliders to see how the empathy score and session transcript change when these measures change.')
+
+  const svgCounts = column.append('svg')
+    .attr('id','#counts-svg');
+
+  svgCounts
+    .attr('class','bars-counts')
+    .attr('id','svg-counts')
+    .attr('height',h)
+    .attr('width',w);
+
+  const openQG = svgCounts
+    .append('g')
+    .attr('class','openQG')
+    .attr('id','openQG');
+
+  const complexRG = svgCounts
+    .append('g')
+    .attr('class','complexRG')
+    .attr('id','complexRG');
+
+  openQG.attr('transform','translate(0,40)');
+  complexRG.attr('transform','translate(0,140)');
+
+  const openQT = openQG.append('text')
+    .attr('class','textCounts openQ')
+    .attr('x','0px');
+  openQT.append('tspan')
+    .text('Questions: ')
+    .style('font-weight','lighter');
+  openQT.append('tspan')
+    .attr('id','openQ-perc')
+    .text(Math.round(data.openPerc) + '% Open')
+    .style('font-weight','bold');
+
+  const complexRT = complexRG.append('text')
+    .attr('class','textCounts complexR')
+    .attr('x','0px');
+  complexRT.append('tspan')
+    .text('Reflections: ')
+    .style('font-weight','lighter');
+  complexRT.append('tspan')
+    .attr('id','complexQ-perc')
+    .text(Math.round(data.complexPerc) + '% Complex')
+    .style('font-weight','bold');
+
+  openQG.append('rect')
+    .attr('class','tick-counts')
+    .attr('x',(barW*(1-.96)/2));
+
+  i = 0;
+  openQG.selectAll('tick-open')
+    .data(questions.open)
+    .enter()
+    .append('rect')
+    .attr('class','tick-counts tick-open')
+    .attr('x',function(){
+      i++;
+      if(i == data.openCount){
+        return ((barW*(1-.96)/2)+i*((barW*.96)/(data.openCount+data.closedCount))-1);
+      }else{
+        return (barW*(1-.96)/2)+i*((barW*.96)/(data.openCount+data.closedCount));
+      }
+    });
+  i = 0;
+  d3.selectAll('.tick-open')
+    .attr('id',function(){
+      i++;
+      return 'tick-open-' + i;
+    });
+  i = data.openCount;
+  openQG.selectAll('tick-close')
+    .data(questions.close)
+    .enter()
+    .append('rect')
+    .attr('class','tick-counts tick-close')
+    .attr('x',function(){
+      i++;
+      return (barW*(1-.96)/2)+i*((barW*.96)/(data.openCount+data.closedCount));
+    });
+  i = data.openCount;
+  d3.selectAll('.tick-close')
+    .attr('id',function(){
+      i++;
+      return 'tick-close-' + i;
+    });
+
+  complexRG.append('rect')
+    .attr('class','tick-counts')
+    .attr('x',(barW*(1-.96)/2));
+  i = 0;
+  complexRG.selectAll('tick-complex')
+    .data(reflections.complex)
+    .enter()
+    .append('rect')
+    .attr('class','tick-counts tick-complex')
+    .attr('x',function(){
+      i++;
+      if(i == data.complexCount){
+        return ((barW*(1-.96)/2)+i*((barW*.96)/(data.complexCount+data.simpleCount))-1);
+      }else{
+        return (barW*(1-.96)/2)+i*((barW*.96)/(data.complexCount+data.simpleCount));
+      }
+    })
+  i = 0;
+  d3.selectAll('.tick-complex')
+    .attr('id',function(){
+      i++;
+      return 'tick-complex-' + i;
+    });
+  i = data.complexCount;
+  complexRG.selectAll('tick-simple')
+    .data(reflections.simple)
+    .enter()
+    .append('rect')
+    .attr('class','tick-counts tick-simple')
+    .attr('x',function(){
+      i++;
+      return (barW*(1-.96)/2)+i*((barW*.96)/(data.complexCount+data.simpleCount));
+    });
+  i = data.complexCount;
+  d3.selectAll('.tick-simple')
+  .attr('id',function(){
+    i++;
+    return 'tick-complex-' + i;
+  });
+
+  column.selectAll('.tick-counts')
+    .attr('y',40)
+    .attr('width',1)
+    .attr('height',4);
+  column.select('#tick-open-' + data.openCount)
+    .attr('y',38)
+    .attr('width',2)
+    .attr('height',8);
+  column.select('#tick-complex-' + data.complexCount)
+    .attr('y',38)
+    .attr('width',2)
+    .attr('height',8);
+
+  // variables for slider inputs
   const positionOffset = h-10-barY;
   let scoreNow = mlScore;
   let diffNow = 0;
   let diffQ = 0;
   let diffR = 0;
   let diff = 0.2;
-  const column = d3.select('#content-empathy');
   const form = column.append('form').attr('id','form');
 
   // define empathy score change
@@ -15,7 +167,7 @@ function createSliders(data,questions,reflections,mlScore){
   var rDiff = (.6 * eDiff)/reflections.simple.length;
 
   // associate range steps with session text
-  let i = 1;
+  i = 1;
   questions.open.forEach(function(d){
     d.step = i;
     i++;
@@ -35,6 +187,7 @@ function createSliders(data,questions,reflections,mlScore){
     i++;
   });
 
+  // create input ranges
   form.append('input')
     .attr('class','slider')
     .attr('id','slider-open')
@@ -49,32 +202,6 @@ function createSliders(data,questions,reflections,mlScore){
     .attr('max',(data.openCount+data.closedCount))
     .attr('step',1)
     .attr('value',data.openCount);
-
-  d3.select('#openQG')
-    .append('rect')
-    .attr('class','tick-counts')
-    .attr('x',(barW*(1-.96)/2));
-
-  i = 0;
-  d3.select('#openQG').selectAll('tick-open')
-    .data(questions.open)
-    .enter()
-    .append('rect')
-    .attr('class','tick-counts tick-open')
-    .attr('x',function(){
-      i++;
-      return (barW*(1-.96)/2)+i*((barW*.96)/(data.openCount+data.closedCount));
-    });
-
-  d3.select('#openQG').selectAll('tick-close')
-    .data(questions.close)
-    .enter()
-    .append('rect')
-    .attr('class','tick-counts tick-close')
-    .attr('x',function(){
-      i++;
-      return (barW*(1-.96)/2)+i*((barW*.96)/(data.openCount+data.closedCount));
-    });
 
   form.append('input')
     .attr('class','slider')
@@ -91,43 +218,14 @@ function createSliders(data,questions,reflections,mlScore){
     .attr('step',1)
     .attr('value',data.complexCount);
 
-  d3.select('#complexRG')
-    .append('rect')
-    .attr('class','tick-counts')
-    .attr('x',(barW*(1-.96)/2));
-
-  i = 0;
-  d3.select('#complexRG').selectAll('tick-complex')
-    .data(reflections.complex)
-    .enter()
-    .append('rect')
-    .attr('class','tick-counts tick-complex')
-    .attr('x',function(){
-      i++;
-      return (barW*(1-.96)/2)+i*((barW*.96)/(data.complexCount+data.simpleCount));
-    });
-
-  d3.select('#complexRG').selectAll('tick-simple')
-    .data(reflections.simple)
-    .enter()
-    .append('rect')
-    .attr('class','tick-counts tick-simple')
-    .attr('x',function(){
-      i++;
-      return (barW*(1-.96)/2)+i*((barW*.96)/(data.complexCount+data.simpleCount));
-    });
-
-  column.selectAll('.tick-counts')
-    .attr('y',40)
-    .attr('width',1)
-    .attr('height',4);
-
+  // reset button
   column.append('button')
     .attr('id','btn-form')
     .html('RESET')
     .style('position','relative')
     .style('top','-140px')
     .on('click',function(){
+      interaction++;
       document.getElementById('form').reset();
       d3.select('#slider-open')
         .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + data.openPerc + '%, #EEEEEE ' + data.openPerc + '%, #EEEEEE)');
@@ -146,6 +244,8 @@ function createSliders(data,questions,reflections,mlScore){
       d3.selectAll('.text-change-open')
         .remove();
       d3.selectAll('.text-change-complex')
+        .remove();
+      d3.selectAll('.rect-change')
         .remove();
 
       scoreNow = mlScore;
@@ -179,7 +279,7 @@ function createSliders(data,questions,reflections,mlScore){
   d3.csv('./manipulation_session_change.csv',function(dataChange){
     d3.select('#slider-open')
       .on('input',function(e){
-
+        interaction++;
         let valQcurr = document.getElementById('slider-open').value;
         d3.select('#slider-open')
           .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + (valQcurr/(data.openCount+data.closedCount)*100) + '%, #EEEEEE ' + (valQcurr/(data.openCount+data.closedCount)*100) + '%, #EEEEEE)');
@@ -187,6 +287,9 @@ function createSliders(data,questions,reflections,mlScore){
           .text(Math.round((valQcurr/(data.openCount+data.closedCount))*100) + '% Open');
 
         if(Math.round(valQcurr) < Math.round(data.openCount)){
+          // d3.select('#slider-open')
+          //   .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + (valQcurr/(data.openCount+data.closedCount)*100) + '%, #EEEEEE ' + (valQcurr/(data.openCount+data.closedCount)*100) +
+          //    '%, #EEEEEE ' + (data.openPerc-10) + '%, #19ABB5 ' + (data.openPerc-10) + '%, #19ABB5 ' + (data.openPerc+10) + '%, #EEEEEE ' + (data.openPerc+10) +'%, #EEEEEE)');
 
           if(Math.round(valQcurr) < Math.round(valQprev)){
             diffQ = diffQ - qDiff;
@@ -200,17 +303,12 @@ function createSliders(data,questions,reflections,mlScore){
             d3.select('#therapist-original-' + d.id)
               .classed('striked-open',function(a){
                 if(Math.round(valQcurr) < d.step){
-                  if(d3.select(this).classed('striked-open') == false){
-                    jumpToText(d);
-                  }
                   removeTextChange(d);
                   addTextChange(d,'open',dataChange);
+                  identifyTextChange(d,'open');
                   return true;
                 }
                 else{
-                  if(d3.select(this).classed('striked-open') == true){
-                    jumpToText(d);
-                  }
                   removeTextChange(d);
                   return false;
                 }
@@ -232,17 +330,12 @@ function createSliders(data,questions,reflections,mlScore){
             d3.select('#therapist-original-' + d.id)
               .classed('striked-open',function(){
                 if(Math.round(valQcurr) >= d.step){
-                  if(d3.select(this).classed('striked-open') == false){
-                    jumpToText(d);
-                  }
                   removeTextChange(d);
                   addTextChange(d,'open',dataChange);
+                  identifyTextChange(d,'open');
                   return true;
                 }
                 else{
-                  if(d3.select(this).classed('striked-open') == true){
-                    jumpToText(d);
-                  }
                   removeTextChange(d);
                   return false;
                 }
@@ -250,9 +343,12 @@ function createSliders(data,questions,reflections,mlScore){
           });
         }
         else{
+
           d3.selectAll('.striked-open')
             .classed('striked-open',false);
           d3.selectAll('.text-change-open')
+            .remove();
+          d3.selectAll('.rect-change-open')
             .remove();
 
           diffQ = 0;
@@ -272,7 +368,6 @@ function createSliders(data,questions,reflections,mlScore){
             .text(scoreNow.toFixed(2));
           d3.select('#mlNumChange')
             .text(' (down ' + Math.abs(diffNow.toFixed(2)) + ')')
-            // .style('fill','#CC6471')
             .style('font-weight','bolder');
         }else if(diffNow > 0){
           d3.select('#scoreChange')
@@ -283,7 +378,6 @@ function createSliders(data,questions,reflections,mlScore){
             .text(scoreNow.toFixed(2));
           d3.select('#mlNumChange')
             .text(' (up ' + Math.abs(diffNow.toFixed(2)) + ')')
-            // .style('fill','#19ABB5')
             .style('font-weight','bolder');
         }else{
           d3.select('#scoreChange')
@@ -300,6 +394,7 @@ function createSliders(data,questions,reflections,mlScore){
 
     d3.select('#slider-complex')
       .on('input',function(e){
+        interaction++;
         let valRcurr = document.getElementById('slider-complex').value;
         d3.select('#slider-complex')
           .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + (valRcurr/(data.complexCount+data.simpleCount)*100) + '%, #EEEEEE ' + (valRcurr/(data.complexCount+data.simpleCount)*100) + '%, #EEEEEE)');
@@ -320,17 +415,12 @@ function createSliders(data,questions,reflections,mlScore){
             d3.select('#therapist-original-' + d.id)
               .classed('striked-complex',function(){
                 if(Math.round(valRcurr) < d.step){
-                  if(d3.select(this).classed('striked-complex') == false){
-                    jumpToText(d);
-                  }
                   removeTextChange(d);
                   addTextChange(d,'complex',dataChange);
+                  identifyTextChange(d,'complex');
                   return true;
                 }
                 else{
-                  if(d3.select(this).classed('striked-complex') == true){
-                    jumpToText(d);
-                  }
                   removeTextChange(d);
                   return false;
                 }
@@ -351,17 +441,12 @@ function createSliders(data,questions,reflections,mlScore){
             d3.select('#therapist-original-' + d.id)
               .classed('striked-complex',function(){
                 if(Math.round(valRcurr) >= d.step){
-                  if(d3.select(this).classed('striked-complex') == false){
-                    jumpToText(d);
-                  }
                   removeTextChange(d);
                   addTextChange(d,'complex',dataChange);
+                  identifyTextChange(d,'complex');
                   return true;
                 }
                 else{
-                  if(d3.select(this).classed('striked-complex') == true){
-                    jumpToText(d);
-                  }
                   removeTextChange(d);
                   return false;
                 }
@@ -372,6 +457,8 @@ function createSliders(data,questions,reflections,mlScore){
           d3.selectAll('.striked-complex')
             .classed('striked-complex',false);
           d3.selectAll('.text-change-complex')
+            .remove();
+          d3.selectAll('.rect-change-complex')
             .remove();
 
           diffR = 0;
@@ -390,7 +477,6 @@ function createSliders(data,questions,reflections,mlScore){
             .text(scoreNow.toFixed(2));
           d3.select('#mlNumChange')
             .text(' (down ' + Math.abs(diffNow.toFixed(2)) + ')')
-            // .style('fill','#CC6471')
             .style('font-weight','bolder');
         }else if(diffNow > 0){
           d3.select('#scoreChange')
@@ -401,7 +487,6 @@ function createSliders(data,questions,reflections,mlScore){
             .text(scoreNow.toFixed(2));
           d3.select('#mlNumChange')
             .text(' (up ' + Math.abs(diffNow.toFixed(2)) + ')')
-            // .style('fill','#19ABB5')
             .style('font-weight','bolder');
         }else{
           d3.select('#scoreChange')
@@ -438,10 +523,24 @@ function addTextChange(d,scale,dataChange){
 function removeTextChange(d){
   d3.select('#therapist-change-' + d.id)
     .remove();
+  d3.select('#rect-change-' + d.id)
+    .remove();
 }
 
-function jumpToText(d){
-  list = document.getElementById('container-session'),
+function identifyTextChange(d,scale){
+  visibleH = document.getElementById('container-session').clientHeight;
+  totalH = document.getElementById('container-session').scrollHeight;
+
   targetli = document.getElementById('therapist-' + d.id);
-  list.scrollTop = targetli.offsetTop - 57; //57 is offsetTop for the first element
+  targetliloc = targetli.offsetTop - 57; //57 is offsetTop for the first element
+
+  d3.select('#tracking-svg')
+    .append('rect')
+    .attr('class','rect-change rect-change-' + scale)
+    .attr('id','rect-change-' + d.id)
+    .attr('x',8)
+    .attr('y',((targetliloc/totalH)*visibleH).toFixed(0))
+    .attr('height',2)
+    .attr('width',10);
+
 }

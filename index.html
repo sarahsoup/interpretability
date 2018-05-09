@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!-- Font Awesome -->
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
-  <!-- W3 for Progress Bar -->
-  <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
   <!-- CSS -->
   <link href="./style.css" rel="stylesheet"/>
 </head>
@@ -25,32 +23,23 @@
     <div class="col-lg-12 audio-container">
       <p>This is where you listen to the session.</p>
       <audio id="session-audio0">
-        <!-- <source src="http://drive.google.com/open?id=0B7OaBHt0PWMwZjVXVmxiZTJ0VU0" type="audio/wav"> -->
       </audio>
     </div>
   </div>
   <div class="row hidden" id="rating">
     <div class="col-lg-12 rating-container">
-      <p>This is where you rate the session.</p>
-      <p id="rating-val">0</p><br>
+      <p>This is where you rate the session from 1 to 5. Non-numeric values will default to zero.</p>
+      <!-- <p id="rating-val">0</p><br> -->
       <form>
-        <input class="slider" id="slider-rating" type="range" min=0 max=5 step=.1 value=0>
+        <!-- <input class="slider" id="slider-rating" type="range" min=0 max=5 step=.1 value=0> -->
+        <input type="number" id="number-rating" min=0 max=5  step=.5 value=0>
       </form>
       <a class="btn btn-next">next</a>
     </div>
 
   </div>
-  <div class="row hidden" id="selection">
-    <a class="btn">narrative description</a>
-    <a class="btn">confidence</a>
-    <a class="btn">manipulation</a>
-    <a class="btn">similar sessions</a>
-    <a class="btn">influential n-grams</a>
-  </div>
   <div class="row hidden" id="header">
     <div class="col-sm-12" id="header-title"></div>
-    <!-- <div class="col-sm-3" id="header-therapist"></div>
-    <div class="col-sm-3" id="header-client"></div> -->
   </div>
   <div class="row hidden" id="content">
     <div class="col-sm" id="content-empathy">
@@ -62,7 +51,7 @@
   </div>
   <div class="row hidden" id="next">
     <div class="col-sm-12">
-      <a class="btn btn-next" id="btn-to-survey">next</a>
+      <a class="btn btn-next" id="btn-to-survey" target="_blank">next</a>
     </div>
   </div>
 </div>
@@ -76,11 +65,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <!--  Javascript -->
-<script src="./narrative.js"></script>
-<script src="./confidence.js"></script>
-<script src="./manipulation.js"></script>
-<script src="./similarsessions.js"></script>
-<script src="./influence.js"></script>
+<script src="./variation-specific-js/narrative.js"></script>
+<script src="./variation-specific-js/confidence.js"></script>
+<script src="./variation-specific-js/manipulation.js"></script>
+<script src="./variation-specific-js/similarsessions.js"></script>
+<script src="./variation-specific-js/influence.js"></script>
 <script src="./playsession.js"></script>
 <script src="./script.js"></script>
 
