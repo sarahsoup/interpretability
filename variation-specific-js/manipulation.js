@@ -40,8 +40,7 @@ function createSliders(data,questions,reflections,mlScore,w){
     .attr('class','textCounts openQ')
     .attr('x','0px');
   openQT.append('tspan')
-    .text('Questions: ')
-    .style('font-weight','lighter');
+    .text('Questions: ');
   openQT.append('tspan')
     .attr('id','openQ-perc')
     .text(Math.round(data.openPerc) + '% Open')
@@ -51,8 +50,7 @@ function createSliders(data,questions,reflections,mlScore,w){
     .attr('class','textCounts complexR')
     .attr('x','0px');
   complexRT.append('tspan')
-    .text('Reflections: ')
-    .style('font-weight','lighter');
+    .text('Reflections: ');
   complexRT.append('tspan')
     .attr('id','complexQ-perc')
     .text(Math.round(data.complexPerc) + '% Complex')

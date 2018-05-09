@@ -38,6 +38,11 @@
   font-weight: bolder;
   width: 100px;
   height: 75px;
+  padding-left: 10px;
+}
+
+#number-rating:focus{
+  outline: 0;
 }
 
 .btn{
@@ -252,6 +257,10 @@ h6{
   cursor: pointer;
   border: none;
   background: white;
+}
+
+button:focus{
+  outline: 0;
 }
 
 /* INFLUENTIAL N-GRAMS */

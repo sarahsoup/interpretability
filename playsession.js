@@ -24,7 +24,6 @@ function playSession(){
     .append('i')
     .attr('id','icon-play-0')
     .attr('class','fas fa-play fa-lg');
-    // .attr('class','far fa-play-circle fa-2x');
   d3.select('#audio-controls-0')
     .append('button')
     .attr('id','btn-stop-0')
@@ -33,19 +32,11 @@ function playSession(){
     .on('click',function(d){
       stopPlayer(0);
     });
-  // d3.select('#btn-stop-0')
-  //   .append('i')
-  //   .attr('id','icon-stop-circle-0')
-  //   .attr('class','far fa-circle fa-2x');
-    // .attr('class','far fa-stop-circle fa-2x');
+
   d3.select('#btn-stop-0')
     .append('i')
     .attr('id','icon-stop-0')
     .attr('class','fas fa-fast-backward fa-lg');
-    // .attr('class','fas fa-fast-backward fa-sm')
-    // .style('position','relative')
-    // .style('right','23px')
-    // .style('bottom','6px');
 
   progressDiv = d3.select('#audio-controls-0')
     .append('div')
@@ -72,15 +63,15 @@ function togglePlayPause(div) {
    if (audioPlayer.paused || audioPlayer.ended) {
       btn.title = 'pause';
       btn.className = 'btn-pause';
-      icon.classed('fa-play'/*-circle'*/,false);
-      icon.classed('fa-pause'/*-circle'*/,true);
+      icon.classed('fa-play',false);
+      icon.classed('fa-pause',true);
       audioPlayer.play();
    }
    else {
       btn.title = 'play';
       btn.className = 'btn-play';
-      icon.classed('fa-play'/*-circle'*/,true);
-      icon.classed('fa-pause'/*-circle'*/,false);
+      icon.classed('fa-play',true);
+      icon.classed('fa-pause',false);
       audioPlayer.pause();
    }
 }
@@ -94,8 +85,8 @@ function stopPlayer(div){
   icon = d3.select('#icon-play-' + div);
   btn.title = 'play';
   btn.className = 'btn-play';
-  icon.classed('fa-play'/*-circle'*/,true);
-  icon.classed('fa-pause'/*-circle'*/,false);
+  icon.classed('fa-play',true);
+  icon.classed('fa-pause',false);
 
   progressBar = document.getElementById('progress-bar-' + div);
   progressBar.value = 0;

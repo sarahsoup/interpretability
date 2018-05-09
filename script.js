@@ -61,7 +61,7 @@ const variationArr = [
 ];
 const randomVarIndex = Math.floor(Math.random() * 5);
 variation = variationArr[randomVarIndex].variation;
-// variation = 'similar sessions'; //manually set variation
+variation = 'influential n-grams'; //manually set variation
 
 /* WELCOME SCREEN */
 d3.select('#welcome').selectAll('.btn')
