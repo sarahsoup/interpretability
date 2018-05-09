@@ -23,7 +23,7 @@ function createDescription(){
 
   body.append('button')
     .attr('id','modal-content-btn')
-    .html('OKAY')
+    .html('okay')
     .on('click',function(){
       modal.style('display','none');
     });
