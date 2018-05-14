@@ -1,0 +1,1749 @@
+{
+    "sessionNumber": "20150427.wav",
+    "beginTime": "0:0:34.22",
+    "endTime": "0:9:59.94",
+    "duration": "0:9:25.72",
+    "date": "",
+    "therapist": "",
+    "client": {
+        "clientID": "",
+        "sex": "",
+        "age": ""
+    },
+    "scores": {
+        "globals": {
+            "overall": 3,
+            "empathy": 3.32213333333,
+            "miSpirit": 3.3238
+        },
+        "behaviorCounts": {
+            "reflectionToQuestion": {
+                "reflections": 19,
+                "questions": 14,
+                "reflectionToQuestionRatio": 1.35714285714
+            },
+            "percentOpenQuestions": {
+                "openQuestions": 5,
+                "closedQuestions": 9,
+                "percentOpenQuestions": 35.7142857143
+            },
+            "percentComplexReflections": {
+                "complexReflections": 3,
+                "simpleReflections": 16,
+                "percentComplexReflections": 15.7894736842
+            }
+        },
+        "miAdherence": 100.0
+    },
+    "notes": {
+        "general": [
+            {
+                "id": 1,
+                "text": "This is the note as a string. "
+            },
+            {
+                "id": 2,
+                "text": "This is another note as a string. "
+            }
+        ],
+        "sessionStrengths": [
+            {
+                "id": 1,
+                "text": "This is a session strength as a string. "
+            },
+            {
+                "id": 2,
+                "text": "This is another session strength as a string. "
+            }
+        ],
+        "areasForImprovement": [
+            {
+                "id": 1,
+                "text": "This is an area for improvement as a string. "
+            },
+            {
+                "id": 2,
+                "text": "This is another area for improvement as a string. "
+            }
+        ]
+    },
+    "session": {
+        "talkTime": {
+            "therapist": 200.24,
+            "client": 300.84,
+            "therapistToClientPercent": 0.399616827652
+        },
+        "talkTurn": [
+            {
+                "id": 1,
+                "startTime": 1.16,
+                "endTime": 2.88,
+                "duration": 1.72,
+                "speaker": "therapist",
+                "vocalArousal": 0.883,
+                "codes": [ "COU" ],
+                "asrText": "okay now that's a great"
+            },
+            {
+                "id": 2,
+                "startTime": 3.13,
+                "endTime": 7.69,
+                "duration": 4.56,
+                "speaker": "therapist",
+                "vocalArousal": 0.479,
+                "codes": [ "GI" ],
+                "asrText": "um today's april twenty seventh doesn't fifteen this is there and and being tina sum up"
+            },
+            {
+                "id": 3,
+                "startTime": 7.93,
+                "endTime": 8.77,
+                "duration": 0.84,
+                "speaker": "therapist",
+                "vocalArousal": 0.414,
+                "codes": [ "GI" ],
+                "asrText": "um"
+            },
+            {
+                "id": 4,
+                "startTime": 9.25,
+                "endTime": 15.71,
+                "duration": 6.46,
+                "speaker": "therapist",
+                "vocalArousal": 0.336,
+                "codes": [ "GI" ],
+                "asrText": "i'll be reading a therapist good profile all to you know be reading brittany clan brittany"
+            },
+            {
+                "id": 5,
+                "startTime": 16.26,
+                "endTime": 22.06,
+                "duration": 5.8,
+                "speaker": "therapist",
+                "vocalArousal": 0.61,
+                "codes": [ "GI" ],
+                "asrText": "um this recording is made using the task cans internal microphones"
+            },
+            {
+                "id": 6,
+                "startTime": 22.45,
+                "endTime": 24.77,
+                "duration": 2.32,
+                "speaker": "therapist",
+                "vocalArousal": 0.553,
+                "codes": [ "GI" ],
+                "asrText": "on that a you'd be setting"
+            },
+            {
+                "id": 7,
+                "startTime": 25.56,
+                "endTime": 27.28,
+                "duration": 1.72,
+                "speaker": "therapist",
+                "vocalArousal": 0.146,
+                "codes": [ "GI" ],
+                "asrText": "as opposed to ex why setting"
+            },
+            {
+                "id": 8,
+                "startTime": 30.81,
+                "endTime": 31.39,
+                "duration": 0.58,
+                "speaker": "therapist",
+                "vocalArousal": 0.62,
+                "codes": [ "FA" ],
+                "asrText": "okay"
+            },
+            {
+                "id": 9,
+                "startTime": 32.5,
+                "endTime": 33.78,
+                "duration": 1.28,
+                "speaker": "therapist",
+                "vocalArousal": 0.782,
+                "codes": [ "COU" ],
+                "asrText": "so welcome brittany"
+            },
+            {
+                "id": 10,
+                "startTime": 34.22,
+                "endTime": 34.76,
+                "duration": 0.54,
+                "speaker": "client",
+                "vocalArousal": 0.685,
+                "codes": [ "CLI" ],
+                "asrText": "no"
+            },
+            {
+                "id": 11,
+                "startTime": 35.23,
+                "endTime": 37.01,
+                "duration": 1.78,
+                "speaker": "therapist",
+                "vocalArousal": 0.526,
+                "codes": [ "GI" ],
+                "asrText": "um here we are"
+            },
+            {
+                "id": 12,
+                "startTime": 38.68,
+                "endTime": 40.28,
+                "duration": 1.6,
+                "speaker": "therapist",
+                "vocalArousal": 0.696,
+                "codes": [ "QUO" ],
+                "asrText": "so what brings you in today"
+            },
+            {
+                "id": 13,
+                "startTime": 40.84,
+                "endTime": 45.26,
+                "duration": 4.42,
+                "speaker": "client",
+                "vocalArousal": 0.534,
+                "codes": [ "CLI" ],
+                "asrText": "well um i was living with my"
+            },
+            {
+                "id": 14,
+                "startTime": 45.52,
+                "endTime": 48.94,
+                "duration": 3.42,
+                "speaker": "client",
+                "vocalArousal": 0.548,
+                "codes": [ "CLI" ],
+                "asrText": "boyfriend and i have my to three kids um"
+            },
+            {
+                "id": 15,
+                "startTime": 49.19,
+                "endTime": 50.67,
+                "duration": 1.48,
+                "speaker": "client",
+                "vocalArousal": 0.102,
+                "codes": [ "CLI" ],
+                "asrText": "and we"
+            },
+            {
+                "id": 16,
+                "startTime": 51.1,
+                "endTime": 53.44,
+                "duration": 2.34,
+                "speaker": "client",
+                "vocalArousal": 0.283,
+                "codes": [ "CLI" ],
+                "asrText": "my boyfriend and i went out to you um"
+            },
+            {
+                "id": 17,
+                "startTime": 54.96,
+                "endTime": 64.3,
+                "duration": 9.34,
+                "speaker": "client",
+                "vocalArousal": 0.564,
+                "codes": [ "CLI" ],
+                "asrText": "to me that because i do i've mm me had to we left their kids at home um they're fine but a neighbors called the cops and um"
+            },
+            {
+                "id": 18,
+                "startTime": 65.02,
+                "endTime": 66.54,
+                "duration": 1.52,
+                "speaker": "client",
+                "vocalArousal": 0.194,
+                "codes": [ "CLI" ],
+                "asrText": "they wanna see where"
+            },
+            {
+                "id": 19,
+                "startTime": 67.12,
+                "endTime": 71.26,
+                "duration": 4.14,
+                "speaker": "client",
+                "vocalArousal": 0.35,
+                "codes": [ "CLI" ],
+                "asrText": "so i love my kids are at that"
+            },
+            {
+                "id": 20,
+                "startTime": 71.57,
+                "endTime": 76.95,
+                "duration": 5.38,
+                "speaker": "client",
+                "vocalArousal": 0.595,
+                "codes": [ "CLI" ],
+                "asrText": "c p o s top protective services it yeah and they want me to come here for"
+            },
+            {
+                "id": 21,
+                "startTime": 77.64,
+                "endTime": 78.42,
+                "duration": 0.78,
+                "speaker": "client",
+                "vocalArousal": 0.933,
+                "codes": [ "CLI" ],
+                "asrText": "counseling"
+            },
+            {
+                "id": 22,
+                "startTime": 79.83,
+                "endTime": 87.57,
+                "duration": 7.74,
+                "speaker": "therapist",
+                "vocalArousal": 0.35,
+                "codes": [ "GI" ],
+                "asrText": "well wow that's a lot in a short story um so it just make sure that i've got everything um you"
+            },
+            {
+                "id": 23,
+                "startTime": 87.86,
+                "endTime": 89.66,
+                "duration": 1.8,
+                "speaker": "therapist",
+                "vocalArousal": 0.128,
+                "codes": [ "QUC" ],
+                "asrText": "were living with your three kids"
+            },
+            {
+                "id": 24,
+                "startTime": 89.91,
+                "endTime": 93.57,
+                "duration": 3.66,
+                "speaker": "therapist",
+                "vocalArousal": 0.515,
+                "codes": [ "GI" ],
+                "asrText": "um u w um we're not living with your boyfriend time"
+            },
+            {
+                "id": 25,
+                "startTime": 93.95,
+                "endTime": 100.57,
+                "duration": 6.62,
+                "speaker": "client",
+                "vocalArousal": 0.67,
+                "codes": [ "CLI" ],
+                "asrText": "we we are living we are living together but yeah he's my boyfriend he's on my husband okay so as far as you"
+            },
+            {
+                "id": 26,
+                "startTime": 100.91,
+                "endTime": 101.73,
+                "duration": 0.82,
+                "speaker": "therapist",
+                "vocalArousal": 0.275,
+                "codes": [ "FA" ],
+                "asrText": "um"
+            },
+            {
+                "id": 27,
+                "startTime": 102.09,
+                "endTime": 107.21,
+                "duration": 5.12,
+                "speaker": "therapist",
+                "vocalArousal": 0.305,
+                "codes": [ "RES" ],
+                "asrText": "uh you and he left um that home to see your dealer"
+            },
+            {
+                "id": 28,
+                "startTime": 107.8,
+                "endTime": 116.44,
+                "duration": 8.64,
+                "speaker": "therapist",
+                "vocalArousal": 0.565,
+                "codes": [ "RES" ],
+                "asrText": "and um while you were gone and the three children were at home without you mm hmm um and you said a neighbor called"
+            },
+            {
+                "id": 29,
+                "startTime": 116.7,
+                "endTime": 118.3,
+                "duration": 1.6,
+                "speaker": "therapist",
+                "vocalArousal": 0.321,
+                "codes": [ "GI" ],
+                "asrText": "uh the authorities"
+            },
+            {
+                "id": 30,
+                "startTime": 119.08,
+                "endTime": 121.3,
+                "duration": 2.22,
+                "speaker": "therapist",
+                "vocalArousal": 0.414,
+                "codes": [ "GI" ],
+                "asrText": "they came they found the children"
+            },
+            {
+                "id": 31,
+                "startTime": 122.07,
+                "endTime": 122.87,
+                "duration": 0.8,
+                "speaker": "therapist",
+                "vocalArousal": 0.196,
+                "codes": [ "GI" ],
+                "asrText": "um"
+            },
+            {
+                "id": 32,
+                "startTime": 123.57,
+                "endTime": 126.79,
+                "duration": 3.22,
+                "speaker": "therapist",
+                "vocalArousal": 0.196,
+                "codes": [ "GI" ],
+                "asrText": "and so i'm seeing that there is a legal"
+            },
+            {
+                "id": 33,
+                "startTime": 127.28,
+                "endTime": 131.76,
+                "duration": 4.48,
+                "speaker": "therapist",
+                "vocalArousal": 0.226,
+                "codes": [ "RES" ],
+                "asrText": "part of this on a mystery to party since c p s wants you to be here in treatment"
+            },
+            {
+                "id": 34,
+                "startTime": 132.92,
+                "endTime": 134.24,
+                "duration": 1.32,
+                "speaker": "therapist",
+                "vocalArousal": 0.196,
+                "codes": [ "RES" ],
+                "asrText": "and you're"
+            },
+            {
+                "id": 35,
+                "startTime": 134.58,
+                "endTime": 139.24,
+                "duration": 4.66,
+                "speaker": "therapist",
+                "vocalArousal": 0.553,
+                "codes": [ "GI" ],
+                "asrText": "and you're a drug dealer as we were talking about you and your boyfriend visiting mm hmm"
+            },
+            {
+                "id": 36,
+                "startTime": 139.48,
+                "endTime": 140.32,
+                "duration": 0.84,
+                "speaker": "therapist",
+                "vocalArousal": 0.012,
+                "codes": [ "GI" ],
+                "asrText": "um"
+            },
+            {
+                "id": 37,
+                "startTime": 141.08,
+                "endTime": 147.52,
+                "duration": 6.44,
+                "speaker": "client",
+                "vocalArousal": 0.454,
+                "codes": [ "CLI" ],
+                "asrText": "and i never drive most of the yeah yeah i think you know i think you pretty much got the gist of it um"
+            },
+            {
+                "id": 38,
+                "startTime": 148.61,
+                "endTime": 154.09,
+                "duration": 5.48,
+                "speaker": "client",
+                "vocalArousal": 0.792,
+                "codes": [ "CLI" ],
+                "asrText": "yeah i mean my in my oldest is on he's thirty and he's fine he can handle him self and"
+            },
+            {
+                "id": 39,
+                "startTime": 154.43,
+                "endTime": 157.13,
+                "duration": 2.7,
+                "speaker": "client",
+                "vocalArousal": 0.504,
+                "codes": [ "CLI" ],
+                "asrText": "the two younger ones are ten and so and so"
+            },
+            {
+                "id": 40,
+                "startTime": 157.77,
+                "endTime": 158.69,
+                "duration": 0.92,
+                "speaker": "client",
+                "vocalArousal": 0.564,
+                "codes": [ "CLI" ],
+                "asrText": "well they would be"
+            },
+            {
+                "id": 41,
+                "startTime": 159.13,
+                "endTime": 167.07,
+                "duration": 7.94,
+                "speaker": "client",
+                "vocalArousal": 0.27,
+                "codes": [ "CLI" ],
+                "asrText": "they be fine um i never i never wanna do drugs around my kids so it's something that my my mom did around me and i just don't wanna know"
+            },
+            {
+                "id": 42,
+                "startTime": 167.43,
+                "endTime": 169.81,
+                "duration": 2.38,
+                "speaker": "client",
+                "vocalArousal": 0.698,
+                "codes": [ "CLI" ],
+                "asrText": "i saw my kids have to go through that so uh"
+            },
+            {
+                "id": 43,
+                "startTime": 170.15,
+                "endTime": 172.03,
+                "duration": 1.88,
+                "speaker": "client",
+                "vocalArousal": 0.595,
+                "codes": [ "CLI" ],
+                "asrText": "you don't wanna do drugs are my kids but"
+            },
+            {
+                "id": 44,
+                "startTime": 172.52,
+                "endTime": 173.98,
+                "duration": 1.46,
+                "speaker": "client",
+                "vocalArousal": 0.792,
+                "codes": [ "CLI" ],
+                "asrText": "so the twenty dealers house"
+            },
+            {
+                "id": 45,
+                "startTime": 174.69,
+                "endTime": 180.73,
+                "duration": 6.04,
+                "speaker": "therapist",
+                "vocalArousal": 0.398,
+                "codes": [ "RES" ],
+                "asrText": "so and and in order to kind of remove yourself from being around your kids you went to your dealers s"
+            },
+            {
+                "id": 46,
+                "startTime": 181.04,
+                "endTime": 184.1,
+                "duration": 3.06,
+                "speaker": "therapist",
+                "vocalArousal": 0.383,
+                "codes": [ "GI" ],
+                "asrText": "i'm sure i understand not only to buy"
+            },
+            {
+                "id": 47,
+                "startTime": 184.75,
+                "endTime": 186.63,
+                "duration": 1.88,
+                "speaker": "therapist",
+                "vocalArousal": 0.441,
+                "codes": [ "GI" ],
+                "asrText": "drugs but to"
+            },
+            {
+                "id": 48,
+                "startTime": 187.35,
+                "endTime": 194.97,
+                "duration": 7.62,
+                "speaker": "client",
+                "vocalArousal": 0.49,
+                "codes": [ "CLI" ],
+                "asrText": "to do drugs there as well yeah okay yeah he's he's what's in walking distance so we're not gonna drive or anything but um well that's gonna be"
+            },
+            {
+                "id": 49,
+                "startTime": 195.21,
+                "endTime": 199.77,
+                "duration": 4.56,
+                "speaker": "client",
+                "vocalArousal": 0.814,
+                "codes": [ "CLI" ],
+                "asrText": "yeah so just to talk orders house mm hmm and when using then"
+            },
+            {
+                "id": 50,
+                "startTime": 200.83,
+                "endTime": 202.11,
+                "duration": 1.28,
+                "speaker": "client",
+                "vocalArousal": 0.75,
+                "codes": [ "CLI" ],
+                "asrText": "and then go back home"
+            },
+            {
+                "id": 51,
+                "startTime": 203.47,
+                "endTime": 204.13,
+                "duration": 0.66,
+                "speaker": "therapist",
+                "vocalArousal": 0.454,
+                "codes": [ "FA" ],
+                "asrText": "and"
+            },
+            {
+                "id": 52,
+                "startTime": 204.76,
+                "endTime": 207.36,
+                "duration": 2.6,
+                "speaker": "therapist",
+                "vocalArousal": 0.206,
+                "codes": [ "RES" ],
+                "asrText": "and and there's no there's kinda walk you mentioned"
+            },
+            {
+                "id": 53,
+                "startTime": 208.01,
+                "endTime": 214.75,
+                "duration": 6.74,
+                "speaker": "client",
+                "vocalArousal": 0.471,
+                "codes": [ "CLI" ],
+                "asrText": "yeah i mean i thought my neighbors are cool and we all just kind of forget in a while you're hanging out and"
+            },
+            {
+                "id": 54,
+                "startTime": 215.62,
+                "endTime": 216.52,
+                "duration": 0.9,
+                "speaker": "client",
+                "vocalArousal": 0.456,
+                "codes": [ "CLI" ],
+                "asrText": "i know"
+            },
+            {
+                "id": 55,
+                "startTime": 216.98,
+                "endTime": 218.4,
+                "duration": 1.42,
+                "speaker": "client",
+                "vocalArousal": 0.58,
+                "codes": [ "CLI" ],
+                "asrText": "called cops you know"
+            },
+            {
+                "id": 56,
+                "startTime": 219.86,
+                "endTime": 220.92,
+                "duration": 1.06,
+                "speaker": "therapist",
+                "vocalArousal": 0.216,
+                "codes": [ "GI" ],
+                "asrText": "and then if i s"
+            },
+            {
+                "id": 57,
+                "startTime": 221.24,
+                "endTime": 223.02,
+                "duration": 1.78,
+                "speaker": "therapist",
+                "vocalArousal": 0.493,
+                "codes": [ "QUO" ],
+                "asrText": "how you're feeling about"
+            },
+            {
+                "id": 58,
+                "startTime": 223.75,
+                "endTime": 226.41,
+                "duration": 2.66,
+                "speaker": "therapist",
+                "vocalArousal": 0.681,
+                "codes": [ "QUO" ],
+                "asrText": "this situation or being here today"
+            },
+            {
+                "id": 59,
+                "startTime": 227.06,
+                "endTime": 232.22,
+                "duration": 5.16,
+                "speaker": "client",
+                "vocalArousal": 0.52,
+                "codes": [ "CLI" ],
+                "asrText": "pretty frustrated and yeah um i feel like i'm i'm a good mom and"
+            },
+            {
+                "id": 60,
+                "startTime": 233.46,
+                "endTime": 236.08,
+                "duration": 2.62,
+                "speaker": "client",
+                "vocalArousal": 0.644,
+                "codes": [ "CLI" ],
+                "asrText": "and the places like this or for people who"
+            },
+            {
+                "id": 61,
+                "startTime": 236.54,
+                "endTime": 243.02,
+                "duration": 6.48,
+                "speaker": "client",
+                "vocalArousal": 0.564,
+                "codes": [ "CLI" ],
+                "asrText": "aren't good parents um i don't have my kids but i'm a good a good mom"
+            },
+            {
+                "id": 62,
+                "startTime": 244.62,
+                "endTime": 251.64,
+                "duration": 7.02,
+                "speaker": "therapist",
+                "vocalArousal": 0.383,
+                "codes": [ "GI" ],
+                "asrText": "so there's a lot there too so just being here um and you know as a drug treatment facility um"
+            },
+            {
+                "id": 63,
+                "startTime": 252.17,
+                "endTime": 254.97,
+                "duration": 2.8,
+                "speaker": "therapist",
+                "vocalArousal": 0.712,
+                "codes": [ "RES" ],
+                "asrText": "doesn't sound like it matches with how you see yourself"
+            },
+            {
+                "id": 64,
+                "startTime": 255.48,
+                "endTime": 256.02,
+                "duration": 0.54,
+                "speaker": "client",
+                "vocalArousal": 0.641,
+                "codes": [ "CLI" ],
+                "asrText": "no"
+            },
+            {
+                "id": 65,
+                "startTime": 256.41,
+                "endTime": 264.69,
+                "duration": 8.28,
+                "speaker": "therapist",
+                "vocalArousal": 0.454,
+                "codes": [ "QUO" ],
+                "asrText": "and being involved in the situations with your kids c p s getting involved that doesn't match with how you see yourself why do you see yourself as um"
+            },
+            {
+                "id": 66,
+                "startTime": 265.01,
+                "endTime": 266.05,
+                "duration": 1.04,
+                "speaker": "therapist",
+                "vocalArousal": 0.805,
+                "codes": [ "RES" ],
+                "asrText": "as a good mom"
+            },
+            {
+                "id": 67,
+                "startTime": 266.62,
+                "endTime": 266.94,
+                "duration": 0.32,
+                "speaker": "client",
+                "vocalArousal": 0.67,
+                "codes": [ "CLI" ],
+                "asrText": "yeah"
+            },
+            {
+                "id": 68,
+                "startTime": 267.45,
+                "endTime": 274.05,
+                "duration": 6.6,
+                "speaker": "client",
+                "vocalArousal": 0.471,
+                "codes": [ "CLI" ],
+                "asrText": "you do and um i mean i'm i'm here because i wanna i wanna do anything that i have to do to get my kids back okay"
+            },
+            {
+                "id": 69,
+                "startTime": 275.3,
+                "endTime": 277.36,
+                "duration": 2.06,
+                "speaker": "therapist",
+                "vocalArousal": 0.526,
+                "codes": [ "QUO" ],
+                "asrText": "and what might that entail"
+            },
+            {
+                "id": 70,
+                "startTime": 278.34,
+                "endTime": 279.04,
+                "duration": 0.7,
+                "speaker": "client",
+                "vocalArousal": 0.75,
+                "codes": [ "CLI" ],
+                "asrText": "um"
+            },
+            {
+                "id": 71,
+                "startTime": 279.77,
+                "endTime": 282.47,
+                "duration": 2.7,
+                "speaker": "client",
+                "vocalArousal": 0.471,
+                "codes": [ "CLI" ],
+                "asrText": "part of it they said this uh i have to"
+            },
+            {
+                "id": 72,
+                "startTime": 283.01,
+                "endTime": 284.99,
+                "duration": 1.98,
+                "speaker": "client",
+                "vocalArousal": 0.218,
+                "codes": [ "CLI" ],
+                "asrText": "so do you drug test once a month"
+            },
+            {
+                "id": 73,
+                "startTime": 285.81,
+                "endTime": 287.13,
+                "duration": 1.32,
+                "speaker": "client",
+                "vocalArousal": 0.454,
+                "codes": [ "CLI" ],
+                "asrText": "um so i have to"
+            },
+            {
+                "id": 74,
+                "startTime": 288.32,
+                "endTime": 291.08,
+                "duration": 2.76,
+                "speaker": "client",
+                "vocalArousal": 0.232,
+                "codes": [ "CLI" ],
+                "asrText": "have to quit using um meth is my"
+            },
+            {
+                "id": 75,
+                "startTime": 291.37,
+                "endTime": 295.13,
+                "duration": 3.76,
+                "speaker": "client",
+                "vocalArousal": 0.353,
+                "codes": [ "CLI" ],
+                "asrText": "drug of choice so safe to quit using meth mm"
+            },
+            {
+                "id": 76,
+                "startTime": 296.4,
+                "endTime": 297.64,
+                "duration": 1.24,
+                "speaker": "client",
+                "vocalArousal": 0.488,
+                "codes": [ "CLI" ],
+                "asrText": "yeah and"
+            },
+            {
+                "id": 77,
+                "startTime": 298.98,
+                "endTime": 305.36,
+                "duration": 6.38,
+                "speaker": "client",
+                "vocalArousal": 0.35,
+                "codes": [ "CLI" ],
+                "asrText": "yeah i don't know if i have to my boyfriend can't live at the house anymore because he's not their father and"
+            },
+            {
+                "id": 78,
+                "startTime": 305.86,
+                "endTime": 307.48,
+                "duration": 1.62,
+                "speaker": "client",
+                "vocalArousal": 0.088,
+                "codes": [ "CLI" ],
+                "asrText": "don't know with the"
+            },
+            {
+                "id": 79,
+                "startTime": 308.01,
+                "endTime": 317.43,
+                "duration": 9.42,
+                "speaker": "client",
+                "vocalArousal": 0.299,
+                "codes": [ "CLI" ],
+                "asrText": "i don't know it's a biological father is gonna have to get involved with all this he lives in or again and it's just and it's just a mess with them so uh huh um i don't"
+            },
+            {
+                "id": 80,
+                "startTime": 318.2,
+                "endTime": 324.72,
+                "duration": 6.52,
+                "speaker": "client",
+                "vocalArousal": 0.655,
+                "codes": [ "CLI" ],
+                "asrText": "i guess the biggest thing is that i have to have to quit i have to be here that's part of my treatment"
+            },
+            {
+                "id": 81,
+                "startTime": 325.11,
+                "endTime": 327.85,
+                "duration": 2.74,
+                "speaker": "therapist",
+                "vocalArousal": 0.782,
+                "codes": [ "RES" ],
+                "asrText": "yeah and so i hear you saying that there is um"
+            },
+            {
+                "id": 82,
+                "startTime": 328.15,
+                "endTime": 336.69,
+                "duration": 8.54,
+                "speaker": "therapist",
+                "vocalArousal": 0.578,
+                "codes": [ "RES" ],
+                "asrText": "but there's kind of some criteria you have to so you have to quit using um you know i'm wondering when you say that um"
+            },
+            {
+                "id": 83,
+                "startTime": 338.25,
+                "endTime": 344.23,
+                "duration": 5.98,
+                "speaker": "therapist",
+                "vocalArousal": 0.774,
+                "codes": [ "QUC" ],
+                "asrText": "what's behind that is is are you saying you have to quit because c p s is making you"
+            },
+            {
+                "id": 84,
+                "startTime": 347.06,
+                "endTime": 349.44,
+                "duration": 2.38,
+                "speaker": "therapist",
+                "vocalArousal": 0.539,
+                "codes": [ "QUC" ],
+                "asrText": "or you saying you have to quit for some other reason"
+            },
+            {
+                "id": 85,
+                "startTime": 351.25,
+                "endTime": 352.01,
+                "duration": 0.76,
+                "speaker": "client",
+                "vocalArousal": 0.837,
+                "codes": [ "CLI" ],
+                "asrText": "um"
+            },
+            {
+                "id": 86,
+                "startTime": 353.96,
+                "endTime": 355.38,
+                "duration": 1.42,
+                "speaker": "client",
+                "vocalArousal": 0.8,
+                "codes": [ "CLI" ],
+                "asrText": "well i guess"
+            },
+            {
+                "id": 87,
+                "startTime": 355.6,
+                "endTime": 362.36,
+                "duration": 6.76,
+                "speaker": "client",
+                "vocalArousal": 0.265,
+                "codes": [ "CLI" ],
+                "asrText": "i guess c p s wants c p s wants me to quit so i can be a better mom mm hmm that's how they see it so"
+            },
+            {
+                "id": 88,
+                "startTime": 363.94,
+                "endTime": 369.44,
+                "duration": 5.5,
+                "speaker": "client",
+                "vocalArousal": 0.129,
+                "codes": [ "CLI" ],
+                "asrText": "by quitting for c p s because some technically quitting to be a better mom but"
+            },
+            {
+                "id": 89,
+                "startTime": 370.58,
+                "endTime": 372.88,
+                "duration": 2.3,
+                "speaker": "client",
+                "vocalArousal": 0.222,
+                "codes": [ "CLI" ],
+                "asrText": "i thought it was okay i thought it was a good mom"
+            },
+            {
+                "id": 90,
+                "startTime": 373.7,
+                "endTime": 374.88,
+                "duration": 1.18,
+                "speaker": "client",
+                "vocalArousal": 0.049,
+                "codes": [ "CLI" ],
+                "asrText": "when i was"
+            },
+            {
+                "id": 91,
+                "startTime": 375.91,
+                "endTime": 377.41,
+                "duration": 1.5,
+                "speaker": "client",
+                "vocalArousal": 0.655,
+                "codes": [ "CLI" ],
+                "asrText": "using yeah"
+            },
+            {
+                "id": 92,
+                "startTime": 377.76,
+                "endTime": 379.46,
+                "duration": 1.7,
+                "speaker": "therapist",
+                "vocalArousal": 0.805,
+                "codes": [ "GI" ],
+                "asrText": "so it's so um"
+            },
+            {
+                "id": 93,
+                "startTime": 381.0,
+                "endTime": 386.88,
+                "duration": 5.88,
+                "speaker": "therapist",
+                "vocalArousal": 0.383,
+                "codes": [ "RES" ],
+                "asrText": "if you weren't involved in the current situation with c p s and not having your kids right now"
+            },
+            {
+                "id": 94,
+                "startTime": 387.33,
+                "endTime": 388.07,
+                "duration": 0.74,
+                "speaker": "therapist",
+                "vocalArousal": 0.237,
+                "codes": [ "GI" ],
+                "asrText": "um"
+            },
+            {
+                "id": 95,
+                "startTime": 389.1,
+                "endTime": 390.7,
+                "duration": 1.6,
+                "speaker": "therapist",
+                "vocalArousal": 0.185,
+                "codes": [ "GI" ],
+                "asrText": "you might feel"
+            },
+            {
+                "id": 96,
+                "startTime": 391.5,
+                "endTime": 394.18,
+                "duration": 2.68,
+                "speaker": "therapist",
+                "vocalArousal": 0.61,
+                "codes": [ "GI" ],
+                "asrText": "good i've just continuing the way things were"
+            },
+            {
+                "id": 97,
+                "startTime": 395.14,
+                "endTime": 398.74,
+                "duration": 3.6,
+                "speaker": "client",
+                "vocalArousal": 0.641,
+                "codes": [ "CLI" ],
+                "asrText": "yeah i think i guess maybe so i mean my kids they know"
+            },
+            {
+                "id": 98,
+                "startTime": 399.23,
+                "endTime": 404.21,
+                "duration": 4.98,
+                "speaker": "client",
+                "vocalArousal": 0.383,
+                "codes": [ "CLI" ],
+                "asrText": "they eat three meals a day that close mm hmm they go to school mm"
+            },
+            {
+                "id": 99,
+                "startTime": 405.22,
+                "endTime": 409.92,
+                "duration": 4.7,
+                "speaker": "client",
+                "vocalArousal": 0.367,
+                "codes": [ "CLI" ],
+                "asrText": "if they were have any friends over and over and and the reason for my kids mm hmm from their friends"
+            },
+            {
+                "id": 100,
+                "startTime": 410.39,
+                "endTime": 415.55,
+                "duration": 5.16,
+                "speaker": "client",
+                "vocalArousal": 0.436,
+                "codes": [ "CLI" ],
+                "asrText": "i'm just trying to help my kids with their homework we can especially basic needs"
+            },
+            {
+                "id": 101,
+                "startTime": 416.11,
+                "endTime": 420.21,
+                "duration": 4.1,
+                "speaker": "client",
+                "vocalArousal": 0.567,
+                "codes": [ "CLI" ],
+                "asrText": "yeah it sounds like there um i'm doing the best i can do mm hmm"
+            },
+            {
+                "id": 102,
+                "startTime": 421.54,
+                "endTime": 425.42,
+                "duration": 3.88,
+                "speaker": "therapist",
+                "vocalArousal": 0.61,
+                "codes": [ "RES" ],
+                "asrText": "um so for you mentioned a couple of times that you don't use in front of them"
+            },
+            {
+                "id": 103,
+                "startTime": 425.88,
+                "endTime": 431.26,
+                "duration": 5.38,
+                "speaker": "therapist",
+                "vocalArousal": 0.493,
+                "codes": [ "COU" ],
+                "asrText": "um talk a little bit about that you said your mother did use in front of you"
+            },
+            {
+                "id": 104,
+                "startTime": 431.71,
+                "endTime": 437.03,
+                "duration": 5.32,
+                "speaker": "client",
+                "vocalArousal": 0.52,
+                "codes": [ "CLI" ],
+                "asrText": "yeah so my my and my dad left when i was young um"
+            },
+            {
+                "id": 105,
+                "startTime": 437.65,
+                "endTime": 439.85,
+                "duration": 2.2,
+                "speaker": "client",
+                "vocalArousal": 0.283,
+                "codes": [ "CLI" ],
+                "asrText": "and that's my mom was a single mom"
+            },
+            {
+                "id": 106,
+                "startTime": 440.58,
+                "endTime": 442.4,
+                "duration": 1.82,
+                "speaker": "client",
+                "vocalArousal": 0.436,
+                "codes": [ "CLI" ],
+                "asrText": "and um"
+            },
+            {
+                "id": 107,
+                "startTime": 443.42,
+                "endTime": 444.46,
+                "duration": 1.04,
+                "speaker": "client",
+                "vocalArousal": 0.436,
+                "codes": [ "CLI" ],
+                "asrText": "she um"
+            },
+            {
+                "id": 108,
+                "startTime": 445.91,
+                "endTime": 452.17,
+                "duration": 6.26,
+                "speaker": "client",
+                "vocalArousal": 0.471,
+                "codes": [ "CLI" ],
+                "asrText": "should hard time taking care of my brothers and sisters and i so uh she where the trees coke"
+            },
+            {
+                "id": 109,
+                "startTime": 453.02,
+                "endTime": 453.68,
+                "duration": 0.66,
+                "speaker": "client",
+                "vocalArousal": 0.419,
+                "codes": [ "CLI" ],
+                "asrText": "um"
+            },
+            {
+                "id": 110,
+                "startTime": 454.11,
+                "endTime": 457.23,
+                "duration": 3.12,
+                "speaker": "client",
+                "vocalArousal": 0.52,
+                "codes": [ "CLI" ],
+                "asrText": "mostly for the energy she would use it and um"
+            },
+            {
+                "id": 111,
+                "startTime": 459.19,
+                "endTime": 460.35,
+                "duration": 1.16,
+                "speaker": "client",
+                "vocalArousal": 0.655,
+                "codes": [ "CLI" ],
+                "asrText": "yeah she would just"
+            },
+            {
+                "id": 112,
+                "startTime": 460.79,
+                "endTime": 467.95,
+                "duration": 7.16,
+                "speaker": "client",
+                "vocalArousal": 0.698,
+                "codes": [ "CLI" ],
+                "asrText": "sorry wines off to take home so you start doing this mm hmm how what were you do you remember about seven no"
+            },
+            {
+                "id": 113,
+                "startTime": 468.77,
+                "endTime": 469.83,
+                "duration": 1.06,
+                "speaker": "therapist",
+                "vocalArousal": 0.828,
+                "codes": [ "COU" ],
+                "asrText": "scary a little bit"
+            },
+            {
+                "id": 114,
+                "startTime": 470.76,
+                "endTime": 475.82,
+                "duration": 5.06,
+                "speaker": "client",
+                "vocalArousal": 0.383,
+                "codes": [ "CLI" ],
+                "asrText": "yeah i i didn't know what it i know and then i have class my brothers and sisters and"
+            },
+            {
+                "id": 115,
+                "startTime": 476.08,
+                "endTime": 479.7,
+                "duration": 3.62,
+                "speaker": "client",
+                "vocalArousal": 0.613,
+                "codes": [ "CLI" ],
+                "asrText": "they just said it and so my aunt has to do them to take care of us"
+            },
+            {
+                "id": 116,
+                "startTime": 480.11,
+                "endTime": 480.77,
+                "duration": 0.66,
+                "speaker": "client",
+                "vocalArousal": 0.504,
+                "codes": [ "CLI" ],
+                "asrText": "um"
+            },
+            {
+                "id": 117,
+                "startTime": 481.83,
+                "endTime": 484.19,
+                "duration": 2.36,
+                "speaker": "client",
+                "vocalArousal": 0.548,
+                "codes": [ "CLI" ],
+                "asrText": "and we'll take care of each other mm"
+            },
+            {
+                "id": 118,
+                "startTime": 485.33,
+                "endTime": 485.85,
+                "duration": 0.52,
+                "speaker": "client",
+                "vocalArousal": 0.136,
+                "codes": [ "CLI" ],
+                "asrText": "okay"
+            },
+            {
+                "id": 119,
+                "startTime": 486.25,
+                "endTime": 487.95,
+                "duration": 1.7,
+                "speaker": "therapist",
+                "vocalArousal": 0.837,
+                "codes": [ "GI" ],
+                "asrText": "my phone i'm sorry to interrupt yeah"
+            },
+            {
+                "id": 120,
+                "startTime": 488.27,
+                "endTime": 490.87,
+                "duration": 2.6,
+                "speaker": "therapist",
+                "vocalArousal": 0.366,
+                "codes": [ "QUC" ],
+                "asrText": "had it make you feel when you were watching them"
+            },
+            {
+                "id": 121,
+                "startTime": 491.23,
+                "endTime": 492.57,
+                "duration": 1.34,
+                "speaker": "therapist",
+                "vocalArousal": 0.428,
+                "codes": [ "QUC" ],
+                "asrText": "your mother do that or"
+            },
+            {
+                "id": 122,
+                "startTime": 493.53,
+                "endTime": 494.27,
+                "duration": 0.74,
+                "speaker": "client",
+                "vocalArousal": 0.777,
+                "codes": [ "CLI" ],
+                "asrText": "sad"
+            },
+            {
+                "id": 123,
+                "startTime": 494.6,
+                "endTime": 497.1,
+                "duration": 2.5,
+                "speaker": "client",
+                "vocalArousal": 0.712,
+                "codes": [ "CLI" ],
+                "asrText": "you feel so yeah some for"
+            },
+            {
+                "id": 124,
+                "startTime": 497.77,
+                "endTime": 499.49,
+                "duration": 1.72,
+                "speaker": "client",
+                "vocalArousal": 0.626,
+                "codes": [ "CLI" ],
+                "asrText": "so for my mother but um"
+            },
+            {
+                "id": 125,
+                "startTime": 501.3,
+                "endTime": 501.7,
+                "duration": 0.4,
+                "speaker": "client",
+                "vocalArousal": 0.868,
+                "codes": [ "CLI" ],
+                "asrText": "that's"
+            },
+            {
+                "id": 126,
+                "startTime": 502.7,
+                "endTime": 505.72,
+                "duration": 3.02,
+                "speaker": "client",
+                "vocalArousal": 0.353,
+                "codes": [ "CLI" ],
+                "asrText": "so for my mother that she to in front of us that she"
+            },
+            {
+                "id": 127,
+                "startTime": 505.99,
+                "endTime": 507.33,
+                "duration": 1.34,
+                "speaker": "client",
+                "vocalArousal": 0.265,
+                "codes": [ "CLI" ],
+                "asrText": "didn't have any shame"
+            },
+            {
+                "id": 128,
+                "startTime": 507.69,
+                "endTime": 508.31,
+                "duration": 0.62,
+                "speaker": "client",
+                "vocalArousal": 0.504,
+                "codes": [ "CLI" ],
+                "asrText": "you more"
+            },
+            {
+                "id": 129,
+                "startTime": 509.1,
+                "endTime": 510.84,
+                "duration": 1.74,
+                "speaker": "client",
+                "vocalArousal": 0.419,
+                "codes": [ "CLI" ],
+                "asrText": "didn't have any any"
+            },
+            {
+                "id": 130,
+                "startTime": 511.45,
+                "endTime": 517.83,
+                "duration": 6.38,
+                "speaker": "client",
+                "vocalArousal": 0.567,
+                "codes": [ "CLI" ],
+                "asrText": "dignity to not do drugs and kind of a she just there's just trying to get by so it seems them digging phone yeah"
+            },
+            {
+                "id": 131,
+                "startTime": 518.31,
+                "endTime": 519.25,
+                "duration": 0.94,
+                "speaker": "therapist",
+                "vocalArousal": 0.903,
+                "codes": [ "RES" ],
+                "asrText": "and they're s"
+            },
+            {
+                "id": 132,
+                "startTime": 520.73,
+                "endTime": 522.13,
+                "duration": 1.4,
+                "speaker": "client",
+                "vocalArousal": 0.75,
+                "codes": [ "CLI" ],
+                "asrText": "kind of the home"
+            },
+            {
+                "id": 133,
+                "startTime": 522.97,
+                "endTime": 523.87,
+                "duration": 0.9,
+                "speaker": "client",
+                "vocalArousal": 0.58,
+                "codes": [ "CLI" ],
+                "asrText": "grew up in kind of"
+            },
+            {
+                "id": 134,
+                "startTime": 524.17,
+                "endTime": 525.95,
+                "duration": 1.78,
+                "speaker": "client",
+                "vocalArousal": 0.334,
+                "codes": [ "CLI" ],
+                "asrText": "kinda poor neighborhood so a lot"
+            },
+            {
+                "id": 135,
+                "startTime": 526.35,
+                "endTime": 529.55,
+                "duration": 3.2,
+                "speaker": "client",
+                "vocalArousal": 0.232,
+                "codes": [ "CLI" ],
+                "asrText": "lot of people are doing drugs i mean that's how i got into it after"
+            },
+            {
+                "id": 136,
+                "startTime": 530.33,
+                "endTime": 531.89,
+                "duration": 1.56,
+                "speaker": "client",
+                "vocalArousal": 0.8,
+                "codes": [ "CLI" ],
+                "asrText": "say my mind to it like"
+            },
+            {
+                "id": 137,
+                "startTime": 532.26,
+                "endTime": 535.68,
+                "duration": 3.42,
+                "speaker": "client",
+                "vocalArousal": 0.338,
+                "codes": [ "CLI" ],
+                "asrText": "that seem to help her too uh huh so i just felt like"
+            },
+            {
+                "id": 138,
+                "startTime": 536.95,
+                "endTime": 538.23,
+                "duration": 1.28,
+                "speaker": "client",
+                "vocalArousal": 0.27,
+                "codes": [ "CLI" ],
+                "asrText": "you this is something and"
+            },
+            {
+                "id": 139,
+                "startTime": 538.87,
+                "endTime": 539.71,
+                "duration": 0.84,
+                "speaker": "client",
+                "vocalArousal": 0.017,
+                "codes": [ "CLI" ],
+                "asrText": "people do"
+            },
+            {
+                "id": 140,
+                "startTime": 540.43,
+                "endTime": 542.47,
+                "duration": 2.04,
+                "speaker": "client",
+                "vocalArousal": 0.641,
+                "codes": [ "CLI" ],
+                "asrText": "is something that when i have to do"
+            },
+            {
+                "id": 141,
+                "startTime": 543.14,
+                "endTime": 543.68,
+                "duration": 0.54,
+                "speaker": "client",
+                "vocalArousal": 0.8,
+                "codes": [ "CLI" ],
+                "asrText": "to"
+            },
+            {
+                "id": 142,
+                "startTime": 544.93,
+                "endTime": 546.75,
+                "duration": 1.82,
+                "speaker": "client",
+                "vocalArousal": 0.551,
+                "codes": [ "CLI" ],
+                "asrText": "it be okay oh i see"
+            },
+            {
+                "id": 143,
+                "startTime": 551.04,
+                "endTime": 551.38,
+                "duration": 0.34,
+                "speaker": "therapist",
+                "vocalArousal": 0.003,
+                "codes": [ "FA" ],
+                "asrText": "yeah"
+            },
+            {
+                "id": 144,
+                "startTime": 553.47,
+                "endTime": 556.29,
+                "duration": 2.82,
+                "speaker": "therapist",
+                "vocalArousal": 0.599,
+                "codes": [ "GI" ],
+                "asrText": "i have a little bit of time left mm"
+            },
+            {
+                "id": 145,
+                "startTime": 557.93,
+                "endTime": 561.67,
+                "duration": 3.74,
+                "speaker": "therapist",
+                "vocalArousal": 0.79,
+                "codes": [ "REC" ],
+                "asrText": "so it sounds like it's pretty powerful feelings connected to watching"
+            },
+            {
+                "id": 146,
+                "startTime": 562.3,
+                "endTime": 563.24,
+                "duration": 0.94,
+                "speaker": "therapist",
+                "vocalArousal": 0.539,
+                "codes": [ "REC" ],
+                "asrText": "your mother"
+            },
+            {
+                "id": 147,
+                "startTime": 563.66,
+                "endTime": 569.14,
+                "duration": 5.48,
+                "speaker": "therapist",
+                "vocalArousal": 0.599,
+                "codes": [ "REC" ],
+                "asrText": "do drugs and even sometimes thinking about why she might have to do this mm"
+            },
+            {
+                "id": 148,
+                "startTime": 569.42,
+                "endTime": 570.76,
+                "duration": 1.34,
+                "speaker": "therapist",
+                "vocalArousal": 0.428,
+                "codes": [ "RES" ],
+                "asrText": "to get energy"
+            },
+            {
+                "id": 149,
+                "startTime": 571.03,
+                "endTime": 574.11,
+                "duration": 3.08,
+                "speaker": "therapist",
+                "vocalArousal": 0.366,
+                "codes": [ "RES" ],
+                "asrText": "um to get by like you said to take care of"
+            },
+            {
+                "id": 150,
+                "startTime": 574.38,
+                "endTime": 575.76,
+                "duration": 1.38,
+                "speaker": "therapist",
+                "vocalArousal": 0.454,
+                "codes": [ "RES" ],
+                "asrText": "you're in your siblings"
+            },
+            {
+                "id": 151,
+                "startTime": 576.57,
+                "endTime": 577.27,
+                "duration": 0.7,
+                "speaker": "therapist",
+                "vocalArousal": 0.035,
+                "codes": [ "GI" ],
+                "asrText": "um"
+            },
+            {
+                "id": 152,
+                "startTime": 578.7,
+                "endTime": 580.2,
+                "duration": 1.5,
+                "speaker": "therapist",
+                "vocalArousal": 0.847,
+                "codes": [ "GI" ],
+                "asrText": "and yet i'm wondering"
+            },
+            {
+                "id": 153,
+                "startTime": 581.24,
+                "endTime": 582.24,
+                "duration": 1.0,
+                "speaker": "therapist",
+                "vocalArousal": 0.759,
+                "codes": [ "GI" ],
+                "asrText": "about how"
+            },
+            {
+                "id": 154,
+                "startTime": 582.73,
+                "endTime": 586.49,
+                "duration": 3.76,
+                "speaker": "therapist",
+                "vocalArousal": 0.673,
+                "codes": [ "GI" ],
+                "asrText": "you know now you find yourself in a similar position"
+            },
+            {
+                "id": 155,
+                "startTime": 587.38,
+                "endTime": 588.16,
+                "duration": 0.78,
+                "speaker": "therapist",
+                "vocalArousal": 0.504,
+                "codes": [ "GI" ],
+                "asrText": "um"
+            },
+            {
+                "id": 156,
+                "startTime": 589.97,
+                "endTime": 591.61,
+                "duration": 1.64,
+                "speaker": "therapist",
+                "vocalArousal": 0.837,
+                "codes": [ "QUC" ],
+                "asrText": "i'm wondering if you"
+            },
+            {
+                "id": 157,
+                "startTime": 592.53,
+                "endTime": 596.59,
+                "duration": 4.06,
+                "speaker": "therapist",
+                "vocalArousal": 0.599,
+                "codes": [ "QUC" ],
+                "asrText": "possibly see any connection between your attitude to your mother's drug use"
+            },
+            {
+                "id": 158,
+                "startTime": 597.22,
+                "endTime": 598.6,
+                "duration": 1.38,
+                "speaker": "therapist",
+                "vocalArousal": 0.673,
+                "codes": [ "QUC" ],
+                "asrText": "and how you see yourself"
+            },
+            {
+                "id": 159,
+                "startTime": 599.3,
+                "endTime": 599.94,
+                "duration": 0.64,
+                "speaker": "therapist",
+                "vocalArousal": 0.883,
+                "codes": [ "QUC" ],
+                "asrText": "today"
+            },
+            {
+                "id": 160,
+                "startTime": 600.95,
+                "endTime": 606.75,
+                "duration": 5.8,
+                "speaker": "client",
+                "vocalArousal": 0.58,
+                "codes": [ "CLI" ],
+                "asrText": "like it's it's it's different because my kids dancing use but i don't know if my kids now that"
+            },
+            {
+                "id": 161,
+                "startTime": 608.48,
+                "endTime": 613.96,
+                "duration": 5.48,
+                "speaker": "client",
+                "vocalArousal": 0.504,
+                "codes": [ "CLI" ],
+                "asrText": "i guess my kids you know that i use i never told them mm hmm right that i have"
+            },
+            {
+                "id": 162,
+                "startTime": 614.52,
+                "endTime": 616.04,
+                "duration": 1.52,
+                "speaker": "client",
+                "vocalArousal": 0.367,
+                "codes": [ "CLI" ],
+                "asrText": "but i guess they can assume that"
+            },
+            {
+                "id": 163,
+                "startTime": 617.1,
+                "endTime": 618.28,
+                "duration": 1.18,
+                "speaker": "client",
+                "vocalArousal": 0.785,
+                "codes": [ "CLI" ],
+                "asrText": "go in a while to quit"
+            },
+            {
+                "id": 164,
+                "startTime": 618.77,
+                "endTime": 624.67,
+                "duration": 5.9,
+                "speaker": "client",
+                "vocalArousal": 0.488,
+                "codes": [ "CLI" ],
+                "asrText": "with bob and then when they come back or what that happier mm hmm is that muscle when something's"
+            },
+            {
+                "id": 165,
+                "startTime": 625.53,
+                "endTime": 626.31,
+                "duration": 0.78,
+                "speaker": "client",
+                "vocalArousal": 0.471,
+                "codes": [ "CLI" ],
+                "asrText": "going on"
+            },
+            {
+                "id": 166,
+                "startTime": 626.8,
+                "endTime": 633.72,
+                "duration": 6.92,
+                "speaker": "client",
+                "vocalArousal": 0.522,
+                "codes": [ "CLI" ],
+                "asrText": "yeah i'm not sure how much of that there are put them together or you know so i don't i don't know if they"
+            },
+            {
+                "id": 167,
+                "startTime": 634.53,
+                "endTime": 635.81,
+                "duration": 1.28,
+                "speaker": "client",
+                "vocalArousal": 0.567,
+                "codes": [ "CLI" ],
+                "asrText": "no because they feel"
+            }
+        ]
+    }
+}

@@ -415,9 +415,10 @@ function createVariation(variation){
   dataObj.session = sessionType;
   dataObj.listenTime = +listenMaxDur.toFixed(0);
   dataObj.variation = variation.replace(/ /g,"_");
-  d3.json('http://api.db-ip.com/v2/free/self', function(data) {
-    dataObj.ip = data.ipAddress;
-  });
+  // currently omitting ip address capture
+  // d3.json('http://api.db-ip.com/v2/free/self', function(data) {
+  //   dataObj.ip = data.ipAddress;
+  // });
 
   d3.select('#btn-to-survey')
     .style('color','black')
@@ -427,7 +428,7 @@ function createVariation(variation){
       clearInterval(durSecInterval);
       d3.select(this).attr('href','https://sri.utah.edu/epnew/bypass/anon.jsp?gid=4196738'+
         '&randomsessionid=' + dataObj.user +
-        '&ip=' + dataObj.ip +
+        // '&ip=' + dataObj.ip +
         '&empathy=' + dataObj.rating +
         '&sessiongoodbad=' + dataObj.session +
         '&listentime=' + dataObj.listenTime +
