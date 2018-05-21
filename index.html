@@ -14,30 +14,49 @@
 <div class="container">
   <div class="row" id="welcome">
     <div class="col-lg-12 welcome-container">
-      <h6>Welcome!</h6>
-      <p>This is where we tell you about the study.</p>
+      <h6 id="welcome-header">Hello, and thank you for participating in our study!</h6>
+      <p>
+        We are researchers at the University of Utah, the University of Washington, and Northeastern University. We have developed a software application that measures human empathy, and we’re interested in hearing your thoughts about it.
+      </p>
+      <p>
+        We would like you to listen to a few minutes of a role-played session between a therapist and a client. Then, we’d like you to rate the counselor’s empathy on a scale of 1-5, were 1 means “the therapist demonstrated little or no empathy for the client”, and 5 means, “the therapist was extremely empathic.”
+      </p>
+      <p>
+        Next, we’ll show you how our algorithm rated the therapist’s empathy. We’ll also provide additional information about the software, and about the session. We’d like you to spend a few minutes reviewing the session and the rating, to try and get a sense of how well the software works.
+      </p>
+      <p>
+        Finally, we’ll ask you to complete a brief survey about our system.
+      </p>
+      <p>
+        The entire study should take about 15-20 minutes, and your answers are confidential. When you are finished, you may leave your contact information if you would like to be included in a drawing for a $50 Amazon gift card.
+      </p>
+      <p>
+        If you have questions about this study or would like additional information, please contact humaninterpretability@gmail.com.
+      </p>
+      <p id="welcome-p-last">
+        If you’re ready to begin, please click the button below.
+      </p>
       <a class="btn btn-next">next</a>
     </div>
   </div>
   <div class="row hidden" id="audio">
     <div class="col-lg-12 audio-container">
-      <p>This is where you listen to the session.</p>
+      <p>Please listen to this 3-minute excerpt of a role-played session between a therapist and a client.</p>
       <audio id="session-audio0">
       </audio>
     </div>
-  </div>
-  <div class="row hidden" id="rating">
     <div class="col-lg-12 rating-container">
-      <p>This is where you rate the session from 1 to 5. Non-numeric values will default to zero.</p>
+      <p>After you have listened to the excerpt, please rate the therapist’s empathy on a scale of 1-5, were 1 means “the therapist demonstrated little or no empathy for the client”, and 5 means, “the therapist was extremely empathic.”</p>
       <!-- <p id="rating-val">0</p><br> -->
-      <form>
+      <form id="form-rating">
         <!-- <input class="slider" id="slider-rating" type="range" min=0 max=5 step=.1 value=0> -->
-        <input type="number" id="number-rating" min=0 max=5  step=.5 value=0>
+        <input type="number" id="number-rating" min=1 max=5  step=.5>
       </form>
-      <a class="btn btn-next">next</a>
+      <a class="btn btn-next disabled">next</a>
     </div>
-
   </div>
+  <!-- <div class="row hidden" id="rating">
+  </div> -->
   <div class="row hidden" id="header">
     <div class="col-sm-12" id="header-title"></div>
   </div>
@@ -52,6 +71,12 @@
   <div class="row hidden" id="next">
     <div class="col-sm-12">
       <a class="btn btn-next" id="btn-to-survey" target="_blank">next</a>
+    </div>
+  </div>
+  <div class="modal" id="modal-next">
+    <div class="modal-content">
+      <div class="modal-body">
+      </div>
     </div>
   </div>
 </div>

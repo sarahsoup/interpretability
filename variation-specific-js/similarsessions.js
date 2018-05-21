@@ -24,102 +24,55 @@ function similarSessions(){
     .append('p')
     .attr('id','desc-similar')
     .style('width',barW+'px')
-    .html('These are sessions that had similar empathy scores. Click a session to listen to a portion of it.')
+    .html('The software rated these sessions similarly to the one you heard. Press the play button to listen to an excerpt from each session.')
 
   const container = d3.select('#content-empathy')
     .append('div')
     .attr('id','container-similar')
     .attr('width',barW)
-    .style('margin-top','30px')
-    .append('g');
+    .style('margin-top','30px');
 
-    /* create accordian */
-    accordionButton1 = container.append('button')
-      .attr('class','accordion')
-      .attr('id','accordion-1')
-      .attr('data-toggle','collapse')
-      .attr('data-target','#collapse-1')
-      .on('click',function(){
-        similarFlipIcon('1');
-      });
-    accordionButton1
-      .append('i')
-      .attr('class','icon')
-      .attr('id','icon-1')
-      .attr('class','icon fas fa-chevron-down fa-lg');
-    accordionButton1
-      .append('text')
-      .attr('id','text-1')
-      .style('font-size','12px')
-      .style('padding-left','10px');
-
-    d3.select('#text-1')
-      .append('tspan')
-      .text('Session 1 Empathy Score: ');
-    d3.select('#text-1')
-      .append('tspan')
-      .text(function(){
-        if(session == sessionGood){
-          return empathyGood1;
-        }else if(session == sessionBad){
-          return empathyBad1;
-        }
-      })
-      .style('font-weight','bold');
+  container.append('p')
+    .style('font-size','12px')
+    .html(function(){
+      if(session == sessionGood){
+        return 'Session 1 Empathy Score: <span class="bold">' + empathyGood1 + '</span>';
+      }else if(session == sessionBad){
+        return 'Session 1 Empathy Score: <span class="bold">' + empathyBad1 + '</span>';
+      }
+    });
 
     container.append('div')
-      .attr('class','collapse')
       .attr('id','collapse-1');
 
     similarPlayAudio('1');
 
-    accordionButton2 = container.append('button')
-      .attr('class','accordion')
-      .attr('id','accordion-2')
-      .attr('data-toggle','collapse')
-      .attr('data-target','#collapse-2')
-      .on('click',function(){
-        similarFlipIcon('2');
-      });
-    accordionButton2
-      .append('i')
-      .attr('class','icon')
-      .attr('id','icon-2')
-      .attr('class','icon fas fa-chevron-down fa-lg');
-    accordionButton2
-      .append('text')
-      .attr('id','text-2')
+    container.append('p')
       .style('font-size','12px')
-      .style('padding-left','10px');
+      .style('mergin-top','10px')
+      .html(function(){
+        if(session == sessionGood){
+          return 'Session 2 Empathy Score: <span class="bold">' + empathyGood2 + '</span>';
+        }else if(session == sessionBad){
+          return 'Session 2 Empathy Score: <span class="bold">' + empathyBad2 + '</span>';
+        }
+      });
 
-      d3.select('#text-2')
-        .append('tspan')
-        .text('Session 2 Empathy Score: ');
-      d3.select('#text-2')
-        .append('tspan')
-        .text(function(){
-          if(session == sessionGood){
-            return empathyGood2;
-          }else if(session == sessionBad){
-            return empathyBad2;
-          }
-        })
-        .style('font-weight','bold');
     container.append('div')
-      .attr('class','collapse')
       .attr('id','collapse-2');
+
     similarPlayAudio('2');
 
-  function similarFlipIcon(num){
-    icon = d3.select('#icon-'+num);
-    if(icon.classed('fa-chevron-down')){
-      icon.classed('fa-chevron-down',false);
-      icon.classed('fa-chevron-up',true);
-    }else{
-      icon.classed('fa-chevron-up',false);
-      icon.classed('fa-chevron-down',true);
-    }
-  };
+  // function similarFlipIcon(num){
+  //   icon = d3.select('#icon-'+num);
+  //   if(icon.classed('fa-chevron-down')){
+  //     icon.classed('fa-chevron-down',false);
+  //     icon.classed('fa-chevron-up',true);
+  //   }else{
+  //     icon.classed('fa-chevron-up',false);
+  //     icon.classed('fa-chevron-down',true);
+  //   }
+  // };
 
   function similarPlayAudio(div){
     d3.select('#collapse-' + div)

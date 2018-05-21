@@ -11,7 +11,7 @@ function createSliders(data,questions,reflections,mlScore,w){
   column.append('p')
     .attr('id','desc-counts')
     .style('width',barW+'px')
-    .html('Here are some measures correlated with empathy. '+
+    .html('Empathy is correlated with asking open questions and making complex reflections. ' +
     'Drag the sliders to see how the empathy score and session transcript change when these measures change.')
 
   const svgCounts = column.append('svg')
@@ -507,6 +507,11 @@ function addTextChange(d,scale,dataChange){
     .append('tspan')
     .attr('class','text-change-' + scale)
     .attr('id','therapist-change-' + d.id)
+    .classed('in-scope',function(){
+      if(d3.select('#therapist-original-' + d.id).classed('in-scope')){
+        return true;
+      }else{ return false; }
+    })
     .text(function(a){
       var textChange = '';
       dataChange.forEach(function(x){

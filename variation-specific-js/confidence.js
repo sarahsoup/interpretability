@@ -15,7 +15,7 @@ function makeEmpathyBars(mlScore){
     .text('with a confidence interval of ')
   d3.select('#textScore-ml')
     .append('tspan')
-    .text('(' + (mlScore-confInt).toFixed(2) + ', ' + (mlScore+confInt).toFixed(2) + ')')
+    .html('&plusmn;' + (confInt).toFixed(2))
     .style('fill','#19ABB5')
     .style('font-weight','bold');
 

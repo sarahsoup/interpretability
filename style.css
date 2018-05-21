@@ -12,6 +12,7 @@
 
 #welcome{
   display: block;
+  font-size: 14px;
 }
 
 #welcome, #audio, #rating, #selection{
@@ -23,8 +24,28 @@
   padding-right: 0px;
 }
 
+#welcome-header{
+  margin-bottom: 20px;
+}
+
+#welcome-p-last{
+  margin-bottom: 50px;
+}
+
+#audio{
+  font-size: 14px;
+}
+
 #progress-0{
   width: 80%;
+}
+
+.rating-container{
+  padding-top: 40px;
+}
+
+#form-rating{
+  padding: 20px;
 }
 
 #rating-val{
@@ -168,9 +189,11 @@ h6{
   margin-left: 20px;
 }
 
-/* MODAL STYLE */
+.in-scope{
+  font-weight: bold;
+}
 
-#modal-content-btn, #btn-form{
+#btn-form{
   cursor: pointer;
   background-color: white;
   border: 1px solid black;
@@ -181,7 +204,13 @@ h6{
   font-weight: bold;
 }
 
-#modal-btn{
+#modal-next{
+  display: none;
+}
+
+/* MODAL STYLE */
+
+/* #modal-btn{
   position: absolute;
   margin-left: 20px;
   margin-top: 6px;
@@ -189,13 +218,13 @@ h6{
   cursor: pointer;
   background-color: white;
   border: none;
-}
+} */
 
 #modal-content-btn{
   text-align: center;
   margin: auto;
-  margin-top: 20px;
-  display: flex;
+  margin-top: 40px;
+  width: 80px;
 }
 
 .modal{
@@ -208,10 +237,14 @@ h6{
 
 .modal-content{
   width: 50%;
-  margin: 15% auto;
+  margin: 10% auto;
   padding: 20px;
   box-shadow: 0px 5px 15px rgba(0,0,0,.5);
 }
+
+/* #modal-next .modal-content{
+  margin: 30% auto;
+} */
 
 .modal-body{
   padding: 20px;
@@ -231,7 +264,7 @@ h6{
 
 /* SIMILAR SESSIONS */
 
-.accordion{
+/* .accordion{
   cursor: pointer;
   width: 500px;
   height: 50px;
@@ -241,6 +274,10 @@ h6{
   padding-left: 20px;
   border: none;
   border-top: 1px solid black;
+} */
+
+.bold{
+  font-weight: bold;
 }
 
 .icon{
@@ -296,14 +333,16 @@ button:focus{
   border: 1px solid black;
 }
 
+.pos, .neg{
+  font-weight: bolder;
+}
+
 .pos, .text-change-pos{
   color: #70B276;
-  font-weight: bolder;
 }
 
 .neg, .text-change-neg{
   color: #CC6471;
-  font-weight: bolder;
 }
 
 .striked-pos, .striked-neg{
@@ -325,7 +364,7 @@ li {
 /* MANIPULATION */
 .striked-open, .striked-complex{
   text-decoration: line-through;
-  font-weight: bolder;
+  /* font-weight: bolder; */
   color: #CC6471;
 }
 

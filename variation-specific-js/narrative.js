@@ -16,13 +16,15 @@ function createDescription(){
     .attr('class','modal-body');
 
   header.append('h6')
-    .html('ABOUT THE ALGORITHM');
+    .html('ABOUT THE SOFTWARE');
 
   body.append('p')
+    .style('font-size','14px')
     .html(aboutAlg);
 
   body.append('button')
     .attr('id','modal-content-btn')
+    .attr('class','btn')
     .html('okay')
     .on('click',function(){
       modal.style('display','none');

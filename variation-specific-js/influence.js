@@ -19,7 +19,7 @@ function influenceLegend(talkTurn){
     .style('width',barW+'px')
     .style('margin-top','30px')
     .html('The most influential words and phrases to the empathy score are listed below and emphasized in the session transcript. ' +
-    'Some are <span class="pos">pro-empathy</span> and some are <span class="neg">anti-empathy</span>.')
+    '<span class="pos">Pro-empathy</span> phrases tend to raise empathy scores, while <span class="neg">anti-empathy</span> phrases tend to lower empathy scores.')
 
   row = d3.select('#content-empathy')
     .append('div')
@@ -57,15 +57,15 @@ function influenceLegend(talkTurn){
 
 function influenceFunctionality(mlScore){
 
-  d3.select('#content-session')
-    .append('p')
-    .attr('class','ngram-legend')
-    .style('font-size','12px')
-    .style('width',barW+'px')
-    .style('margin-top','30px')
-    .style('margin-bottom','10px')
-    .html('Click the buttons below to see how changing the ' +
-    'most influential words and phrases to all positive or negative affect the empathy score.');
+  // d3.select('#content-session')
+  //   .append('p')
+  //   .attr('class','ngram-legend')
+  //   .style('font-size','12px')
+  //   .style('width',barW+'px')
+  //   .style('margin-top','30px')
+  //   .style('margin-bottom','10px')
+  //   .html('Click the buttons below to see how changing the ' +
+  //   'most influential words and phrases to all pro-empathy or anti-empathy affect the empathy score.');
 
   btns = d3.select('#content-session')
     .append('g')
@@ -126,8 +126,8 @@ function influence(){
     .classed('text-influence-neg',true)
     .select('.therapist-original')
     .classed('striked-neg',false)
-    .style('color','#CC6471')
-    .style('font-weight','bolder');
+    .style('color','#CC6471');
+    // .style('font-weight','bolder');
   d3.selectAll('.text-change-pos').remove();
 
   d3.selectAll('.therapist-text')
@@ -135,8 +135,8 @@ function influence(){
     .classed('text-influence-pos',true)
     .select('.therapist-original')
     .classed('striked-pos',false)
-    .style('color','#70B276')
-    .style('font-weight','bolder');
+    .style('color','#70B276');
+    // .style('font-weight','bolder');
   d3.selectAll('.text-change-neg').remove();
 
 }
@@ -161,6 +161,11 @@ function influenceChange(direction){
         .append('tspan')
         .attr('class','text-change-pos')
         .attr('id',function(d){ return 'therapist-change-' + d.id; })
+        .classed('in-scope',function(d){
+          if(d3.select('#therapist-original-' + d.id).classed('in-scope')){
+            return true;
+          }else{ return false; }
+        })
         .classed('striked-neg',false)
         .text('(changed to pro-empathy word/phrase)');
     }
@@ -183,6 +188,11 @@ function influenceChange(direction){
         .append('tspan')
         .attr('class','text-change-neg')
         .attr('id',function(d){ return 'therapist-change-' + d.id; })
+        .classed('in-scope',function(d){
+          if(d3.select('#therapist-original-' + d.id).classed('in-scope')){
+            return true;
+          }else{ return false; }
+        })
         .classed('striked-pos',false)
         .text('(changed to anti-empathy word/phrase)');
     }

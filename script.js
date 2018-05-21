@@ -6,7 +6,11 @@ const barH = 50;
 const barY = 20;
 
 // text about algorithm: for narrative and confidence variations
-const aboutAlg = 'This is text about the algorithm';
+const aboutAlg = 'This software employs a machine-learning algorithm that was trained on a dataset of 300,000 utterances from 356 session recordings. ' +
+  'These sessions were hand-labelled by an 8-person coding team of human therapists. '+
+  'By analyzing these data, the software identified patterns that correlated with the human ratings. '+
+  'For example, the coding team may have given higher empathy ratings to sessions where therapists repeated clients’ statements than sessions where therapists used phrases like “you’re wrong.” '+
+  'This system has been found to be 93% correlated with human reliability, which means that in general, the system’s ratings are 93% likely to be the same as the coding team’s.';
 
 // confidence variation variables
 const confAdj = 25;
@@ -61,7 +65,7 @@ const variationArr = [
 ];
 const randomVarIndex = Math.floor(Math.random() * 5);
 variation = variationArr[randomVarIndex].variation;
-// variation = 'influential n-grams'; //manually set variation
+// variation = 'manipulation'; //manually set variation
 
 /* WELCOME SCREEN */
 d3.select('#welcome').selectAll('.btn')
@@ -76,23 +80,33 @@ d3.select('#welcome').selectAll('.btn')
 
 /* SESSION AUDIO SCREEN */
 playSession();
-d3.select('.audio-container')
-  .append('a')
-  .attr('class','btn btn-next')
-  .html('next');
+
+d3.select('#number-rating')
+  .on('input',function(){
+    if(document.getElementById('number-rating').value != "" && document.getElementById('number-rating').value >= 1 && document.getElementById('number-rating').value <= 5){
+      d3.select('#audio').selectAll('.btn')
+        .classed('disabled',false);
+    }else{
+      d3.select('#audio').selectAll('.btn')
+        .classed('disabled',true);
+    }
+  });
 
 d3.select('#audio').selectAll('.btn')
   .on('click',function(d){
-    stopPlayer(0);
-    d3.select('#audio')
-      .style('display','none')
-      .classed('hidden',true);
-    d3.select('#rating')
-      .style('display','block')
-      .classed('hidden',false);
-    d3.select('#slider-rating')
-      .attr('defaultValue',0)
-      .attr('value',0);
+      stopPlayer(0);
+      rating = document.getElementById('number-rating').value;
+      userScore = rating;
+      d3.select('#audio')
+        .style('display','none')
+        .classed('hidden',true);
+      d3.select('#header')
+        .classed('hidden',false);
+      d3.select('#content')
+        .classed('hidden',false);
+      d3.select('#next')
+        .classed('hidden',false);
+      createVariation(variation);
   });
 
 /* SESSION RATING SCREEN */
@@ -110,22 +124,6 @@ d3.select('#audio').selectAll('.btn')
 //     d3.select('#slider-rating')
 //       .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + ((rating/5)*100) + '%, #EEEEEE ' + ((rating/5)*100) + '%, #EEEEEE)');
 //   });
-
-d3.select('#rating').selectAll('.btn')
-  .on('click',function(d){
-      rating = document.getElementById('number-rating').value;
-      userScore = rating;
-      d3.select('#rating')
-        .style('display','none')
-        .classed('hidden',true);
-      d3.select('#header')
-        .classed('hidden',false);
-      d3.select('#content')
-        .classed('hidden',false);
-      d3.select('#next')
-        .classed('hidden',false);
-      createVariation(variation);
-  });
 
 /* CREATE VARIATION-BASED OUTPUT SCREEN */
 function createVariation(variation){
@@ -230,7 +228,7 @@ function createVariation(variation){
       .attr('id','textScore-ml')
       .attr('x','0px');
     mlScoreT.append('tspan')
-      .text('The algorithm rated the session ');
+      .text('The software rated the session ');
     mlScoreT.append('tspan')
       .attr('id','mlNum')
       .text(mlScore.toFixed(2))
@@ -314,7 +312,7 @@ function createVariation(variation){
       d3.select('#content-empathy')
         .append('h6')
         .attr('id','title-aboutAlg')
-        .html('ABOUT THE ALGORITHM');
+        .html('ABOUT THE SOFTWARE');
       d3.select('#content-empathy')
         .append('p')
         .attr('id','desc-aboutAlg')
@@ -326,13 +324,26 @@ function createVariation(variation){
 
     /************** SESSION TRANSCRIPT **************/
 
+    d3.select('#content-session')
+      .append('p')
+      .attr('id','transcript-desc')
+      .style('font-size','12px')
+      .style('width',barW+'px')
+      .style('margin-top','30px')
+      .html('Here is a transcript of the entire role-played session. The excerpt you listened to is indicated in <span class="bold">bold</span>.')
+
     if(variation == 'influential n-grams'){
+      d3.select('#transcript-desc')
+        .html('Here is a transcript of the entire role-played session. The excerpt you listened to is indicated in <span class="bold">bold</span>. '+
+        'Click the buttons below to see how changing the ' +
+        'most influential words and phrases to all pro-empathy or anti-empathy affect the empathy score.')
       influenceFunctionality(mlScore);
     }
 
     d3.select('#content-session')
       .append('div')
-      .attr('id','container-session')
+      .attr('id','container-session');
+    d3.select('#content-session')
       .append('div')
       .attr('id','manipulation-tracking');
 
@@ -374,24 +385,45 @@ function createVariation(variation){
       .attr('id',function(d){
         return d.speaker + '-original-' + d.id;
       })
+      .classed('in-scope',function(d){
+        if(session == sessionGood){
+          if(d.id >= 74 && d.id <= 119){
+            return true;
+          }else{ return false; }
+        }else if(session == sessionBad){
+          if(d.id >= 51 && d.id <= 88){
+            return true;
+          }else{ return false; }
+        }
+      })
       .text(function(d){
         return d.asrText;
       });
 
     if(variation == 'similar sessions'){
-      d3.select('#container-session')
-        .style('height','580px'); // to accomodate for accordion expansion
       similarSessions();
+      d3.select('#container-session')
+        .style('height','480px');
     }
     else if(variation == 'influential n-grams'){
       d3.select('#container-session')
         .style('margin-top','30px');
       influence();
+    }
+    else if(variation == 'confidence' || variation == 'narrative description'){
+      d3.select('#container-session')
+        .style('height','450px');
     }else if(variation == 'manipulation'){
       d3.select('#container-session')
-        .style('height','540px');
+        .style('height','560px');
       d3.select('#manipulation-tracking')
-        .style('height','540px');
+        .style('top',function(){
+          var rect = document.getElementById('container-session').getBoundingClientRect(),
+            greaterRect = document.getElementById('content-session').getBoundingClientRect(),
+    	      scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+          return (rect.top - greaterRect.top + scrollTop) + 'px';
+        })
+        .style('height','560px');
       trackingH = document.getElementById('manipulation-tracking').clientHeight;
       trackingW = document.getElementById('manipulation-tracking').clientWidth;
       d3.select('#manipulation-tracking')
@@ -410,6 +442,7 @@ function createVariation(variation){
   return '_' + Math.random().toString(36).substr(2, 9);
   };
 
+  // data storage
   dataObj.user = generateId();
   dataObj.rating = rating;
   dataObj.session = sessionType;
@@ -426,6 +459,24 @@ function createVariation(variation){
       dataObj.interactionCount = interaction;
       dataObj.outputTime = outputDurSec;
       clearInterval(durSecInterval);
+      d3.select('#modal-next')
+        .style('display','block');
+    })
+
+  // modal content
+  d3.select('#modal-next').selectAll('.modal-body')
+    .append('p')
+    .style('font-size','14px')
+    .style('text-align','center')
+    .style('margin-top','40px')
+    .html('You will now be directed to the survey site.');
+
+  d3.select('#modal-next').selectAll('.modal-body')
+    .append('a')
+    .attr('id','modal-content-btn')
+    .attr('class','btn')
+    .html('okay')
+    .on('click',function(){
       d3.select(this).attr('href','https://sri.utah.edu/epnew/bypass/anon.jsp?gid=4196738'+
         '&randomsessionid=' + dataObj.user +
         // '&ip=' + dataObj.ip +
@@ -435,6 +486,6 @@ function createVariation(variation){
         '&variation=' + dataObj.variation +
         '&timespentlooking=' + dataObj.outputTime +
         '&interactioncount=' + dataObj.interactionCount);
-    })
+    });
 
 };
