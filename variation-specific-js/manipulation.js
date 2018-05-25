@@ -541,7 +541,7 @@ function identifyTextChange(d,scale){
     .append('rect')
     .attr('class','rect-change rect-change-' + scale)
     .attr('id','rect-change-' + d.id)
-    .attr('x',8)
+    .attr('x',2)
     .attr('y',((targetliloc/totalH)*visibleH).toFixed(0))
     .attr('height',2)
     .attr('width',10);

@@ -10,12 +10,36 @@
   background-color: rgba(0, 0, 0, .5);
 }
 
+#welcome-imgs{
+
+}
+
+#welcome-imgs img{
+  width: 80%;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#img-wash{
+  left: 10%;
+}
+
+#img-neu{
+  left: 20%;
+}
+
 #welcome{
   display: block;
   font-size: 14px;
 }
 
-#welcome, #audio, #rating, #selection{
+#welcome-imgs, #welcome{
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+#welcome-imgs, #welcome, #audio, #rating, #selection{
   margin-top: 60px;
 }
 
@@ -34,6 +58,8 @@
 
 #audio{
   font-size: 14px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 #progress-0{
@@ -45,10 +71,22 @@
 }
 
 #form-rating{
+  display: inline;
   padding: 20px;
 }
 
-#rating-val{
+#form-rating input[type=radio]{
+  margin-left: 20px;
+  margin-right: 5px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+#radio-1{
+  margin-left: 10px;
+}
+
+/* #rating-val{
   text-align: center;
   font-size: 40px;
   font-weight: bolder;
@@ -64,7 +102,7 @@
 
 #number-rating:focus{
   outline: 0;
-}
+} */
 
 .btn{
   cursor: pointer;
@@ -374,7 +412,7 @@ li {
 
 #manipulation-tracking{
   position: absolute;
-  width: 20px;
+  width: 14px;
   right: 0px;
 }
 

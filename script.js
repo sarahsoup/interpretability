@@ -70,6 +70,9 @@ variation = variationArr[randomVarIndex].variation;
 /* WELCOME SCREEN */
 d3.select('#welcome').selectAll('.btn')
   .on('click',function(d){
+    d3.select('#welcome-imgs')
+      .style('display','none')
+      .classed('hidden',true);
     d3.select('#welcome')
       .style('display','none')
       .classed('hidden',true);
@@ -78,52 +81,48 @@ d3.select('#welcome').selectAll('.btn')
       .classed('hidden',false);
   });
 
-/* SESSION AUDIO SCREEN */
+/* SESSION AUDIO AND RATING SCREEN */
 playSession();
 
-d3.select('#number-rating')
-  .on('input',function(){
-    if(document.getElementById('number-rating').value != "" && document.getElementById('number-rating').value >= 1 && document.getElementById('number-rating').value <= 5){
-      d3.select('#audio').selectAll('.btn')
-        .classed('disabled',false);
-    }else{
-      d3.select('#audio').selectAll('.btn')
-        .classed('disabled',true);
-    }
+d3.select('#radio-1')
+  .on('click',function(){
+    d3.select('#audio').selectAll('.btn').classed('disabled',false);
+    rating = this.value;
+  });
+d3.select('#radio-2')
+  .on('click',function(){
+    d3.select('#audio').selectAll('.btn').classed('disabled',false);
+    rating = this.value;
+  });
+d3.select('#radio-3')
+  .on('click',function(){
+    d3.select('#audio').selectAll('.btn').classed('disabled',false);
+    rating = this.value;
+  });
+d3.select('#radio-4')
+  .on('click',function(){
+    d3.select('#audio').selectAll('.btn').classed('disabled',false);
+    rating = this.value;
+  });
+d3.select('#radio-5')
+  .on('click',function(){
+    d3.select('#audio').selectAll('.btn').classed('disabled',false);
+    rating = this.value;
   });
 
 d3.select('#audio').selectAll('.btn')
   .on('click',function(d){
       stopPlayer(0);
-      rating = document.getElementById('number-rating').value;
       userScore = rating;
       d3.select('#audio')
         .style('display','none')
         .classed('hidden',true);
-      d3.select('#header')
-        .classed('hidden',false);
       d3.select('#content')
         .classed('hidden',false);
       d3.select('#next')
         .classed('hidden',false);
       createVariation(variation);
   });
-
-/* SESSION RATING SCREEN */
-// rating = document.getElementById('slider-rating').value;
-// d3.select('#rating-val').html(rating);
-// d3.select('#number-rating')
-// below code for slider input
-// d3.select('#slider-rating')
-//   .style('height','10px')
-//   .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + ((rating/5)*100) + '%, #EEEEEE ' + ((rating/5)*100) + '%, #EEEEEE)')
-//   .style('border-radius','10px')
-//   .on('input',function(){
-//     rating = document.getElementById('slider-rating').value;
-//     document.getElementById('rating-val').innerHTML = rating;
-//     d3.select('#slider-rating')
-//       .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + ((rating/5)*100) + '%, #EEEEEE ' + ((rating/5)*100) + '%, #EEEEEE)');
-//   });
 
 /* CREATE VARIATION-BASED OUTPUT SCREEN */
 function createVariation(variation){
@@ -181,12 +180,6 @@ function createVariation(variation){
         })
       }
     });
-
-    /* HEADER */
-    const sessionNumber = d3.select('#header-title')
-      .append('h6')
-      .attr('class','header-text')
-      .html('HUMAN INTERPRETABILITY STUDY');
 
     /************* EMPATHY BARS *************/
 

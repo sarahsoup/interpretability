@@ -12,8 +12,25 @@
 </head>
 <body>
 <div class="container">
+  <div class="row" id="header">
+    <div class="col-sm-12" id="header-title">
+      <h6 class="header-text">HUMAN INTERPRETABILITY STUDY</h6>
+    </div>
+  </div>
+  <div class="row" id="welcome-imgs">
+    <div class="col-sm-4" id="div-utah">
+      <img class="img-logo" id="img-utah" src="./univ-logos/utah.png">
+    </div>
+    <div class="col-sm-4" id="div-wash">
+      <img class="img-logo" id="img-wash" src="./univ-logos/washington.jpeg">
+    </div>
+    <div class="col-sm-4" id="div-neu">
+      <img class="img-logo" id="img-neu" src="./univ-logos/northeastern.png">
+    </div>
+  </div>
   <div class="row" id="welcome">
-    <div class="col-lg-12 welcome-container">
+    <div class="col-sm-12 welcome-container">
+      <!-- <h6>HUMAN INTERPRETABILITY STUDY</h6> -->
       <h6 id="welcome-header">Hello, and thank you for participating in our study!</h6>
       <p>
         We are researchers at the University of Utah, the University of Washington, and Northeastern University. We have developed a software application that measures human empathy, and we’re interested in hearing your thoughts about it.
@@ -31,7 +48,7 @@
         The entire study should take about 15-20 minutes, and your answers are confidential. When you are finished, you may leave your contact information if you would like to be included in a drawing for a $50 Amazon gift card.
       </p>
       <p>
-        If you have questions about this study or would like additional information, please contact humaninterpretability@gmail.com.
+        If you have questions about this study or would like additional information, please contact <a href="mailto:humaninterpretability@gmail.com">humaninterpretability@gmail.com</a>.
       </p>
       <p id="welcome-p-last">
         If you’re ready to begin, please click the button below.
@@ -40,25 +57,26 @@
     </div>
   </div>
   <div class="row hidden" id="audio">
-    <div class="col-lg-12 audio-container">
+    <div class="col-sm-12 audio-container">
       <p>Please listen to this 3-minute excerpt of a role-played session between a therapist and a client.</p>
       <audio id="session-audio0">
       </audio>
     </div>
-    <div class="col-lg-12 rating-container">
+    <div class="col-sm-12 rating-container">
       <p>After you have listened to the excerpt, please rate the therapist’s empathy on a scale of 1-5, were 1 means “the therapist demonstrated little or no empathy for the client”, and 5 means, “the therapist was extremely empathic.”</p>
       <!-- <p id="rating-val">0</p><br> -->
       <form id="form-rating">
         <!-- <input class="slider" id="slider-rating" type="range" min=0 max=5 step=.1 value=0> -->
-        <input type="number" id="number-rating" min=1 max=5  step=.5>
+        <!-- <input type="number" id="number-rating" min=1 max=5  step=.5> -->
+        <input type="radio" name="empathy-rating" id="radio-1" value=1> 1
+        <input type="radio" name="empathy-rating" id="radio-2" value=2> 2
+        <input type="radio" name="empathy-rating" id="radio-3" value=3> 3
+        <input type="radio" name="empathy-rating" id="radio-4" value=4> 4
+        <input type="radio" name="empathy-rating" id="radio-5" value=5> 5
+      </br/>
       </form>
       <a class="btn btn-next disabled">next</a>
     </div>
-  </div>
-  <!-- <div class="row hidden" id="rating">
-  </div> -->
-  <div class="row hidden" id="header">
-    <div class="col-sm-12" id="header-title"></div>
   </div>
   <div class="row hidden" id="content">
     <div class="col-sm" id="content-empathy">
