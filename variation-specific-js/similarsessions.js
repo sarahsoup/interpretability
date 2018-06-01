@@ -1,13 +1,17 @@
 // similar session audio from brian
 // empathy scores manually pulled from ./output/similar-sessions files
-const similarSessionGood1 = './audio/tascam_20150427_ad_ts_bj_gt_clip.wav';
-const empathyGood1 = '3.32';
-const similarSessionGood2 = './audio/tascam_20150430_ad_bp_ha_gt_clip.wav';
-const empathyGood2 = '3.56';
-const similarSessionBad1 = './audio/tascam_20150430_bp_ad_ha_bt_clip.wav';
-const empathyBad1 = '3.38';
-const similarSessionBad2 = './audio/tascam_20150504_bp_ts_al_bt_clip.wav';
-const empathyBad2 = '3.49';
+const similarSessionGood1 = './audio/tascam_20150427_ad_ts_bj_gt_clip_enhanced.wav';
+// const empathyGood1 = '3.32';
+const empathyGood1 = '3.3';
+const similarSessionGood2 = './audio/tascam_20150430_ad_bp_ha_gt_clip_enhanced.wav';
+// const empathyGood2 = '3.56';
+const empathyGood2 = '3.6';
+const similarSessionBad1 = './audio/tascam_20150430_bp_ad_ha_bt_clip_enhanced.wav';
+// const empathyBad1 = '3.38';
+const empathyBad1 = '3.4';
+const similarSessionBad2 = './audio/tascam_20150504_bp_ts_al_bt_clip_enhanced.wav';
+// const empathyBad2 = '3.49';
+const empathyBad2 = '3.5';
 
 // for calculating max listening time for each audio file
 let audioMax1 = 0;

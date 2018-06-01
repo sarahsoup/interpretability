@@ -1,5 +1,9 @@
 function createSliders(data,questions,reflections,mlScore,w){
 
+  // adjust decimals for mlScore
+  d3.select('#mlNum')
+    .text(mlScore.toFixed(2));
+
   const column = d3.select('#content-empathy');
   let i;
 
@@ -11,7 +15,8 @@ function createSliders(data,questions,reflections,mlScore,w){
   column.append('p')
     .attr('id','desc-counts')
     .style('width',barW+'px')
-    .html('Empathy is correlated with asking open questions and making complex reflections. ' +
+    .html('Empathy is correlated with asking open questions (i.e., questions that invite an open-ended response from the client) and making complex reflections ' +
+    '(i.e., summaries or reflections that are integrative or make a hypothesis about what the client may have meant). ' +
     'Drag the sliders to see how the empathy score and session transcript change when these measures change.')
 
   const svgCounts = column.append('svg')
@@ -40,7 +45,7 @@ function createSliders(data,questions,reflections,mlScore,w){
     .attr('class','textCounts openQ')
     .attr('x','0px');
   openQT.append('tspan')
-    .text('Questions: ');
+    .text((data.openCount+data.closedCount) + ' Questions: ');
   openQT.append('tspan')
     .attr('id','openQ-perc')
     .text(Math.round(data.openPerc) + '% Open')
@@ -50,7 +55,7 @@ function createSliders(data,questions,reflections,mlScore,w){
     .attr('class','textCounts complexR')
     .attr('x','0px');
   complexRT.append('tspan')
-    .text('Reflections: ');
+    .text((data.simpleCount+data.complexCount) + ' Reflections: ');
   complexRT.append('tspan')
     .attr('id','complexQ-perc')
     .text(Math.round(data.complexPerc) + '% Complex')

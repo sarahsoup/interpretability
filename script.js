@@ -48,10 +48,10 @@ session = sessionArr[randomSessIndex].session;
 // session = sessionGood; //manually set session
 let sessionAudio, sessionType;
 if(session == sessionGood){
-  sessionAudio = './audio/hi_goodtherapy_clip.wav';
+  sessionAudio = './audio/hi_goodtherapy_clip_enhanced.wav';
   sessionType = 'good';
 }else if(session == sessionBad){
-  sessionAudio = './audio/hi_badtherapy_clip.wav';
+  sessionAudio = './audio/hi_badtherapy_clip_enhanced.wav';
   sessionType = 'bad';
 }
 
@@ -65,7 +65,7 @@ const variationArr = [
 ];
 const randomVarIndex = Math.floor(Math.random() * 5);
 variation = variationArr[randomVarIndex].variation;
-// variation = 'manipulation'; //manually set variation
+// variation = variationArr[2].variation; //manually set variation
 
 /* WELCOME SCREEN */
 d3.select('#welcome').selectAll('.btn')
@@ -224,7 +224,7 @@ function createVariation(variation){
       .text('The software rated the session ');
     mlScoreT.append('tspan')
       .attr('id','mlNum')
-      .text(mlScore.toFixed(2))
+      .text(mlScore.toFixed(1))
       .style('font-weight','bold');
     mlScoreT.append('tspan')
       .attr('id','mlNumChange');

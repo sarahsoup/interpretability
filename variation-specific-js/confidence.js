@@ -15,7 +15,7 @@ function makeEmpathyBars(mlScore){
     .text('with a confidence interval of ')
   d3.select('#textScore-ml')
     .append('tspan')
-    .html('&plusmn;' + (confInt).toFixed(2))
+    .html('&plusmn;' + (confInt).toFixed(1))
     .style('fill','#19ABB5')
     .style('font-weight','bold');
 
@@ -71,15 +71,15 @@ function makeConfidenceLabels(mlScore){
 
   // append text
   mlScoreG.append('text')
-    .text(mlScore.toFixed(2))
+    .text(mlScore.toFixed(1))
     .attr('class','confidence-label')
     .attr('x',scaleX(mlScore));
   mlScoreG.append('text')
-    .text((mlScore+confInt).toFixed(2))
+    .text((mlScore+confInt).toFixed(1))
     .attr('class','confidence-label')
     .attr('x',scaleX(mlScore+confInt));
   mlScoreG.append('text')
-    .text((mlScore-confInt).toFixed(2))
+    .text((mlScore-confInt).toFixed(1))
     .attr('class','confidence-label')
     .attr('x',scaleX(mlScore-confInt));
   mlScoreG.selectAll('.confidence-label')
