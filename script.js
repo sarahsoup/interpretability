@@ -1,22 +1,22 @@
 /* VARIABLES */
-
 const h = 300;
 const barW = 500;
 const barH = 50;
 const barY = 20;
+const scoreMax = 7;
 
 // text about algorithm: for narrative and confidence variations
 const aboutAlg = 'This software employs a machine-learning algorithm that was trained on a dataset of 300,000 utterances from 356 session recordings. ' +
   'These sessions were hand-labelled by an 8-person coding team of human therapists. '+
   'By analyzing these data, the software identified patterns that correlated with the human ratings. '+
   'For example, the coding team may have given higher empathy ratings to sessions where therapists repeated clients’ statements than sessions where therapists used phrases like “you’re wrong.” '+
-  'This system has been found to be 93% correlated with human reliability, which means that in general, the system’s ratings are 93% likely to be the same as the coding team’s.';
+  'This system has a 0.93 correlation with human predictions, which means that the machine is nearly as likely to agree with another human who rates the session as two human raters are with each other.';
 
 // confidence variation variables
 const confAdj = 25;
-const secondLnAdj = 18;
+const secondLnAdj = (18*2);
 const barAdj = 10;
-const confInt = 0.4; // manually assigned confidence interval (+/- empathy score)
+const confInt = 0.94; // manually assigned confidence interval (+/- empathy score)
 const scaleColor = chroma.scale(['#EEEEEE','#19ABB5']);
 
 // transcripts
@@ -34,7 +34,7 @@ let variation;
 let rating;
 let dataObj = {};
 
-const scaleX = d3.scaleLinear().domain([0, 5]).range([0, barW]);
+const scaleX = d3.scaleLinear().domain([0, scoreMax]).range([0, barW]);
 const scaleP = d3.scaleLinear().domain([0, 100]).range([0, barW]);
 const windowW = window.innerWidth;
 
@@ -44,14 +44,15 @@ const sessionArr = [
   {session: sessionBad},
 ];
 const randomSessIndex = Math.floor(Math.random() * 2);
-session = sessionArr[randomSessIndex].session;
-// session = sessionGood; //manually set session
+//session = sessionArr[randomSessIndex].session;
+session = sessionGood; //manually set session
 let sessionAudio, sessionType;
 if(session == sessionGood){
-  sessionAudio = './audio/hi_goodtherapy_clip_enhanced.wav';
+  sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_goodtherapy_enhanced.wav';
   sessionType = 'good';
 }else if(session == sessionBad){
-  sessionAudio = './audio/hi_badtherapy_clip_enhanced.wav';
+  // sessionAudio = './audio/hi_badtherapy_clip_enhanced.wav';
+  sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_badtherapy.wav';
   sessionType = 'bad';
 }
 
@@ -65,7 +66,7 @@ const variationArr = [
 ];
 const randomVarIndex = Math.floor(Math.random() * 5);
 variation = variationArr[randomVarIndex].variation;
-// variation = variationArr[2].variation; //manually set variation
+variation = variationArr[4].variation; //manually set variation
 
 /* WELCOME SCREEN */
 d3.select('#welcome').selectAll('.btn')
@@ -109,6 +110,16 @@ d3.select('#radio-5')
     d3.select('#audio').selectAll('.btn').classed('disabled',false);
     rating = this.value;
   });
+d3.select('#radio-6')
+  .on('click',function(){
+    d3.select('#audio').selectAll('.btn').classed('disabled',false);
+    rating = this.value;
+  });
+d3.select('#radio-7')
+  .on('click',function(){
+    d3.select('#audio').selectAll('.btn').classed('disabled',false);
+    rating = this.value;
+  });
 
 d3.select('#audio').selectAll('.btn')
   .on('click',function(d){
@@ -142,6 +153,7 @@ function createVariation(variation){
   }
 
   d3.json(session,function(data){
+    // console.log(data);
 
     /* VARIABLES */
     const mlScore = data.scores.globals.empathy;
@@ -268,7 +280,7 @@ function createVariation(variation){
         .attr('class','rect-background mlScore mlScoreChange')
         .attr('id','scoreChangePos')
         .attr('x',scaleX(mlScore))
-        .attr('width',scaleX(5-mlScore));
+        .attr('width',scaleX(scoreMax-mlScore));
       mlScoreG.selectAll('.mlScoreChange')
         .attr('height',barH/10)
         .attr('y',barY+(9*barH/20));
@@ -323,11 +335,11 @@ function createVariation(variation){
       .style('font-size','12px')
       .style('width',barW+'px')
       .style('margin-top','30px')
-      .html('Here is a transcript of the entire role-played session. The excerpt you listened to is indicated in <span class="bold">bold</span>.')
+      .html('Here is a software-generated transcript of the role-played session.')
 
     if(variation == 'influential n-grams'){
       d3.select('#transcript-desc')
-        .html('Here is a transcript of the entire role-played session. The excerpt you listened to is indicated in <span class="bold">bold</span>. '+
+        .html('Here is a software-generated transcript of the role-played session. ' +
         'Click the buttons below to see how changing the ' +
         'most influential words and phrases to all pro-empathy or anti-empathy affect the empathy score.')
       influenceFunctionality(mlScore);
@@ -372,25 +384,40 @@ function createVariation(variation){
         return d.speaker + '-' + d.id;
       })
       .append('tspan')
+      .text(function(d){
+        if(d.speaker == 'therapist'){
+          return 't: ';
+        }else{
+          return 'c: ';
+        }
+      })
+
+    d3.selectAll('.session-text')
+      .append('tspan')
       .attr('class',function(d){
         return d.speaker + '-original';
       })
       .attr('id',function(d){
         return d.speaker + '-original-' + d.id;
       })
-      .classed('in-scope',function(d){
-        if(session == sessionGood){
-          if(d.id >= 74 && d.id <= 119){
-            return true;
-          }else{ return false; }
-        }else if(session == sessionBad){
-          if(d.id >= 51 && d.id <= 88){
-            return true;
-          }else{ return false; }
+      // commented code below indicated bolded text in transcript
+      // .classed('in-scope',function(d){
+      //   if(session == sessionGood){
+      //     if(d.id >= 74 && d.id <= 119){
+      //       return true;
+      //     }else{ return false; }
+      //   }else if(session == sessionBad){
+      //     if(d.id >= 51 && d.id <= 88){
+      //       return true;
+      //     }else{ return false; }
+      //   }
+      // })
+      .html(function(d){
+        if(d.speaker == 'therapist'){
+          return d.asrText;
+        }else{
+          return d.asrText;
         }
-      })
-      .text(function(d){
-        return d.asrText;
       });
 
     if(variation == 'similar sessions'){
@@ -400,12 +427,16 @@ function createVariation(variation){
     }
     else if(variation == 'influential n-grams'){
       d3.select('#container-session')
-        .style('margin-top','30px');
+        .style('margin-top','30px')
+        .style('height','470px');
       influence();
     }
-    else if(variation == 'confidence' || variation == 'narrative description'){
+    else if(variation == 'narrative description'){
       d3.select('#container-session')
         .style('height','450px');
+    }else if(variation == 'confidence'){
+      d3.select('#container-session')
+        .style('height','470px');
     }else if(variation == 'manipulation'){
       d3.select('#container-session')
         .style('height','560px');

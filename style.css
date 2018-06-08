@@ -63,27 +63,50 @@
 }
 
 #progress-0{
-  width: 80%;
+  width: 90%;
 }
 
 .rating-container{
   padding-top: 40px;
 }
 
-#form-rating{
-  display: inline;
+.rating-div{
+ line-height: 120px;
+}
+
+.form-rating{
+  display: inline-block;
   padding: 20px;
+  line-height: normal;
+  text-align: center;
 }
 
-#form-rating input[type=radio]{
-  margin-left: 20px;
-  margin-right: 5px;
-  margin-top: 20px;
-  margin-bottom: 40px;
+.form-rating label{
+  display: block;
 }
 
-#radio-1{
-  margin-left: 10px;
+.form-rating input[type=radio]{
+  margin-bottom: 5px;
+}
+
+.form-rating label, .label-end{
+  color: LightGrey;
+}
+
+#label-1{
+  width: 250px;
+  display: inline-block;
+  line-height: normal;
+  vertical-align: middle;
+  margin-top: -10px;
+}
+
+#label-7{
+  width: 380px;
+  display: inline-block;
+  line-height: normal;
+  vertical-align: middle;
+  margin-top: -10px;
 }
 
 /* #rating-val{
@@ -200,7 +223,7 @@ h6{
 
 #container-session{
   height: 520px;
-  margin-top: 40px;
+  margin-top: 30px;
   overflow: -moz-scrollbars-vertical;
   overflow: scroll;
 }
@@ -371,21 +394,19 @@ button:focus{
   border: 1px solid black;
 }
 
-.pos, .neg{
+.text-influence-pos, .pos, .text-change-pos{
   font-weight: bolder;
-}
-
-.pos, .text-change-pos{
   color: #70B276;
 }
 
-.neg, .text-change-neg{
+.text-influence-neg, .neg, .text-change-neg{
+  font-weight: bolder;
   color: #CC6471;
 }
 
 .striked-pos, .striked-neg{
   text-decoration: line-through;
-  margin-right: 5px;
+  /* margin-right: 5px; */
 }
 
 ul {

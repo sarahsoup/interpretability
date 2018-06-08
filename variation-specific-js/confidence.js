@@ -3,21 +3,35 @@ function makeEmpathyBars(mlScore){
   d3.select('#mlNum')
     .style('fill','#19ABB5');
 
-  // increase svg height to accomodate additional line of text
+  // accomodate additional line of text
   d3.select('#svg-empathy')
     .attr('height',h+25);
+  d3.select('#mlScoreG')
+    .attr('transform','translate(0,140)');
 
   // add second line of text about confidence interval
   d3.select('#textScore-ml')
     .append('tspan')
-    .attr('x',0)
-    .attr('dy',secondLnAdj)
-    .text('with a confidence interval of ')
+    .text(' with a confidence interval of ')
   d3.select('#textScore-ml')
     .append('tspan')
     .html('&plusmn;' + (confInt).toFixed(1))
     .style('fill','#19ABB5')
     .style('font-weight','bold');
+
+  d3.select('#textScore-ml')
+    .append('tspan')
+    .attr('x',0)
+    .attr('dy',(secondLnAdj/2)+6)
+    .text('This means that an expert human would likely have rated the counselor\'s empathy')
+    .style('font-size','12px');
+
+  d3.select('#textScore-ml')
+    .append('tspan')
+    .attr('x',0)
+    .attr('dy',(secondLnAdj/2)-2)
+    .text('within '+ confInt.toFixed(1) +' points of the automated rating.')
+    .style('font-size','12px');
 
   // append gradient for confidence interval
   const gradient = d3.select('#mlScoreG').append('linearGradient')
@@ -50,14 +64,14 @@ function makeEmpathyBars(mlScore){
     .attr('width',4)
     .attr('height',barH+'px')
     .attr('x',scaleX(userScore)-2)
-    .attr('y',barY+barAdj+'px')
+    .attr('y',barY/*+barAdj*/+'px')
     .style('fill','black');
 
   // y-pos adjustments
   d3.select('#textScore-ml')
     .attr('y',confAdj+'px');
   d3.select('#userScoreG').selectAll('.rect-background')
-    .attr('y',barY+barAdj+'px');
+    .attr('y',barY/*+barAdj*/+'px');
   d3.select('#mlScoreG').selectAll('.rect-background')
     .attr('y',barY+confAdj+barAdj+secondLnAdj+'px');
 }

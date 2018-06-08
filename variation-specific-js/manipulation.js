@@ -165,7 +165,7 @@ function createSliders(data,questions,reflections,mlScore,w){
   const form = column.append('form').attr('id','form');
 
   // define empathy score change
-  var eDiff = 5 - mlScore;
+  var eDiff = scoreMax - mlScore;
   var qDiff = (.3 * eDiff)/questions.close.length;
   var rDiff = (.6 * eDiff)/reflections.simple.length;
 

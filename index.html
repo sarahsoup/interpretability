@@ -58,23 +58,45 @@
   </div>
   <div class="row hidden" id="audio">
     <div class="col-sm-12 audio-container">
-      <p>Please listen to this 3-minute excerpt of a role-played session between a therapist and a client. The therapist will be the first voice you hear.</p>
+      <p>Please listen to this 10-minute role-played session between a therapist and a client. The therapist will be the first voice you hear.</p>
       <audio id="session-audio0">
       </audio>
     </div>
     <div class="col-sm-12 rating-container">
-      <p>After you have listened to the excerpt, please rate the therapist’s empathy on a scale of 1-5, where 1 means “the therapist demonstrated little or no empathy for the client”, and 5 means, “the therapist was extremely empathic.”</p>
-      <!-- <p id="rating-val">0</p><br> -->
-      <form id="form-rating">
-        <!-- <input class="slider" id="slider-rating" type="range" min=0 max=5 step=.1 value=0> -->
-        <!-- <input type="number" id="number-rating" min=1 max=5  step=.5> -->
-        <input type="radio" name="empathy-rating" id="radio-1" value=1> 1
-        <input type="radio" name="empathy-rating" id="radio-2" value=2> 2
-        <input type="radio" name="empathy-rating" id="radio-3" value=3> 3
-        <input type="radio" name="empathy-rating" id="radio-4" value=4> 4
-        <input type="radio" name="empathy-rating" id="radio-5" value=5> 5
-      </br/>
-      </form>
+      <p>After you have listened to the session, please rate the therapist’s empathy on a scale of 1-7.</p>
+      <div class="rating-div">
+        <p class="label-end" id="label-1">Clinician has no apparent interest in client’s worldview. Gives little or no attention to the client’s perspective.</p>
+        <div class="form-rating">
+          <input type="radio" name="empathy-rating" id="radio-1" value=1 disabled>
+          <label for="radio-1">1</label>
+        </div>
+        <div class="form-rating">
+          <input type="radio" name="empathy-rating" id="radio-2" value=2 disabled>
+          <label for="radio-2">2</label>
+        </div>
+        <div class="form-rating">
+          <input type="radio" name="empathy-rating" id="radio-3" value=3 disabled>
+          <label for="radio-3">3</label>
+        </div>
+        <div class="form-rating">
+          <input type="radio" name="empathy-rating" id="radio-4" value=4 disabled>
+          <label for="radio-4">4</label>
+        </div>
+        <div class="form-rating">
+          <input type="radio" name="empathy-rating" id="radio-5" value=5 disabled>
+          <label for="radio-5">5</label>
+        </div>
+        <div class="form-rating">
+          <input type="radio" name="empathy-rating" id="radio-6" value=6 disabled>
+          <label for="radio-6">6</label>
+        </div>
+        <div class="form-rating">
+          <input type="radio" name="empathy-rating" id="radio-7" value=7 disabled>
+          <label for="radio-7">7</label>
+        <!-- </br/> -->
+      </div>
+        <p class="label-end" id="label-7">Clinician shows evidence of deep understanding of client’s point of view, not just for what has been explicitly stated but what the client means but has not yet said.</p>
+      </div>
       <a class="btn btn-next disabled">next</a>
     </div>
   </div>

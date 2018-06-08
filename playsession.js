@@ -1,4 +1,5 @@
 function playSession(){
+
   d3.select('#session-audio0')
     .append('source')
     .attr('src',sessionAudio);
@@ -19,6 +20,7 @@ function playSession(){
     .attr('title','play')
     .on('click',function(d){
       togglePlayPause(0);
+      enableRating();
     });
   d3.select('#btn-play-0')
     .append('i')
@@ -103,4 +105,18 @@ function updateProgressBar(div){
   if(listenMaxDur < audioPlayer.currentTime){
     listenMaxDur = audioPlayer.currentTime;
   }
+}
+
+function enableRating(){
+  document.getElementById('radio-1').removeAttribute('disabled');
+  document.getElementById('radio-2').removeAttribute('disabled');
+  document.getElementById('radio-3').removeAttribute('disabled');
+  document.getElementById('radio-4').removeAttribute('disabled');
+  document.getElementById('radio-5').removeAttribute('disabled');
+  document.getElementById('radio-6').removeAttribute('disabled');
+  document.getElementById('radio-7').removeAttribute('disabled');
+  d3.selectAll('label')
+    .style('color','black');
+  d3.selectAll('.label-end')
+    .style('color','black');
 }
