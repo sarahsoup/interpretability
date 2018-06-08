@@ -279,7 +279,7 @@ function createSliders(data,questions,reflections,mlScore,w){
   valQprev = document.getElementById('slider-open').value;
   valRprev = document.getElementById('slider-complex').value;
 
-  d3.csv('./manipulation_session_change.csv',function(dataChange){
+  d3.csv('./manipulation_session_change.csv').then(function(dataChange){
     d3.select('#slider-open')
       .on('input',function(e){
         interaction++;

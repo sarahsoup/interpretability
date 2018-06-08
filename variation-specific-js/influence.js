@@ -12,9 +12,32 @@ const spanChngPos = '<span class="text-change-pos">';
 const spanChngNeg = '<span class="text-change-neg">';
 
 
-// influenceChange() changes text in session transcript - to be overwritten
+// async function loadInfluenceNgrams(talkTurn){
+//   const data = await d3.csv('../empathyparams.csv');
+//   data.forEach(function(i){
+//     let count=0;
+//     i.ngram = i.ngram.replace(/_/g,' ');
+//     i.influence = +i.influence;
+//     talkTurn.forEach(function(d){
+//       if(d.speaker == 'therapist' && d.asrText.includes(i.ngram)){
+//         index = d.asrText.indexOf(i.ngram)
+//         if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+i.ngram.length) == d.asrText.length || d.asrText.charAt(index+i.ngram.length) == ' ')){
+//           count++;
+//         }
+//       }
+//     })
+//     if(count > 0){ influenceArr.push(i);}
+//   })
+//   influenceArr.sort(function(a,b){ return b.influence-a.influence; })
+//   posTop = influenceArr.slice(0,10);
+//   negTop = influenceArr.slice(-10);
+//   negTop.sort(function(a,b){ return a.influence-b.influence; })
+//   // console.log(posTop,negTop);
+//   // return {postTop: posTop, negTop: negTop};
+// }
 
-function influenceLegend(talkTurn){
+
+async function influenceLegend(talkTurn){
   d3.select('#content-empathy')
     .append('h6')
     .attr('id','title-nGram')
@@ -42,73 +65,59 @@ function influenceLegend(talkTurn){
     .attr('class','col-sm-6')
     .append('ul');
 
-  // determine most influential n-grams
-  d3.csv('../empathyparams.csv',function(data){
-    data.forEach(function(i){
-      let count=0;
-      i.ngram = i.ngram.replace(/_/g,' ');
-      i.influence = +i.influence;
-      talkTurn.forEach(function(d){
-        if(d.speaker == 'therapist' && d.asrText.includes(i.ngram)){
-          index = d.asrText.indexOf(i.ngram)
-          if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+i.ngram.length) == d.asrText.length || d.asrText.charAt(index+i.ngram.length) == ' ')){
-            count++;
+  const data = await d3.csv('../empathyparams.csv');
+  data.forEach(function(i){
+    let count=0;
+    i.ngram = i.ngram.replace(/_/g,' ');
+    i.influence = +i.influence;
+    talkTurn.forEach(function(d){
+      if(d.speaker == 'therapist' && d.asrText.includes(i.ngram)){
+        index = d.asrText.indexOf(i.ngram)
+        if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+i.ngram.length) == d.asrText.length || d.asrText.charAt(index+i.ngram.length) == ' ')){
+          count++;
+        }
+      }
+    })
+    if(count > 0){ influenceArr.push(i);}
+  })
+  influenceArr.sort(function(a,b){ return b.influence-a.influence; })
+  posTop = influenceArr.slice(0,10);
+  negTop = influenceArr.slice(-10);
+  negTop.sort(function(a,b){ return a.influence-b.influence; })
+
+  d3.selectAll('.therapist-original')
+    .html(function(d){
+      posTop.forEach(function(p){
+        if(d.asrText.includes(p.ngram)){
+          index = d.asrText.indexOf(p.ngram)
+          if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+p.ngram.length) == d.asrText.length || d.asrText.charAt(index+p.ngram.length) == ' ')){
+            d.asrText = [d.asrText.slice(0, index), spanPosStart, d.asrText.slice(index,index+p.ngram.length), spanEnd, spanChngNeg, spanEnd, d.asrText.slice(index+p.ngram.length)].join('');
           }
         }
       })
-      if(count > 0){ influenceArr.push(i);}
-    })
-    influenceArr.sort(function(a,b){ return b.influence-a.influence; })
-    console.log(influenceArr);
-    console.log(influenceArr.length);
-    posTop = influenceArr.slice(0,10);
-    negTop = influenceArr.slice(-10);
-    negTop.sort(function(a,b){ return a.influence-b.influence; })
-    console.log(posTop,negTop);
-
-    d3.selectAll('.therapist-original')
-      .html(function(d){
-        // if(d.asrText.includes('sound')){
-        //   index = d.asrText.indexOf('sound')
-        //   if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+5) == d.asrText.length || d.asrText.charAt(index+5) == ' ')){
-        //     console.log(d.asrText.charAt(index-1));
-        //     console.log(d.asrText.charAt(index+5));
-        //     d.asrText = [d.asrText.slice(0, index), spanPosStart, d.asrText.slice(index,index+5), spanEnd, d.asrText.slice(index+5)].join('');
-        //   }
-        //   console.log(d.asrText);
-        // }
-        posTop.forEach(function(p){
-          if(d.asrText.includes(p.ngram)){
-            index = d.asrText.indexOf(p.ngram)
-            if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+p.ngram.length) == d.asrText.length || d.asrText.charAt(index+p.ngram.length) == ' ')){
-              d.asrText = [d.asrText.slice(0, index), spanPosStart, d.asrText.slice(index,index+p.ngram.length), spanEnd, spanChngNeg, spanEnd, d.asrText.slice(index+p.ngram.length)].join('');
-            }
+      negTop.forEach(function(n){
+        if(d.asrText.includes(n.ngram)){
+          index = d.asrText.indexOf(n.ngram)
+          if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+n.ngram.length) == d.asrText.length || d.asrText.charAt(index+n.ngram.length) == ' ')){
+            d.asrText = [d.asrText.slice(0, index), spanNegStart, d.asrText.slice(index,index+n.ngram.length), spanEnd, spanChngPos, spanEnd, d.asrText.slice(index+n.ngram.length)].join('');
           }
-        })
-        negTop.forEach(function(n){
-          if(d.asrText.includes(n.ngram)){
-            index = d.asrText.indexOf(n.ngram)
-            if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+n.ngram.length) == d.asrText.length || d.asrText.charAt(index+n.ngram.length) == ' ')){
-              d.asrText = [d.asrText.slice(0, index), spanNegStart, d.asrText.slice(index,index+n.ngram.length), spanEnd, spanChngPos, spanEnd, d.asrText.slice(index+n.ngram.length)].join('');
-            }
-          }
-        })
-        return d.asrText;
+        }
       })
+      return d.asrText;
+    })
 
-    for (let item of posTop)
-    posList
-      .append('li')
-      .attr('class','list-pos pos')
-      .html(item.ngram);
+  for (let item of posTop)
+  posList
+    .append('li')
+    .attr('class','list-pos pos')
+    .html(item.ngram);
 
-    for (let item of negTop)
-    negList
-      .append('li')
-      .attr('class','list-neg neg')
-      .html(item.ngram);
+  for (let item of negTop)
+  negList
+    .append('li')
+    .attr('class','list-neg neg')
+    .html(item.ngram);
 
-  })
 }
 
 function influenceFunctionality(mlScore){

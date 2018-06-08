@@ -152,7 +152,7 @@ function createVariation(variation){
     createDescription();
   }
 
-  d3.json(session,function(data){
+  d3.json(session).then(function(data){
     // console.log(data);
 
     /* VARIABLES */
