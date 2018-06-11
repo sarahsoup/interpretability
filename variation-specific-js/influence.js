@@ -39,10 +39,11 @@ async function influenceLegend(talkTurn){
     .attr('class','col-sm-6')
     .append('ul');
 
-  const data = await d3.csv('../empathyparams.csv');
+  const params = await d3.csv('../empathyparams.csv');
+  console.log(params);
 
   const promise = new Promise((resolve, reject)=>{
-    data.forEach(function(i){
+    params.forEach(function(i){
       let count=0;
       i.ngram = i.ngram.replace(/_/g,' ');
       i.influence = +i.influence;
