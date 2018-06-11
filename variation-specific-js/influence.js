@@ -3,13 +3,52 @@
 // const ngramNegSet = new Set();
 let lastBtnClicked = 'none';
 
-let influenceArr = [];
-let posTop,negTop;
 const spanPosStart = '<span class="text-influence-pos">';
 const spanNegStart = '<span class="text-influence-neg">';
 const spanEnd = '</span>';
 const spanChngPos = '<span class="text-change-pos">';
 const spanChngNeg = '<span class="text-change-neg">';
+const posTop = [
+  {ngram: 'concern', influence: 6.4004392},
+  {ngram: 'energy', influence: 21.33606936},
+  {ngram: 'from', influence: 4.228039274},
+  {ngram: 'great', influence: 4.89966329},
+  {ngram: 'hard', influence: 5.166788208},
+  {ngram: 'idea', influence: 8.220790411},
+  {ngram: 'kinda', influence: 9.422237496},
+  {ngram: 'meth', influence: 5.782501348},
+  {ngram: 'might', influence: 10.50592844},
+  {ngram: 'mom', influence: 9.19237819},
+  {ngram: 'of', influence: 3.97609977},
+  {ngram: 'oh', influence: 10.95562607},
+  {ngram: 'real', influence: 9.451325813},
+  {ngram: 'requirement', influence: 8.986522909},
+  {ngram: 'smoking', influence: 7.194367392},
+  {ngram: 'sort', influence: 7.588859816},
+  {ngram: 'that', influence: 4.908789584},
+  {ngram: 'yeah', influence: 9.183993985}
+];
+const negTop = [
+  {ngram: 'already', influence: -12.0861949},
+  {ngram: 'beautiful', influence: -6.366595576},
+  {ngram: 'die', influence: -7.816927951},
+  {ngram: 'drink', influence: -4.616078639},
+  {ngram: 'gotta', influence: -17.76913592},
+  {ngram: 'he', influence: -4.235523373},
+  {ngram: 'just', influence: -4.512220779},
+  {ngram: 'know', influence: -4.43929699},
+  {ngram: 'no', influence: -8.308023478},
+  {ngram: 'only', influence: -4.281280014},
+  {ngram: 'person', influence: -7.623992916},
+  {ngram: 'prior', influence: -6.858531818},
+  {ngram: 'six', influence: -7.156801694},
+  {ngram: 'sure', influence: -5.262024059},
+  {ngram: 'want', influence: -4.26278777},
+  {ngram: 'we', influence: -5.438774565}
+];
+let posTopSub = [];
+let negTopSub = [];
+
 
 async function influenceLegend(talkTurn){
   d3.select('#content-empathy')
@@ -39,70 +78,104 @@ async function influenceLegend(talkTurn){
     .attr('class','col-sm-6')
     .append('ul');
 
-  const params = await d3.csv('../empathyparams.csv');
-  console.log(params);
+  // for pulling the top influential
+  // let influenceArr = [];
+  // let posTop,negTop;
+  // const params = await d3.csv('../empathyparams.csv');
+  // console.log(params);
+  //
+  // const promise = new Promise((resolve, reject)=>{
+  //   params.forEach(function(i){
+  //     let count=0;
+  //     i.ngram = i.ngram.replace(/_/g,' ');
+  //     i.influence = +i.influence;
+  //     talkTurn.forEach(function(d){
+  //       if(d.speaker == 'therapist' && d.asrText.includes(i.ngram)){
+  //         index = d.asrText.indexOf(i.ngram)
+  //         if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+i.ngram.length) == d.asrText.length || d.asrText.charAt(index+i.ngram.length) == ' ')){
+  //           count++;
+  //         }
+  //       }
+  //     })
+  //     if(count > 0){ influenceArr.push(i);}
+  //   })
+  //   resolve(influenceArr);
+  // })
+  //
+  // promise.then(function(influenceArr){
+  //   console.log(influenceArr);
+  //   influenceArr.sort(function(a,b){ return b.influence-a.influence; })
+  //   posTop = influenceArr.slice(0,10);
+  //   negTop = influenceArr.slice(-10);
+  //   negTop.sort(function(a,b){ return a.influence-b.influence; })
+  //   console.log(posTop);
+  //   console.log(negTop);
+  // })
 
-  const promise = new Promise((resolve, reject)=>{
-    params.forEach(function(i){
-      let count=0;
-      i.ngram = i.ngram.replace(/_/g,' ');
-      i.influence = +i.influence;
-      talkTurn.forEach(function(d){
-        if(d.speaker == 'therapist' && d.asrText.includes(i.ngram)){
-          index = d.asrText.indexOf(i.ngram)
-          if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+i.ngram.length) == d.asrText.length || d.asrText.charAt(index+i.ngram.length) == ' ')){
-            count++;
+  posTop.forEach(function(i){
+    let count=0;
+    talkTurn.forEach(function(d){
+      if(d.speaker == 'therapist' && d.asrText.includes(i.ngram)){
+        index = d.asrText.indexOf(i.ngram)
+        if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+i.ngram.length) == d.asrText.length || d.asrText.charAt(index+i.ngram.length) == ' ')){
+          count++;
+        }
+      }
+    })
+    if(count > 0){ posTopSub.push(i);}
+  })
+  negTop.forEach(function(i){
+    let count=0;
+    talkTurn.forEach(function(d){
+      if(d.speaker == 'therapist' && d.asrText.includes(i.ngram)){
+        index = d.asrText.indexOf(i.ngram)
+        if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+i.ngram.length) == d.asrText.length || d.asrText.charAt(index+i.ngram.length) == ' ')){
+          count++;
+        }
+      }
+    })
+    if(count > 0){ negTopSub.push(i);}
+  })
+
+  posTopSub.sort(function(a,b){ return b.influence-a.influence; })
+  negTopSub.sort(function(a,b){ return a.influence-b.influence; })
+  posTopSub = posTopSub.slice(0,10);
+  negTopSub = negTopSub.slice(0,10);
+
+  for (let item of posTopSub)
+  posList
+    .append('li')
+    .attr('class','list-pos pos')
+    .html(item.ngram);
+
+  for (let item of negTopSub)
+  negList
+    .append('li')
+    .attr('class','list-neg neg')
+    .html(item.ngram);
+}
+
+function influenceInTranscript(){
+  d3.selectAll('.therapist-original')
+    .html(function(d){
+      posTopSub.forEach(function(p){
+        if(d.asrText.includes(p.ngram)){
+          index = d.asrText.indexOf(p.ngram)
+          if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+p.ngram.length) == d.asrText.length || d.asrText.charAt(index+p.ngram.length) == ' ')){
+            d.asrText = [d.asrText.slice(0, index), spanPosStart, d.asrText.slice(index,index+p.ngram.length), spanEnd, spanChngNeg, spanEnd, d.asrText.slice(index+p.ngram.length)].join('');
           }
         }
       })
-      if(count > 0){ influenceArr.push(i);}
-    })
-    resolve(influenceArr);
-  })
-
-  promise.then(function(influenceArr){
-    console.log(influenceArr);
-    influenceArr.sort(function(a,b){ return b.influence-a.influence; })
-    posTop = influenceArr.slice(0,10);
-    negTop = influenceArr.slice(-10);
-    negTop.sort(function(a,b){ return a.influence-b.influence; })
-
-    d3.selectAll('.therapist-original')
-      .html(function(d){
-        posTop.forEach(function(p){
-          if(d.asrText.includes(p.ngram)){
-            index = d.asrText.indexOf(p.ngram)
-            if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+p.ngram.length) == d.asrText.length || d.asrText.charAt(index+p.ngram.length) == ' ')){
-              d.asrText = [d.asrText.slice(0, index), spanPosStart, d.asrText.slice(index,index+p.ngram.length), spanEnd, spanChngNeg, spanEnd, d.asrText.slice(index+p.ngram.length)].join('');
-            }
+      negTopSub.forEach(function(n){
+        if(d.asrText.includes(n.ngram)){
+          index = d.asrText.indexOf(n.ngram)
+          if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+n.ngram.length) == d.asrText.length || d.asrText.charAt(index+n.ngram.length) == ' ')){
+            d.asrText = [d.asrText.slice(0, index), spanNegStart, d.asrText.slice(index,index+n.ngram.length), spanEnd, spanChngPos, spanEnd, d.asrText.slice(index+n.ngram.length)].join('');
           }
-        })
-        negTop.forEach(function(n){
-          if(d.asrText.includes(n.ngram)){
-            index = d.asrText.indexOf(n.ngram)
-            if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+n.ngram.length) == d.asrText.length || d.asrText.charAt(index+n.ngram.length) == ' ')){
-              d.asrText = [d.asrText.slice(0, index), spanNegStart, d.asrText.slice(index,index+n.ngram.length), spanEnd, spanChngPos, spanEnd, d.asrText.slice(index+n.ngram.length)].join('');
-            }
-          }
-        })
-        return d.asrText;
+        }
       })
-
-    for (let item of posTop)
-    posList
-      .append('li')
-      .attr('class','list-pos pos')
-      .html(item.ngram);
-
-    for (let item of negTop)
-    negList
-      .append('li')
-      .attr('class','list-neg neg')
-      .html(item.ngram);
-
-  }).catch((reason)=>{
-    console.log('Handle rejected promise ('+reason+') here.');
-  })
+      return d.asrText;
+    })
 }
 
 function influenceFunctionality(mlScore){

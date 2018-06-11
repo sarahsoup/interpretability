@@ -429,6 +429,7 @@ function createVariation(variation){
       d3.select('#container-session')
         .style('margin-top','30px')
         .style('height','470px');
+      influenceInTranscript();
       influence();
     }
     else if(variation == 'narrative description'){
