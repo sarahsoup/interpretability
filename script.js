@@ -44,8 +44,8 @@ const sessionArr = [
   {session: sessionBad},
 ];
 const randomSessIndex = Math.floor(Math.random() * 2);
-//session = sessionArr[randomSessIndex].session;
-session = sessionGood; //manually set session
+session = sessionArr[randomSessIndex].session;
+// session = sessionBad; //manually set session
 let sessionAudio, sessionType;
 if(session == sessionGood){
   sessionAudio = 'http://sri.utah.edu/psychtest/r01/hi_goodtherapy_enhanced.wav';
@@ -66,7 +66,7 @@ const variationArr = [
 ];
 const randomVarIndex = Math.floor(Math.random() * 5);
 variation = variationArr[randomVarIndex].variation;
-variation = variationArr[4].variation; //manually set variation
+// variation = variationArr[2].variation; //manually set variation
 
 /* WELCOME SCREEN */
 d3.select('#welcome').selectAll('.btn')

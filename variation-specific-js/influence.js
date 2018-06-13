@@ -6,45 +6,45 @@ let lastBtnClicked = 'none';
 const spanPosStart = '<span class="text-influence-pos">';
 const spanNegStart = '<span class="text-influence-neg">';
 const spanEnd = '</span>';
-const spanChngPos = '<span class="text-change-pos">';
-const spanChngNeg = '<span class="text-change-neg">';
+const spanChngPos = '<span class="text-change-pos ';
+const spanChngNeg = '<span class="text-change-neg ';
 const posTop = [
-  {ngram: 'concern', influence: 6.4004392},
-  {ngram: 'energy', influence: 21.33606936},
-  {ngram: 'from', influence: 4.228039274},
-  {ngram: 'great', influence: 4.89966329},
-  {ngram: 'hard', influence: 5.166788208},
-  {ngram: 'idea', influence: 8.220790411},
-  {ngram: 'kinda', influence: 9.422237496},
-  {ngram: 'meth', influence: 5.782501348},
-  {ngram: 'might', influence: 10.50592844},
-  {ngram: 'mom', influence: 9.19237819},
-  {ngram: 'of', influence: 3.97609977},
-  {ngram: 'oh', influence: 10.95562607},
-  {ngram: 'real', influence: 9.451325813},
-  {ngram: 'requirement', influence: 8.986522909},
-  {ngram: 'smoking', influence: 7.194367392},
-  {ngram: 'sort', influence: 7.588859816},
-  {ngram: 'that', influence: 4.908789584},
-  {ngram: 'yeah', influence: 9.183993985}
+  {ngram: 'concern', influence: 6.4004392, change: 'involvement'},
+  {ngram: 'energy', influence: 21.33606936, change: 'power'},
+  {ngram: 'from', influence: 4.228039274, change: 'through'},
+  {ngram: 'great', influence: 4.89966329, change: 'nothing'},
+  {ngram: 'hard', influence: 5.166788208, change: 'tough'},
+  {ngram: 'idea', influence: 8.220790411, change: 'thing'},
+  {ngram: 'kinda', influence: 9.422237496, change: 'probably'},
+  {ngram: 'meth', influence: 5.782501348, change: 'drug'},
+  {ngram: 'might', influence: 10.50592844, change: 'probably'},
+  {ngram: 'mom', influence: 9.19237819, change: 'dad'},
+  {ngram: 'of', influence: 3.97609977, change: 'in'},
+  {ngram: 'oh', influence: 10.95562607, change: 'ha'},
+  {ngram: 'real', influence: 9.451325813, change: 'obvious'},
+  {ngram: 'requirement', influence: 8.986522909, change: 'need'},
+  {ngram: 'smoking', influence: 7.194367392, change: 'addict'},
+  {ngram: 'sort', influence: 7.588859816, change: 'sure'},
+  {ngram: 'that', influence: 4.908789584, change: 'there'},
+  {ngram: 'yeah', influence: 9.183993985, change: 'no'}
 ];
 const negTop = [
-  {ngram: 'already', influence: -12.0861949},
-  {ngram: 'beautiful', influence: -6.366595576},
-  {ngram: 'die', influence: -7.816927951},
-  {ngram: 'drink', influence: -4.616078639},
-  {ngram: 'gotta', influence: -17.76913592},
-  {ngram: 'he', influence: -4.235523373},
-  {ngram: 'just', influence: -4.512220779},
-  {ngram: 'know', influence: -4.43929699},
-  {ngram: 'no', influence: -8.308023478},
-  {ngram: 'only', influence: -4.281280014},
-  {ngram: 'person', influence: -7.623992916},
-  {ngram: 'prior', influence: -6.858531818},
-  {ngram: 'six', influence: -7.156801694},
-  {ngram: 'sure', influence: -5.262024059},
-  {ngram: 'want', influence: -4.26278777},
-  {ngram: 'we', influence: -5.438774565}
+  {ngram: 'already', influence: -12.0861949, change: 'definitely'},
+  {ngram: 'beautiful', influence: -6.366595576, change: 'wonderful'},
+  {ngram: 'die', influence: -7.816927951, change: 'lose'},
+  {ngram: 'drink', influence: -4.616078639, change: 'hurt'},
+  {ngram: 'gotta', influence: -17.76913592, change: 'must'},
+  {ngram: 'he', influence: -4.235523373, change: 'guy'},
+  {ngram: 'just', influence: -4.512220779, change: 'sudden'},
+  {ngram: 'know', influence: -4.43929699, change: 'believe'},
+  {ngram: 'no', influence: -8.308023478, change: 'yes'},
+  {ngram: 'only', influence: -4.281280014, change: 'maybe'},
+  {ngram: 'person', influence: -7.623992916, change: 'somebody'},
+  {ngram: 'prior', influence: -6.858531818, change: 'next'},
+  {ngram: 'six', influence: -7.156801694, change: 'ten'},
+  {ngram: 'sure', influence: -5.262024059, change: 'really'},
+  {ngram: 'want', influence: -4.26278777, change: 'requirement'},
+  {ngram: 'we', influence: -5.438774565, change: 'this'}
 ];
 let posTopSub = [];
 let negTopSub = [];
@@ -156,22 +156,34 @@ async function influenceLegend(talkTurn){
 }
 
 function influenceInTranscript(){
+  let changeClass;
+  let string, indices;
   d3.selectAll('.therapist-original')
     .html(function(d){
       posTopSub.forEach(function(p){
-        if(d.asrText.includes(p.ngram)){
-          index = d.asrText.indexOf(p.ngram)
+        string = d.asrText;
+        indices = 0;
+        while(string.includes(p.ngram)){
+          index = string.indexOf(p.ngram)+indices;
+          changeClass = 'change-' + p.change + '">';
           if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+p.ngram.length) == d.asrText.length || d.asrText.charAt(index+p.ngram.length) == ' ')){
-            d.asrText = [d.asrText.slice(0, index), spanPosStart, d.asrText.slice(index,index+p.ngram.length), spanEnd, spanChngNeg, spanEnd, d.asrText.slice(index+p.ngram.length)].join('');
+            d.asrText = [d.asrText.slice(0, index), spanPosStart, d.asrText.slice(index,index+p.ngram.length), spanEnd, spanChngNeg, changeClass, spanEnd, d.asrText.slice(index+p.ngram.length)].join('');
           }
+          string = d.asrText.substr(index+spanPosStart.length+1);
+          indices =+ index+spanPosStart.length+1;
         }
       })
       negTopSub.forEach(function(n){
-        if(d.asrText.includes(n.ngram)){
-          index = d.asrText.indexOf(n.ngram)
+        string = d.asrText;
+        indices = 0;
+        while(string.includes(n.ngram)){
+          index = d.asrText.indexOf(n.ngram)+indices;
+          changeClass = 'change-' + n.change + '">';
           if((index == 0 || d.asrText.charAt(index-1) == ' ') && ((index+n.ngram.length) == d.asrText.length || d.asrText.charAt(index+n.ngram.length) == ' ')){
-            d.asrText = [d.asrText.slice(0, index), spanNegStart, d.asrText.slice(index,index+n.ngram.length), spanEnd, spanChngPos, spanEnd, d.asrText.slice(index+n.ngram.length)].join('');
+            d.asrText = [d.asrText.slice(0, index), spanNegStart, d.asrText.slice(index,index+n.ngram.length), spanEnd, spanChngPos, changeClass, spanEnd, d.asrText.slice(index+n.ngram.length)].join('');
           }
+          string = d.asrText.substr(index+spanPosStart.length+1);
+          indices =+ index+spanNegStart.length+1;
         }
       })
       return d.asrText;
@@ -265,8 +277,10 @@ function influenceChange(direction){
     d3.selectAll('.text-influence-neg')
       .classed('striked-neg',true);
     if(lastBtnClicked != 'positive'){
-      d3.selectAll('.text-change-pos')
-        .text(' [positive]');
+      negTopSub.forEach(function(n){
+        d3.selectAll('.change-'+n.change)
+          .text(' '+n.change);
+      })
     }
   }else if(direction == 'negative'){
     d3.select('#btn-negative')
@@ -282,8 +296,10 @@ function influenceChange(direction){
     d3.selectAll('.text-influence-pos')
       .classed('striked-pos',true);
     if(lastBtnClicked != 'negative'){
-      d3.selectAll('.text-change-neg')
-        .text(' [negative]');
+      posTopSub.forEach(function(p){
+        d3.selectAll('.change-'+p.change)
+          .text(' '+p.change);
+      })
     }
   }
 }

@@ -1,8 +1,8 @@
 function createSliders(data,questions,reflections,mlScore,w){
 
   // adjust decimals for mlScore
-  d3.select('#mlNum')
-    .text(mlScore.toFixed(2));
+  // d3.select('#mlNum')
+  //   .text(mlScore.toFixed(2));
 
   const column = d3.select('#content-empathy');
   let i;
@@ -263,7 +263,7 @@ function createSliders(data,questions,reflections,mlScore,w){
         .transition()
         .style('opacity',0);
       d3.select('#mlNum')
-        .text(mlScore.toFixed(2));
+        .text(mlScore.toFixed(1));
       d3.select('#mlNumChange')
         .text(null);
     });
@@ -290,10 +290,6 @@ function createSliders(data,questions,reflections,mlScore,w){
           .text(Math.round((valQcurr/(data.openCount+data.closedCount))*100) + '% Open');
 
         if(Math.round(valQcurr) < Math.round(data.openCount)){
-          // d3.select('#slider-open')
-          //   .style('background','linear-gradient(to right, #19ABB5, #19ABB5 ' + (valQcurr/(data.openCount+data.closedCount)*100) + '%, #EEEEEE ' + (valQcurr/(data.openCount+data.closedCount)*100) +
-          //    '%, #EEEEEE ' + (data.openPerc-10) + '%, #19ABB5 ' + (data.openPerc-10) + '%, #19ABB5 ' + (data.openPerc+10) + '%, #EEEEEE ' + (data.openPerc+10) +'%, #EEEEEE)');
-
           if(Math.round(valQcurr) < Math.round(valQprev)){
             diffQ = diffQ - qDiff;
           }else{
@@ -301,7 +297,6 @@ function createSliders(data,questions,reflections,mlScore,w){
           }
           scoreNow = mlScore + diffQ + diffR;
           diffNow = diffQ + diffR;
-
           questions.open.forEach(function(d){
             d3.select('#therapist-original-' + d.id)
               .classed('striked-open',function(a){
@@ -316,11 +311,9 @@ function createSliders(data,questions,reflections,mlScore,w){
                   return false;
                 }
               })
-
           });
         }
         else if(Math.round(valQcurr) > Math.round(data.openCount)){
-
           if(Math.round(valQcurr) > Math.round(valQprev)){
             diffQ = diffQ + qDiff;
           }else{
@@ -328,7 +321,6 @@ function createSliders(data,questions,reflections,mlScore,w){
           }
           scoreNow = mlScore + diffQ + diffR;
           diffNow = diffQ + diffR;
-
           questions.close.forEach(function(d){
             d3.select('#therapist-original-' + d.id)
               .classed('striked-open',function(){
@@ -346,14 +338,12 @@ function createSliders(data,questions,reflections,mlScore,w){
           });
         }
         else{
-
           d3.selectAll('.striked-open')
             .classed('striked-open',false);
           d3.selectAll('.text-change-open')
             .remove();
           d3.selectAll('.rect-change-open')
             .remove();
-
           diffQ = 0;
           scoreNow = mlScore + diffQ + diffR;
           diffNow = diffQ + diffR;
@@ -512,11 +502,7 @@ function addTextChange(d,scale,dataChange){
     .append('tspan')
     .attr('class','text-change-' + scale)
     .attr('id','therapist-change-' + d.id)
-    .classed('in-scope',function(){
-      if(d3.select('#therapist-original-' + d.id).classed('in-scope')){
-        return true;
-      }else{ return false; }
-    })
+    .classed('in-scope',true)
     .text(function(a){
       var textChange = '';
       dataChange.forEach(function(x){
